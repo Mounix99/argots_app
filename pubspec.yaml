@@ -43,7 +43,7 @@ dependencies:
   equatable: ^2.0.5
   mockito: ^5.4.4
   dartz: ^0.10.1
-  intl: ^0.18.1 # conflict with flutter_localizations
+  intl: any
 
   # Data management packages
   get_it: ^7.6.7
@@ -89,6 +89,7 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  generate: true
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

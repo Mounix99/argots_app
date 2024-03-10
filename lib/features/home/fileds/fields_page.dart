@@ -1,3 +1,4 @@
+import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class FieldsPage extends StatelessWidget {
@@ -6,11 +7,9 @@ class FieldsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Fields"),
-      ),
-      body: const Center(
-        child: Text("Fields"),
+      appBar: AppBar(title: Text(context.strings.fields)),
+      body: Center(
+        child: Text(context.strings.fields),
       ),
     );
   }

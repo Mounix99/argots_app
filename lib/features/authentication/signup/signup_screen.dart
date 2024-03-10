@@ -1,4 +1,5 @@
 import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
+import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:agrost_app/features/authentication/signup/signup_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,10 +17,13 @@ class SignUpScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Sign Up'),
-        ),
-        body: BlocBuilder<SignUpCubit, SupabaseCubitState>(
+        appBar: AppBar(title: Text(context.strings.sign_up)),
+        body: BlocConsumer<SignUpCubit, SupabaseCubitState>(
+          listener: (context, state) {
+            if (state.requestState.isSuccess) {
+              context.navigator.goToSplash();
+            }
+          },
           builder: (context, state) {
             final cubit = context.read<SignUpCubit>();
             final form = cubit.form;
@@ -30,22 +34,26 @@ class SignUpScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     ReactiveTextField(
-                      formControlName: SingUpFormFields.email.name,
-                      decoration: const InputDecoration(labelText: 'Email'),
-                    ),
+                        formControlName: SingUpFormFields.email.name,
+                        decoration: InputDecoration(labelText: context.strings.email)),
                     ReactiveTextField(
                       formControlName: SingUpFormFields.password.name,
-                      decoration: const InputDecoration(labelText: 'Password'),
+                      decoration: InputDecoration(labelText: context.strings.password),
                     ),
                     ReactiveTextField(
                       formControlName: SingUpFormFields.confirmPassword.name,
-                      decoration: const InputDecoration(labelText: 'Confirm Password'),
+                      decoration: InputDecoration(labelText: context.strings.confirm_password),
                     ),
                     ElevatedButton(
                       onPressed: () {
                         context.read<SignUpCubit>().signUpWithEmail();
                       },
-                      child: const Text('Sign Up'),
+                      child: Text(context.strings.sign_up),
+                    ),
+                    const SizedBox(height: 16),
+                    TextButton(
+                      onPressed: () => context.navigator.goToSignIn(),
+                      child: Text(context.strings.sign_in),
                     ),
                   ],
                 ),

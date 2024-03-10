@@ -1,3 +1,4 @@
+import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 
 class ProfilePage extends StatelessWidget {
@@ -7,10 +8,10 @@ class ProfilePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Profile"),
+        title: Text(context.strings.profile),
       ),
-      body: const Center(
-        child: Text("Profile"),
+      body: Center(
+        child: Text(context.strings.profile),
       ),
     );
   }

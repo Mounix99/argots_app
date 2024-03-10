@@ -24,12 +24,25 @@ abstract class SupabaseRequestCubit<Type> extends Cubit<SupabaseCubitState> {
   }
 
   @protected
+  void onSuccess() {}
+
+  @protected
+  void onFail() {}
+
+  @protected
   Future<Either<Failure, Type?>> requestData(Future<Either<Failure, Type?>> Function() request) async {
     emitLoading();
     return request().withProgress().then((result) {
       emit(result.fold(
-        (failure) => state.copyWith(requestState: RequestState.error, errorMessage: failure.error),
-        (data) => state.copyWith(requestState: RequestState.success, data: Right(data)),
+        (failure) {
+          onSuccess();
+          return state.copyWith(
+              requestState: RequestState.error, errorMessage: failure.error.toString(), data: Left(failure));
+        },
+        (data) {
+          onFail();
+          return state.copyWith(requestState: RequestState.success, data: Right(data));
+        },
       ));
       return result;
     });

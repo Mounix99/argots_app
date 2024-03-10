@@ -1,0 +1,13 @@
+{
+  "sign_in": "Ввійти",
+  "sign_out": "Вийти",
+  "sign_up": "Зареєструватися",
+  "fields" : "Поля",
+  "plants" : "Рослини",
+  "profile" : "Профіль",
+  "email" : "Пошта",
+  "password" : "Пароль",
+  "confirm_password" : "Підтвердження паролю",
+  "field_required" : "Це поле обовʼязкове",
+  "field_incorrect" : "Це поле заповнено невірно"
+}

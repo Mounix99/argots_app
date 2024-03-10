@@ -1,4 +1,5 @@
 import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
+import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:agrost_app/common/state_management/supabase_cubit/supabase_cubit_state.dart';
 import 'package:agrost_app/features/authentication/signin/signin_cubit.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +17,14 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Sign In'),
+        title: Text(context.strings.sign_in),
       ),
-      body: BlocBuilder<SignInCubit, SupabaseCubitState>(
+      body: BlocConsumer<SignInCubit, SupabaseCubitState>(
+        listener: (context, state) {
+          if (state.requestState.isSuccess) {
+            context.navigator.goToSplash();
+          }
+        },
         builder: (context, state) {
           final cubit = context.read<SignInCubit>();
           final form = cubit.form;
@@ -29,19 +35,21 @@ class SignInScreen extends StatelessWidget {
               child: Column(
                 children: [
                   ReactiveTextField(
-                    formControlName: SignInFormFields.email.name,
-                    decoration: const InputDecoration(labelText: 'Email'),
-                  ),
+                      formControlName: SignInFormFields.email.name,
+                      decoration: InputDecoration(labelText: context.strings.email)),
                   ReactiveTextField(
                     formControlName: SignInFormFields.password.name,
-                    decoration: const InputDecoration(labelText: 'Password'),
+                    decoration: InputDecoration(labelText: context.strings.password),
                   ),
                   ElevatedButton(
-                    onPressed: cubit.signIn,
-                    child: const Text('Sign In'),
+                    onPressed: () => cubit.signIn(),
+                    child: Text(context.strings.sign_in),
                   ),
-                  if (state.requestState == RequestState.loading) const CircularProgressIndicator(),
-                  if (state.requestState == RequestState.error) Text(state.errorMessage.toString()),
+                  const SizedBox(height: 16),
+                  TextButton(
+                    onPressed: () => context.navigator.goToSignUp(),
+                    child: Text(context.strings.sign_up),
+                  ),
                 ],
               ),
             ),

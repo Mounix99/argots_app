@@ -39,9 +39,7 @@ class AgrostRouter {
         redirect: (context, state) {
           final user = supabase.client.auth.currentUser;
 
-          if ((state.matchedLocation == state.namedLocation(Routes.splash.name)) ||
-              (state.matchedLocation == state.namedLocation(Routes.signUp.name)) ||
-              (state.matchedLocation == state.namedLocation(Routes.signIn.name))) {
+          if (state.matchedLocation == state.namedLocation(Routes.splash.name)) {
             if (user == null) {
               return state.namedLocation(Routes.signIn.name);
             } else {

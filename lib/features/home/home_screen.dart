@@ -1,3 +1,4 @@
+import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:collection/collection.dart';
@@ -29,10 +30,10 @@ class HomeNavigation extends StatelessWidget {
         // world scenario, the items would most likely be generated from the
         // branches of the shell route, which can be fetched using
         // `navigationShell.route.branches`.
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: Icon(Ionicons.map), label: "Fields"),
-          BottomNavigationBarItem(icon: Icon(Ionicons.leaf), label: "Plants"),
-          BottomNavigationBarItem(icon: Icon(Ionicons.person), label: "Profile"),
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(icon: const Icon(Ionicons.map), label: context.strings.fields),
+          BottomNavigationBarItem(icon: const Icon(Ionicons.leaf), label: context.strings.plants),
+          BottomNavigationBarItem(icon: const Icon(Ionicons.person), label: context.strings.profile),
         ],
         currentIndex: navigationShell.currentIndex,
         onTap: (int index) => _onTap(context, index),
