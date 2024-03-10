@@ -38,4 +38,6 @@ class PlantModel {
       required this.stagesId});
 
   Map<String, dynamic> toJson() => _$PlantModelToJson(this);
+
+  factory PlantModel.fromJson(Map<String, dynamic> json) => _$PlantModelFromJson(json);
 }

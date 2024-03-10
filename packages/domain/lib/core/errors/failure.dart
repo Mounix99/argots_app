@@ -1,12 +1,28 @@
 import "package:equatable/equatable.dart";
 
 sealed class Failure extends Equatable {
-  const Failure();
+  const Failure(this.error);
+
+  final dynamic error;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [error];
 }
 
-class RemoteSourceFailure extends Failure {}
+class RemoteSourceFailure extends Failure {
+  final dynamic remoteError;
 
-class CacheFailure extends Failure {}
+  const RemoteSourceFailure({this.remoteError}) : super(remoteError);
+
+  @override
+  List<Object> get props => [remoteError];
+}
+
+class CacheFailure extends Failure {
+  final dynamic cacheError;
+
+  const CacheFailure(this.cacheError) : super(cacheError);
+
+  @override
+  List<Object> get props => [cacheError];
+}

@@ -45,11 +45,11 @@ void main() {
 
     test("/Failure/ = should return Failure when adding plant to the repository fails", () async {
       when(mockPlantsRepository.addPlant(plantData: anyNamed("plantData")))
-          .thenAnswer((_) async => Left(RemoteSourceFailure()));
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
       final result = await addPlantUseCase(tPlantModel);
 
-      expect(result, Left(RemoteSourceFailure()));
+      expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.addPlant(plantData: anyNamed("plantData")));
     });
@@ -72,11 +72,11 @@ void main() {
 
     test("/Failure/ = should return Failure when updating plant to the repository fails", () async {
       when(mockPlantsRepository.updatePlant(plantData: tPlantModel, plantId: anyNamed("plantId")))
-          .thenAnswer((_) async => Left(RemoteSourceFailure()));
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
       final result = await updatePlantUseCase((tPlantModel, tPlantId));
 
-      expect(result, Left(RemoteSourceFailure()));
+      expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.updatePlant(plantData: tPlantModel, plantId: anyNamed("plantId")));
     });
@@ -98,11 +98,11 @@ void main() {
 
     test("/Failure/ = should return Failure when deleting plant to the repository fails", () async {
       when(mockPlantsRepository.deletePlant(plantId: anyNamed("plantId")))
-          .thenAnswer((_) async => Left(RemoteSourceFailure()));
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
       final result = await deletePlantUseCase(tPlantId);
 
-      expect(result, Left(RemoteSourceFailure()));
+      expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.deletePlant(plantId: anyNamed("plantId")));
     });
@@ -124,11 +124,11 @@ void main() {
 
     test("/Failure/ = should return Failure when getting plant info from the repository fails", () async {
       when(mockPlantsRepository.getPlantInfo(plantId: anyNamed("plantId")))
-          .thenAnswer((_) async => Left(RemoteSourceFailure()));
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
       final result = await getPlantInfoUseCase(tPlantId);
 
-      expect(result, Left(RemoteSourceFailure()));
+      expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.getPlantInfo(plantId: anyNamed("plantId")));
     });

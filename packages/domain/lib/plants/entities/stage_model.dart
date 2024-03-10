@@ -18,4 +18,8 @@ class StageModel {
       required this.authorDocId,
       this.durationDelta,
       this.stageDocId});
+
+  Map<String, dynamic> toJson() => _$StageModelToJson(this);
+
+  factory StageModel.fromJson(Map<String, dynamic> json) => _$StageModelFromJson(json);
 }

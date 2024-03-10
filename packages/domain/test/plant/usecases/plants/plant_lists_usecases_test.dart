@@ -40,11 +40,11 @@ void main() {
 
     test("/Failure/ = should return Failure when getting list of plants from other users from the repository fails",
         () async {
-      when(mockPlantsRepository.getMarketPlants()).thenAnswer((_) async => Left(RemoteSourceFailure()));
+      when(mockPlantsRepository.getMarketPlants()).thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
       final result = await getMarketPlantsUsecase();
 
-      expect(result, Left(RemoteSourceFailure()));
+      expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.getMarketPlants());
     });
@@ -64,11 +64,11 @@ void main() {
     });
 
     test("/Failure/ = should return Failure when getting list of my plants from the repository fails", () async {
-      when(mockPlantsRepository.getPlantsCreatedByMe()).thenAnswer((_) async => Left(RemoteSourceFailure()));
+      when(mockPlantsRepository.getPlantsCreatedByMe()).thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
       final result = await getListOfMyPlantsUsecase(null);
 
-      expect(result, Left(RemoteSourceFailure()));
+      expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.getPlantsCreatedByMe());
     });
@@ -89,11 +89,12 @@ void main() {
     });
 
     test("/Failure/ = should return Failure when getting my plants from the repository fails", () async {
-      when(mockPlantsRepository.getUserPlants(userId: tPlantId)).thenAnswer((_) async => Left(RemoteSourceFailure()));
+      when(mockPlantsRepository.getUserPlants(userId: tPlantId))
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
       final result = await getUserPlatsUsecase(tPlantId);
 
-      expect(result, Left(RemoteSourceFailure()));
+      expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.getUserPlants(userId: tPlantId));
     });

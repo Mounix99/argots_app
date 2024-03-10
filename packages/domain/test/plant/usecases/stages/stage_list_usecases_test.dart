@@ -36,11 +36,11 @@ void main() {
 
     test("/Failure/ = should return Failure when getting list of stages from the repository fails", () async {
       when(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId")))
-          .thenAnswer((_) async => Left(RemoteSourceFailure()));
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
       final result = await getListOfStagesUsecase(tPlantId);
 
-      expect(result, Left(RemoteSourceFailure()));
+      expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId")));
     });

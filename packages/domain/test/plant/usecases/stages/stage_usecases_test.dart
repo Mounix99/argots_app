@@ -41,11 +41,11 @@ void main() {
 
     test("/Failure/ = should return Failure when adding stage to the repository fails", () async {
       when(mockPlantsRepository.addStage(stageData: anyNamed("stageData")))
-          .thenAnswer((_) async => Left(RemoteSourceFailure()));
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
       final result = await addStageUseCase(tStageModel);
 
-      expect(result, Left(RemoteSourceFailure()));
+      expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.addStage(stageData: anyNamed("stageData")));
     });
@@ -68,11 +68,11 @@ void main() {
 
     test("/Failure/ = should return Failure when updating stage to the repository fails", () async {
       when(mockPlantsRepository.updateStage(stageId: anyNamed("stageId"), stageData: anyNamed("stageData")))
-          .thenAnswer((_) async => Left(RemoteSourceFailure()));
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
       final result = await updateStageUseCase((tStageModel, tStageId));
 
-      expect(result, Left(RemoteSourceFailure()));
+      expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.updateStage(stageId: anyNamed("stageId"), stageData: anyNamed("stageData")));
     });
@@ -94,11 +94,11 @@ void main() {
 
     test("/Failure/ = should return Failure when deleting plant to the repository fails", () async {
       when(mockPlantsRepository.deleteStage(stageId: anyNamed("stageId")))
-          .thenAnswer((_) async => Left(RemoteSourceFailure()));
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
       final result = await deleteStageUseCase(tStageId);
 
-      expect(result, Left(RemoteSourceFailure()));
+      expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.deleteStage(stageId: anyNamed("stageId")));
     });
