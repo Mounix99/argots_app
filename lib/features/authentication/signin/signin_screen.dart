@@ -36,11 +36,18 @@ class SignInScreen extends StatelessWidget {
                 children: [
                   ReactiveTextField(
                       formControlName: SignInFormFields.email.name,
-                      decoration: InputDecoration(labelText: context.strings.email)),
+                      decoration: InputDecoration(labelText: context.strings.email),
+                      validationMessages: {
+                        'required': (control) => context.strings.field_required,
+                        'email': (control) => context.strings.field_incorrect,
+                      }),
                   ReactiveTextField(
-                    formControlName: SignInFormFields.password.name,
-                    decoration: InputDecoration(labelText: context.strings.password),
-                  ),
+                      formControlName: SignInFormFields.password.name,
+                      decoration: InputDecoration(labelText: context.strings.password),
+                      validationMessages: {
+                        'required': (control) => context.strings.field_required,
+                        'minLength': (control) => context.strings.field_incorrect,
+                      }),
                   ElevatedButton(
                     onPressed: () => cubit.signIn(),
                     child: Text(context.strings.sign_in),

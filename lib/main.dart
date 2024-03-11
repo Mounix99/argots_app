@@ -1,3 +1,4 @@
+import 'package:agrost_app/common/theming/agrost_main_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'common/dependency_injection/dependency_injection_service.dart';
@@ -19,6 +20,8 @@ class AgrostApp extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       builder: EasyLoading.init(),
+      theme: AgrostTheming.lightTheme,
+      darkTheme: AgrostTheming.darkTheme,
     );
   }
 }

@@ -34,15 +34,28 @@ class SignUpScreen extends StatelessWidget {
                 child: ListView(
                   children: [
                     ReactiveTextField(
-                        formControlName: SingUpFormFields.email.name,
-                        decoration: InputDecoration(labelText: context.strings.email)),
+                      formControlName: SingUpFormFields.email.name,
+                      decoration: InputDecoration(labelText: context.strings.email),
+                      validationMessages: {
+                        'required': (control) => context.strings.field_required,
+                        'email': (control) => context.strings.field_incorrect,
+                      },
+                    ),
                     ReactiveTextField(
                       formControlName: SingUpFormFields.password.name,
                       decoration: InputDecoration(labelText: context.strings.password),
+                      validationMessages: {
+                        'required': (control) => context.strings.field_required,
+                        'minLength': (control) => context.strings.field_incorrect,
+                      },
                     ),
                     ReactiveTextField(
                       formControlName: SingUpFormFields.confirmPassword.name,
                       decoration: InputDecoration(labelText: context.strings.confirm_password),
+                      validationMessages: {
+                        'required': (control) => context.strings.field_required,
+                        'minLength': (control) => context.strings.field_incorrect,
+                      },
                     ),
                     ElevatedButton(
                       onPressed: () {
