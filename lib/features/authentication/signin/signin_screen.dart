@@ -19,7 +19,7 @@ class SignInScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.strings.sign_in),
       ),
-      body: BlocConsumer<SignInCubit, SupabaseCubitState>(
+      body: BlocConsumer<SignInCubit, SupabaseAuthCubitState>(
         listener: (context, state) {
           if (state.requestState.isSuccess) {
             context.navigator.goToSplash();
@@ -32,7 +32,7 @@ class SignInScreen extends StatelessWidget {
             formGroup: form,
             child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
+              child: ListView(
                 children: [
                   ReactiveTextField(
                       formControlName: SignInFormFields.email.name,

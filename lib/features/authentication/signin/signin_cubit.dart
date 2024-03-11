@@ -5,7 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 enum SignInFormFields { email, password }
 
-class SignInCubit extends SupabaseRequestCubit<AuthResponse?> {
+class SignInCubit extends SupabaseAuthRequestCubit<AuthResponse?> {
   SignInCubit(this._userAuthRepository) : super() {
     form = FormGroup({
       SignInFormFields.email.name: FormControl<String>(validators: [Validators.required, Validators.email]),

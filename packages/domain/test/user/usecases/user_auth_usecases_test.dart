@@ -1,7 +1,9 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/core/errors/failure.dart';
+import 'package:domain/core/success_objects/success_object.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
 import 'package:domain/user/usecases/user_auth_usecases/signin_usecase.dart';
+import 'package:domain/user/usecases/user_auth_usecases/signout_usecase.dart';
 import 'package:domain/user/usecases/user_auth_usecases/signup_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -16,11 +18,13 @@ void main() {
   late MockUserAuthRepository mockUserAuthRepository;
   late SignUpUsecase signUpUseCase;
   late SignInUsecase signInUseCase;
+  late SignOutUsecase signOutUseCase;
 
   setUp(() {
     mockUserAuthRepository = MockUserAuthRepository();
     signUpUseCase = SignUpUsecase(mockUserAuthRepository);
     signInUseCase = SignInUsecase(mockUserAuthRepository);
+    signOutUseCase = SignOutUsecase(mockUserAuthRepository);
   });
 
   group("Domain/User/SignUp", () {
@@ -78,6 +82,28 @@ void main() {
       expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockUserAuthRepository.signInWithEmail(email: anyNamed("email"), password: anyNamed("password")));
+    });
+  });
+
+  group("Domain/User/SignOut", () {
+    test("/Success/ = should sign out user successfully", () async {
+      when(mockUserAuthRepository.signOut()).thenAnswer((_) async => Right(RemoteSourceSuccess()));
+
+      final Either<Failure, Success> result = await signOutUseCase();
+
+      expect(result, Right(RemoteSourceSuccess()));
+
+      verify(mockUserAuthRepository.signOut());
+    });
+
+    test("/Failure/ = should return Failure when signing out user fails", () async {
+      when(mockUserAuthRepository.signOut()).thenAnswer((_) async => const Left(RemoteSourceFailure()));
+
+      final result = await signOutUseCase();
+
+      expect(result, const Left(RemoteSourceFailure()));
+
+      verify(mockUserAuthRepository.signOut());
     });
   });
 }

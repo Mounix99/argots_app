@@ -12,29 +12,29 @@ enum RequestState {
   bool get isInitial => this == RequestState.initial;
 }
 
-class SupabaseCubitState extends Equatable {
+class SupabaseAuthCubitState extends Equatable {
   final RequestState requestState;
   final String? errorMessage;
   final dynamic data;
 
-  const SupabaseCubitState({
+  const SupabaseAuthCubitState({
     required this.requestState,
     this.errorMessage,
     this.data,
   });
 
-  factory SupabaseCubitState.initial() {
-    return const SupabaseCubitState(
+  factory SupabaseAuthCubitState.initial() {
+    return const SupabaseAuthCubitState(
       requestState: RequestState.initial,
     );
   }
 
-  SupabaseCubitState copyWith({
+  SupabaseAuthCubitState copyWith({
     RequestState? requestState,
     String? errorMessage,
     dynamic data,
   }) {
-    return SupabaseCubitState(
+    return SupabaseAuthCubitState(
       requestState: requestState ?? this.requestState,
       errorMessage: errorMessage ?? this.errorMessage,
       data: data ?? this.data,

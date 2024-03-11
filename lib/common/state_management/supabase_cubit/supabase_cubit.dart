@@ -5,8 +5,8 @@ import 'package:domain/core/errors/failure.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class SupabaseRequestCubit<Type> extends Cubit<SupabaseCubitState> {
-  SupabaseRequestCubit() : super(SupabaseCubitState.initial());
+abstract class SupabaseAuthRequestCubit<Type> extends Cubit<SupabaseAuthCubitState> {
+  SupabaseAuthRequestCubit() : super(SupabaseAuthCubitState.initial());
 
   void emitLoading() {
     emit(state.copyWith(requestState: RequestState.loading, data: state.data));
@@ -35,13 +35,12 @@ abstract class SupabaseRequestCubit<Type> extends Cubit<SupabaseCubitState> {
     return request().withProgress().then((result) {
       emit(result.fold(
         (failure) {
-          onSuccess();
-          return state.copyWith(
-              requestState: RequestState.error, errorMessage: failure.error.toString(), data: Left(failure));
+          onFail();
+          return state.copyWith(requestState: RequestState.error, errorMessage: failure.error.toString());
         },
         (data) {
-          onFail();
-          return state.copyWith(requestState: RequestState.success, data: Right(data));
+          onSuccess();
+          return state.copyWith(requestState: RequestState.success, data: state.data);
         },
       ));
       return result;

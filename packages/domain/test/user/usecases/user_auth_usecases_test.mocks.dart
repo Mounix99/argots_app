@@ -7,6 +7,7 @@ import 'dart:async' as _i4;
 
 import 'package:dartz/dartz.dart' as _i2;
 import 'package:domain/core/errors/failure.dart' as _i5;
+import 'package:domain/core/success_objects/success_object.dart' as _i7;
 import 'package:domain/user/repositories/user_auth_repository.dart' as _i3;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:supabase_flutter/supabase_flutter.dart' as _i6;
@@ -121,6 +122,29 @@ class MockUserAuthRepository extends _i1.Mock implements _i3.UserAuthRepository 
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.AuthResponse>>);
+
+  @override
+  _i4.Future<_i2.Either<_i5.Failure, _i7.Success>> signOut() => (super.noSuchMethod(
+        Invocation.method(
+          #signOut,
+          [],
+        ),
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i7.Success>>.value(_FakeEither_0<_i5.Failure, _i7.Success>(
+          this,
+          Invocation.method(
+            #signOut,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, _i7.Success>>.value(_FakeEither_0<_i5.Failure, _i7.Success>(
+          this,
+          Invocation.method(
+            #signOut,
+            [],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, _i7.Success>>);
 }
 
 /// A class which mocks [AuthResponse].

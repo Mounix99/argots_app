@@ -90,7 +90,7 @@ class AgrostRouter {
                 GoRoute(
                   name: Routes.profile.name,
                   path: Routes.profile.path,
-                  builder: (context, state) => const ProfilePage(),
+                  builder: (context, state) => ProfilePage.create(),
                 ),
               ]),
             ],

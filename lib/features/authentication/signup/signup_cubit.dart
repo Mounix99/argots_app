@@ -6,7 +6,7 @@ import '../../../common/state_management/supabase_cubit/supabase_cubit.dart';
 
 enum SingUpFormFields { email, password, confirmPassword }
 
-class SignUpCubit extends SupabaseRequestCubit<AuthResponse?> {
+class SignUpCubit extends SupabaseAuthRequestCubit<AuthResponse?> {
   SignUpCubit(this._userAuthRepository) : super() {
     form = FormGroup({
       SingUpFormFields.email.name: FormControl<String>(validators: [Validators.required, Validators.email]),

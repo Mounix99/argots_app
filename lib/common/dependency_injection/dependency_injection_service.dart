@@ -1,5 +1,7 @@
 import 'package:data/repository_implementation/user_auth_repository_implementation.dart';
+import 'package:data/repository_implementation/user_repository_implementation.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
+import 'package:domain/user/repositories/user_repository.dart';
 import 'package:get_it/get_it.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -21,6 +23,8 @@ class DIService {
   }
 
   static Future<void> _registerRepositories() async {
-    getIt.registerSingleton<UserAuthRepository>(UserAuthRepositoryImplementation(supabase: getIt.get<Supabase>()));
+    getIt.registerLazySingleton<UserAuthRepository>(
+        () => UserAuthRepositoryImplementation(supabase: getIt.get<Supabase>()));
+    getIt.registerLazySingleton<UserRepository>(() => UserRepositoryImplementation(supabase: getIt.get<Supabase>()));
   }
 }

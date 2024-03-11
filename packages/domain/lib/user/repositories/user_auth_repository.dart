@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/core/errors/failure.dart';
+import 'package:domain/core/success_objects/success_object.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract class UserAuthRepository {
@@ -7,4 +8,6 @@ abstract class UserAuthRepository {
       {required String email, required String password, Map<String, dynamic>? data});
 
   Future<Either<Failure, AuthResponse>> signInWithEmail({required String email, required String password});
+
+  Future<Either<Failure, Success>> signOut();
 }

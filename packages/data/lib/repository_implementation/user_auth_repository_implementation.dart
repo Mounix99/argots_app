@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:domain/core/errors/failure.dart';
+import 'package:domain/core/success_objects/success_object.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -30,6 +31,16 @@ class UserAuthRepositoryImplementation implements UserAuthRepository {
         password: password,
       );
       return Right(response);
+    } catch (error) {
+      return Left(RemoteSourceFailure(remoteError: error));
+    }
+  }
+
+  @override
+  Future<Either<Failure, Success>> signOut() async {
+    try {
+      await supabase.client.auth.signOut();
+      return Right(RemoteSourceSuccess());
     } catch (error) {
       return Left(RemoteSourceFailure(remoteError: error));
     }

@@ -18,7 +18,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: Text(context.strings.sign_up)),
-        body: BlocConsumer<SignUpCubit, SupabaseCubitState>(
+        body: BlocConsumer<SignUpCubit, SupabaseAuthCubitState>(
           listener: (context, state) {
             if (state.requestState.isSuccess) {
               context.navigator.goToSplash();
@@ -31,7 +31,7 @@ class SignUpScreen extends StatelessWidget {
               formGroup: form,
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
+                child: ListView(
                   children: [
                     ReactiveTextField(
                         formControlName: SingUpFormFields.email.name,
