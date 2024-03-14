@@ -403,8 +403,8 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
 /// See the documentation for Mockito's code generation for more information.
 class MockPlantModel extends _i1.Mock implements _i7.PlantModel {
   @override
-  int get plantId => (super.noSuchMethod(
-        Invocation.getter(#plantId),
+  int get id => (super.noSuchMethod(
+        Invocation.getter(#id),
         returnValue: 0,
         returnValueForMissingStub: 0,
       ) as int);
@@ -423,29 +423,15 @@ class MockPlantModel extends _i1.Mock implements _i7.PlantModel {
       ) as String);
 
   @override
-  int get authorId => (super.noSuchMethod(
+  String get authorId => (super.noSuchMethod(
         Invocation.getter(#authorId),
-        returnValue: 0,
-        returnValueForMissingStub: 0,
-      ) as int);
-
-  @override
-  List<String> get soilTypes => (super.noSuchMethod(
-        Invocation.getter(#soilTypes),
-        returnValue: <String>[],
-        returnValueForMissingStub: <String>[],
-      ) as List<String>);
-
-  @override
-  String get plantType => (super.noSuchMethod(
-        Invocation.getter(#plantType),
         returnValue: _i9.dummyValue<String>(
           this,
-          Invocation.getter(#plantType),
+          Invocation.getter(#authorId),
         ),
         returnValueForMissingStub: _i9.dummyValue<String>(
           this,
-          Invocation.getter(#plantType),
+          Invocation.getter(#authorId),
         ),
       ) as String);
 
@@ -457,28 +443,28 @@ class MockPlantModel extends _i1.Mock implements _i7.PlantModel {
       ) as bool);
 
   @override
-  DateTime get createDate => (super.noSuchMethod(
-        Invocation.getter(#createDate),
+  DateTime get createdAt => (super.noSuchMethod(
+        Invocation.getter(#createdAt),
         returnValue: _FakeDateTime_1(
           this,
-          Invocation.getter(#createDate),
+          Invocation.getter(#createdAt),
         ),
         returnValueForMissingStub: _FakeDateTime_1(
           this,
-          Invocation.getter(#createDate),
+          Invocation.getter(#createdAt),
         ),
       ) as DateTime);
 
   @override
-  DateTime get lastUpdateDate => (super.noSuchMethod(
-        Invocation.getter(#lastUpdateDate),
+  DateTime get lastUpdateAt => (super.noSuchMethod(
+        Invocation.getter(#lastUpdateAt),
         returnValue: _FakeDateTime_1(
           this,
-          Invocation.getter(#lastUpdateDate),
+          Invocation.getter(#lastUpdateAt),
         ),
         returnValueForMissingStub: _FakeDateTime_1(
           this,
-          Invocation.getter(#lastUpdateDate),
+          Invocation.getter(#lastUpdateAt),
         ),
       ) as DateTime);
 
@@ -494,13 +480,6 @@ class MockPlantModel extends _i1.Mock implements _i7.PlantModel {
           Invocation.getter(#version),
         ),
       ) as String);
-
-  @override
-  List<String> get stagesId => (super.noSuchMethod(
-        Invocation.getter(#stagesId),
-        returnValue: <String>[],
-        returnValueForMissingStub: <String>[],
-      ) as List<String>);
 
   @override
   Map<String, dynamic> toJson() => (super.noSuchMethod(

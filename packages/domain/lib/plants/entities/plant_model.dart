@@ -4,38 +4,32 @@ part 'plant_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class PlantModel {
-  final int plantId;
+  final int id;
   final String title;
   final String? description;
-  final int authorId;
-  final int? stagesLength;
-  final List<String> soilTypes;
-  final List<String>? usesByUsersId;
-  final String plantType;
+  final String authorId;
+  final Iterable<String>? soilType;
+  final List<String>? usedBy;
+  final Iterable<String>? plantType;
   final bool public;
-  final int? timesAddedByUsers;
-  final DateTime createDate;
-  final DateTime lastUpdateDate;
+  final DateTime createdAt;
+  final DateTime lastUpdateAt;
   final String version;
-  final String? photoPath;
-  final List<String> stagesId;
+  final String? photoUrl;
 
   PlantModel(
-      {required this.plantId,
+      {required this.id,
       required this.title,
       this.description,
       required this.authorId,
-      this.stagesLength,
-      required this.soilTypes,
-      this.usesByUsersId,
-      required this.plantType,
+      this.soilType,
+      this.usedBy,
+      this.plantType,
       required this.public,
-      this.timesAddedByUsers,
-      required this.createDate,
-      required this.lastUpdateDate,
+      required this.createdAt,
+      required this.lastUpdateAt,
       required this.version,
-      this.photoPath,
-      required this.stagesId});
+      this.photoUrl});
 
   Map<String, dynamic> toJson() => _$PlantModelToJson(this);
 

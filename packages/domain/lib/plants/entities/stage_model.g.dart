@@ -7,19 +7,23 @@ part of 'stage_model.dart';
 // **************************************************************************
 
 StageModel _$StageModelFromJson(Map<String, dynamic> json) => StageModel(
-      plantDocId: json['plant_doc_id'] as String,
+      id: json['id'] as int,
       title: json['title'] as String,
       description: json['description'] as String?,
-      authorDocId: json['author_doc_id'] as String,
-      durationDelta: json['duration_delta'] as int?,
-      stageDocId: json['stage_doc_id'] as String?,
+      createdAt: DateTime.parse(json['created_at'] as String),
+      lastUpdateAt: DateTime.parse(json['last_update_at'] as String),
+      plantId: json['plant_id'] as int,
+      authorId: json['author_id'] as String,
+      duration: json['duration'] as int,
     );
 
 Map<String, dynamic> _$StageModelToJson(StageModel instance) => <String, dynamic>{
-      'plant_doc_id': instance.plantDocId,
+      'id': instance.id,
       'title': instance.title,
       'description': instance.description,
-      'author_doc_id': instance.authorDocId,
-      'duration_delta': instance.durationDelta,
-      'stage_doc_id': instance.stageDocId,
+      'created_at': instance.createdAt.toIso8601String(),
+      'last_update_at': instance.lastUpdateAt.toIso8601String(),
+      'plant_id': instance.plantId,
+      'author_id': instance.authorId,
+      'duration': instance.duration,
     };
