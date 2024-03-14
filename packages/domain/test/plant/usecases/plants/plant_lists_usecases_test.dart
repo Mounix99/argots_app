@@ -50,53 +50,56 @@ void main() {
     });
   });
 
-  group("Domain/Plant/Get_my_plants", () {
+  group("Domain/Plant/Get_plants_created_by_user", () {
     const List<PlantModel> tPlantModelList = [];
 
-    test("/Success/ = should get list of my plants from the repository", () async {
-      when(mockPlantsRepository.getPlantsCreatedByMe()).thenAnswer((_) async => const Right(tPlantModelList));
+    test("/Success/ = should get list of plants created by user from the repository", () async {
+      when(mockPlantsRepository.getPlantsCreatedByUser(userId: anyNamed("userId")))
+          .thenAnswer((_) async => const Right(tPlantModelList));
 
-      final result = await getListOfMyPlantsUsecase(null);
+      final result = await getListOfMyPlantsUsecase("");
 
       expect(result, const Right(tPlantModelList));
 
-      verify(mockPlantsRepository.getPlantsCreatedByMe());
+      verify(mockPlantsRepository.getPlantsCreatedByUser(userId: anyNamed("userId")));
     });
 
-    test("/Failure/ = should return Failure when getting list of my plants from the repository fails", () async {
-      when(mockPlantsRepository.getPlantsCreatedByMe()).thenAnswer((_) async => const Left(RemoteSourceFailure()));
+    test("/Failure/ = should return Failure when getting list of plants created by user from the repository fails",
+        () async {
+      when(mockPlantsRepository.getPlantsCreatedByUser(userId: anyNamed("userId")))
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await getListOfMyPlantsUsecase(null);
+      final result = await getListOfMyPlantsUsecase("");
 
       expect(result, const Left(RemoteSourceFailure()));
 
-      verify(mockPlantsRepository.getPlantsCreatedByMe());
+      verify(mockPlantsRepository.getPlantsCreatedByUser(userId: anyNamed("userId")));
     });
   });
 
   group("Domain/Plant/Get_user_plants", () {
     const List<PlantModel> tPlantModelList = [];
-    const tPlantId = 1;
 
     test("/Success/ = should get my plants from the repository", () async {
-      when(mockPlantsRepository.getUserPlants(userId: tPlantId)).thenAnswer((_) async => const Right(tPlantModelList));
+      when(mockPlantsRepository.getUserPlants(userId: anyNamed("userId")))
+          .thenAnswer((_) async => const Right(tPlantModelList));
 
-      final result = await getUserPlatsUsecase(tPlantId);
+      final result = await getUserPlatsUsecase("");
 
       expect(result, const Right(tPlantModelList));
 
-      verify(mockPlantsRepository.getUserPlants(userId: tPlantId));
+      verify(mockPlantsRepository.getUserPlants(userId: anyNamed("userId")));
     });
 
     test("/Failure/ = should return Failure when getting my plants from the repository fails", () async {
-      when(mockPlantsRepository.getUserPlants(userId: tPlantId))
+      when(mockPlantsRepository.getUserPlants(userId: anyNamed("userId")))
           .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await getUserPlatsUsecase(tPlantId);
+      final result = await getUserPlatsUsecase("");
 
       expect(result, const Left(RemoteSourceFailure()));
 
-      verify(mockPlantsRepository.getUserPlants(userId: tPlantId));
+      verify(mockPlantsRepository.getUserPlants(userId: anyNamed("userId")));
     });
   });
 }

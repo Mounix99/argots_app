@@ -12,9 +12,9 @@ abstract class PlantsRepository {
 
   Future<Either<Failure, Success>> deletePlant({required int plantId});
 
-  Future<Either<Failure, List<PlantModel>>> getPlantsCreatedByMe({List<int>? plantIds});
+  Future<Either<Failure, List<PlantModel>>> getPlantsCreatedByUser({required String userId});
 
-  Future<Either<Failure, List<PlantModel>>> getUserPlants({required int userId});
+  Future<Either<Failure, List<PlantModel>>> getUserPlants({required String userId});
 
   Future<Either<Failure, List<PlantModel>>> getMarketPlants();
 
