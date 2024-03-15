@@ -9,7 +9,7 @@ class ProfilePage extends StatelessWidget {
 
   static Widget create() {
     return BlocProvider(
-      create: (context) => ProfileCubit(DIService.get(), DIService.get()),
+      create: (context) => ProfileCubit(DIService.get()),
       child: const ProfilePage(),
     );
   }
@@ -27,21 +27,17 @@ class ProfilePage extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          final data = state.user;
-          if (data != null) {
-            return Center(
-              child: ListView(
-                children: [
-                  Text(data.email ?? "", textAlign: TextAlign.center),
-                  TextButton(
-                    onPressed: () => context.read<ProfileCubit>().signOut(),
-                    child: Text(context.strings.sign_out),
-                  ),
-                ],
-              ),
-            );
-          }
-          return const CircularProgressIndicator();
+          return Center(
+            child: ListView(
+              children: [
+                Text(context.user?.email ?? "", textAlign: TextAlign.center),
+                TextButton(
+                  onPressed: () => context.read<ProfileCubit>().signOut(),
+                  child: Text(context.strings.sign_out),
+                ),
+              ],
+            ),
+          );
         },
       ),
     );

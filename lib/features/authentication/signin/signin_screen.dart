@@ -22,6 +22,7 @@ class SignInScreen extends StatelessWidget {
       body: BlocConsumer<SignInCubit, SupabaseAuthCubitState>(
         listener: (context, state) {
           if (state.requestState.isSuccess) {
+            context.authCubit.getUser();
             context.navigator.goToSplash();
           }
         },
