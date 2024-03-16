@@ -9,5 +9,7 @@ abstract class UserAuthRepository {
 
   Future<Either<Failure, AuthResponse>> signInWithEmail({required String email, required String password});
 
+  Future<Either<Failure, AuthResponse>> signInWithToken();
+
   Future<Either<Failure, Success>> signOut();
 }

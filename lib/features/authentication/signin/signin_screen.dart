@@ -1,10 +1,11 @@
 import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
-import 'package:agrost_app/common/state_management/supabase_cubit/supabase_cubit_state.dart';
 import 'package:agrost_app/features/authentication/signin/signin_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reactive_forms/reactive_forms.dart';
+
+import '../../../common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key});

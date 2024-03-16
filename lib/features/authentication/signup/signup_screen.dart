@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
-import '../../../common/state_management/supabase_cubit/supabase_cubit_state.dart';
+import '../../../common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({super.key});

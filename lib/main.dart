@@ -17,12 +17,12 @@ class AgrostApp extends StatelessWidget {
   const AgrostApp({super.key});
 
   static Widget create() {
-    return BlocProvider(create: (context) => AuthCubit(DIService.get()), child: const AgrostApp());
+    return BlocProvider(create: (context) => AuthCubit(DIService.get(), DIService.get()), child: const AgrostApp());
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
+    return BlocBuilder<AuthCubit, AuthCubitState>(
       builder: (_, __) => MaterialApp.router(
         routerConfig: AgrostRouter(DIService.get()).router,
         localizationsDelegates: AppLocalizations.localizationsDelegates,

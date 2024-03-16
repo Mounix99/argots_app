@@ -124,6 +124,30 @@ class MockUserAuthRepository extends _i1.Mock implements _i3.UserAuthRepository 
       ) as _i4.Future<_i2.Either<_i5.Failure, _i6.AuthResponse>>);
 
   @override
+  _i4.Future<_i2.Either<_i5.Failure, _i6.AuthResponse>> signInWithToken() => (super.noSuchMethod(
+        Invocation.method(
+          #signInWithToken,
+          [],
+        ),
+        returnValue:
+            _i4.Future<_i2.Either<_i5.Failure, _i6.AuthResponse>>.value(_FakeEither_0<_i5.Failure, _i6.AuthResponse>(
+          this,
+          Invocation.method(
+            #signInWithToken,
+            [],
+          ),
+        )),
+        returnValueForMissingStub:
+            _i4.Future<_i2.Either<_i5.Failure, _i6.AuthResponse>>.value(_FakeEither_0<_i5.Failure, _i6.AuthResponse>(
+          this,
+          Invocation.method(
+            #signInWithToken,
+            [],
+          ),
+        )),
+      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.AuthResponse>>);
+
+  @override
   _i4.Future<_i2.Either<_i5.Failure, _i7.Success>> signOut() => (super.noSuchMethod(
         Invocation.method(
           #signOut,

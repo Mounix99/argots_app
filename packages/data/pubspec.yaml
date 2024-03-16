@@ -11,6 +11,7 @@ dependencies:
   flutter:
     sdk: flutter
   supabase_flutter: ^2.3.4
+  shared_preferences: ^2.2.2
   dartz: ^0.10.1
 
   # inner packages

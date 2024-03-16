@@ -2,7 +2,7 @@ import 'package:domain/user/repositories/user_auth_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../common/state_management/supabase_cubit/supabase_cubit_state.dart';
+import '../../../common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
 
 class ProfileCubit extends Cubit<ProfileState> {
   final UserAuthRepository _userAuthRepository;

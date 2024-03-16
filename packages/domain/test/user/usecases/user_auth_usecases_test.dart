@@ -3,6 +3,7 @@ import 'package:domain/core/errors/failure.dart';
 import 'package:domain/core/success_objects/success_object.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
 import 'package:domain/user/usecases/user_auth_usecases/signin_usecase.dart';
+import 'package:domain/user/usecases/user_auth_usecases/signin_with_token_usecase.dart';
 import 'package:domain/user/usecases/user_auth_usecases/signout_usecase.dart';
 import 'package:domain/user/usecases/user_auth_usecases/signup_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,12 +20,14 @@ void main() {
   late SignUpUsecase signUpUseCase;
   late SignInUsecase signInUseCase;
   late SignOutUsecase signOutUseCase;
+  late SignInWithTokenUsecase signInWithTokenUsecase;
 
   setUp(() {
     mockUserAuthRepository = MockUserAuthRepository();
     signUpUseCase = SignUpUsecase(mockUserAuthRepository);
     signInUseCase = SignInUsecase(mockUserAuthRepository);
     signOutUseCase = SignOutUsecase(mockUserAuthRepository);
+    signInWithTokenUsecase = SignInWithTokenUsecase(mockUserAuthRepository);
   });
 
   group("Domain/User/SignUp", () {
@@ -104,6 +107,30 @@ void main() {
       expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockUserAuthRepository.signOut());
+    });
+  });
+
+  group("Domain/User/SignInWithToken", () {
+    final authResponse = AuthResponse();
+
+    test("/Success/ = should sign in user with token successfully", () async {
+      when(mockUserAuthRepository.signInWithToken()).thenAnswer((_) async => Right(authResponse));
+
+      final Either<Failure, AuthResponse> result = await signInWithTokenUsecase();
+
+      expect(result, Right(authResponse));
+
+      verify(mockUserAuthRepository.signInWithToken());
+    });
+
+    test("/Failure/ = should return Failure when signing in user with token fails", () async {
+      when(mockUserAuthRepository.signInWithToken()).thenAnswer((_) async => const Left(RemoteSourceFailure()));
+
+      final result = await signInWithTokenUsecase();
+
+      expect(result, const Left(RemoteSourceFailure()));
+
+      verify(mockUserAuthRepository.signInWithToken());
     });
   });
 }

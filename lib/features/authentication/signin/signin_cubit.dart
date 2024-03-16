@@ -1,7 +1,8 @@
-import 'package:agrost_app/common/state_management/supabase_cubit/supabase_cubit.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import '../../../common/state_management/supabase_auth_cubit/supabase_auth_cubit.dart';
 
 enum SignInFormFields { email, password }
 

@@ -1,5 +1,5 @@
 import 'package:agrost_app/common/extensions/future_extensions.dart';
-import 'package:agrost_app/common/state_management/supabase_cubit/supabase_cubit_state.dart';
+import 'package:agrost_app/common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
 import 'package:dartz/dartz.dart';
 import 'package:domain/core/errors/failure.dart';
 import 'package:flutter/cupertino.dart';

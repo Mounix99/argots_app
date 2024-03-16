@@ -5,10 +5,7 @@ extension Dialog<T> on Future<T> {
     EasyLoading.show(status: status, dismissOnTap: dismissOnTap);
     return timeout(
       const Duration(seconds: 30),
-    ).onError((error, stackTrace) {
-      EasyLoading.showError(error.toString());
-      return Future.value();
-    }).whenComplete(EasyLoading.dismiss);
+    ).whenComplete(EasyLoading.dismiss);
   }
 }
 
