@@ -1,5 +1,7 @@
+import 'package:agrost_app/auth_cubit.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:collection/collection.dart';
 import 'package:ionicons/ionicons.dart';
@@ -20,23 +22,30 @@ class HomeNavigation extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: AnimatedBranchContainer(
-        currentIndex: navigationShell.currentIndex,
-        children: children,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        // Here, the items of BottomNavigationBar are hard coded. In a real
-        // world scenario, the items would most likely be generated from the
-        // branches of the shell route, which can be fetched using
-        // `navigationShell.route.branches`.
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: const Icon(Ionicons.map), label: context.strings.fields),
-          BottomNavigationBarItem(icon: const Icon(Ionicons.leaf), label: context.strings.plants),
-          BottomNavigationBarItem(icon: const Icon(Ionicons.person), label: context.strings.profile),
-        ],
-        currentIndex: navigationShell.currentIndex,
-        onTap: (int index) => _onTap(context, index),
+    return BlocListener<AuthCubit, AuthCubitState>(
+      listener: (context, state) {
+        if (state.user == null && !state.isLoading) {
+          context.read<AuthCubit>().getUser();
+        }
+      },
+      child: Scaffold(
+        body: AnimatedBranchContainer(
+          currentIndex: navigationShell.currentIndex,
+          children: children,
+        ),
+        bottomNavigationBar: BottomNavigationBar(
+          // Here, the items of BottomNavigationBar are hard coded. In a real
+          // world scenario, the items would most likely be generated from the
+          // branches of the shell route, which can be fetched using
+          // `navigationShell.route.branches`.
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(icon: const Icon(Ionicons.map), label: context.strings.fields),
+            BottomNavigationBarItem(icon: const Icon(Ionicons.leaf), label: context.strings.plants),
+            BottomNavigationBarItem(icon: const Icon(Ionicons.person), label: context.strings.profile),
+          ],
+          currentIndex: navigationShell.currentIndex,
+          onTap: (int index) => _onTap(context, index),
+        ),
       ),
     );
   }

@@ -63,7 +63,7 @@ class PlantRepositoryImplementation implements PlantsRepository {
   }
 
   @override
-  Future<Either<Failure, List<PlantModel>>> getMarketPlants() async {
+  Future<Either<Failure, List<PlantModel>>> getMarketPlants({required int page}) async {
     try {
       final response = await supabase.client.from(_plantTable).select().eq('public', true);
       if (response.isNotEmpty) {
@@ -78,7 +78,7 @@ class PlantRepositoryImplementation implements PlantsRepository {
   }
 
   @override
-  Future<Either<Failure, List<PlantModel>>> getPlantsCreatedByUser({required String userId}) async {
+  Future<Either<Failure, List<PlantModel>>> getPlantsCreatedByUser({required String userId, required int page}) async {
     try {
       final response = await supabase.client.from(_plantTable).select().eq('author_id', userId);
       if (response.isNotEmpty) {
@@ -93,7 +93,7 @@ class PlantRepositoryImplementation implements PlantsRepository {
   }
 
   @override
-  Future<Either<Failure, List<PlantModel>>> getUserPlants({required String userId}) async {
+  Future<Either<Failure, List<PlantModel>>> getUserPlants({required String userId, required int page}) async {
     try {
       final response = await supabase.client.from(_plantTable).select().contains('used_by', userId);
       if (response.isNotEmpty) {
@@ -139,7 +139,7 @@ class PlantRepositoryImplementation implements PlantsRepository {
   }
 
   @override
-  Future<Either<Failure, List<StageModel>>> getListOfStages({required int plantId}) async {
+  Future<Either<Failure, List<StageModel>>> getListOfStages({required int plantId, required int page}) async {
     try {
       final response = await supabase.client.from(_stageTable).select().eq('plant_id', plantId);
       if (response.isNotEmpty) {

@@ -12,7 +12,11 @@ enum Routes {
   /// Home
   fields('/fields'),
   plants('/plants'),
-  profile('/profile');
+  profile('/profile'),
+
+  /// Plants
+  userPlants('/user_plants'),
+  marketPlace('/market_place');
 
   const Routes(this._path);
 

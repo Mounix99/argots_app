@@ -2,12 +2,18 @@
   "sign_in": "Sign in",
   "sign_out": "Sign out",
   "sign_up": "Sign up",
+
   "fields" : "Fields",
   "plants" : "Plants",
   "profile" : "Profile",
+
+
   "email" : "Email",
   "password" : "Password",
   "confirm_password" : "Confirm password",
   "field_required" : "Required field",
-  "field_incorrect" : "This field is incorrect"
+  "field_incorrect" : "This field is incorrect",
+
+  "my_plants" : "My plants",
+  "plant_market" : "Plant market"
 }

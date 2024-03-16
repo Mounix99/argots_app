@@ -27,79 +27,84 @@ void main() {
 
   group("Domain/Plant/Get_market_plants", () {
     const List<PlantModel> tPlantModelList = [];
+    const page = 1;
 
     test("/Success/ = should get list of plants from other users from the repository", () async {
-      when(mockPlantsRepository.getMarketPlants()).thenAnswer((_) async => const Right(tPlantModelList));
+      when(mockPlantsRepository.getMarketPlants(page: anyNamed("page")))
+          .thenAnswer((_) async => const Right(tPlantModelList));
 
-      final result = await getMarketPlantsUsecase();
+      final result = await getMarketPlantsUsecase(page);
 
       expect(result, const Right(tPlantModelList));
 
-      verify(mockPlantsRepository.getMarketPlants());
+      verify(mockPlantsRepository.getMarketPlants(page: anyNamed("page")));
     });
 
     test("/Failure/ = should return Failure when getting list of plants from other users from the repository fails",
         () async {
-      when(mockPlantsRepository.getMarketPlants()).thenAnswer((_) async => const Left(RemoteSourceFailure()));
+      when(mockPlantsRepository.getMarketPlants(page: anyNamed("page")))
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await getMarketPlantsUsecase();
+      final result = await getMarketPlantsUsecase(page);
 
       expect(result, const Left(RemoteSourceFailure()));
 
-      verify(mockPlantsRepository.getMarketPlants());
+      verify(mockPlantsRepository.getMarketPlants(page: anyNamed("page")));
     });
   });
 
   group("Domain/Plant/Get_plants_created_by_user", () {
     const List<PlantModel> tPlantModelList = [];
+    const page = 1;
 
     test("/Success/ = should get list of plants created by user from the repository", () async {
-      when(mockPlantsRepository.getPlantsCreatedByUser(userId: anyNamed("userId")))
+      when(mockPlantsRepository.getPlantsCreatedByUser(userId: anyNamed("userId"), page: anyNamed("page")))
           .thenAnswer((_) async => const Right(tPlantModelList));
 
-      final result = await getListOfMyPlantsUsecase("");
+      final result = await getListOfMyPlantsUsecase((id: "", page: page));
 
       expect(result, const Right(tPlantModelList));
 
-      verify(mockPlantsRepository.getPlantsCreatedByUser(userId: anyNamed("userId")));
+      verify(mockPlantsRepository.getPlantsCreatedByUser(userId: anyNamed("userId"), page: anyNamed("page")));
     });
 
     test("/Failure/ = should return Failure when getting list of plants created by user from the repository fails",
         () async {
-      when(mockPlantsRepository.getPlantsCreatedByUser(userId: anyNamed("userId")))
+      when(mockPlantsRepository.getPlantsCreatedByUser(userId: anyNamed("userId"), page: anyNamed("page")))
           .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await getListOfMyPlantsUsecase("");
+      final result = await getListOfMyPlantsUsecase((id: "", page: page));
 
       expect(result, const Left(RemoteSourceFailure()));
 
-      verify(mockPlantsRepository.getPlantsCreatedByUser(userId: anyNamed("userId")));
+      verify(mockPlantsRepository.getPlantsCreatedByUser(userId: anyNamed("userId"), page: anyNamed("page")));
     });
   });
 
   group("Domain/Plant/Get_user_plants", () {
     const List<PlantModel> tPlantModelList = [];
+    const page = 1;
 
     test("/Success/ = should get my plants from the repository", () async {
-      when(mockPlantsRepository.getUserPlants(userId: anyNamed("userId")))
+      when(mockPlantsRepository.getUserPlants(userId: anyNamed("userId"), page: anyNamed("page")))
           .thenAnswer((_) async => const Right(tPlantModelList));
 
-      final result = await getUserPlatsUsecase("");
+      final result = await getUserPlatsUsecase((id: "", page: page));
 
       expect(result, const Right(tPlantModelList));
 
-      verify(mockPlantsRepository.getUserPlants(userId: anyNamed("userId")));
+      verify(mockPlantsRepository.getUserPlants(userId: anyNamed("userId"), page: anyNamed("page")));
     });
 
     test("/Failure/ = should return Failure when getting my plants from the repository fails", () async {
-      when(mockPlantsRepository.getUserPlants(userId: anyNamed("userId")))
+      when(mockPlantsRepository.getUserPlants(userId: anyNamed("userId"), page: anyNamed("page")))
           .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await getUserPlatsUsecase("");
+      final result = await getUserPlatsUsecase((id: "", page: page));
 
       expect(result, const Left(RemoteSourceFailure()));
 
-      verify(mockPlantsRepository.getUserPlants(userId: anyNamed("userId")));
+      verify(mockPlantsRepository.getUserPlants(userId: anyNamed("userId"), page: anyNamed("page")));
     });
   });
 }

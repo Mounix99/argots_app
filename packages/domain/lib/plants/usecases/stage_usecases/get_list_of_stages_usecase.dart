@@ -5,13 +5,15 @@ import '../../../core/usecase_contract.dart';
 import '../../entities/stage_model.dart';
 import '../../repositories/plant_repository.dart';
 
-class GetListOfStagesUsecase implements Usecase<List<StageModel>, int> {
+typedef GetListOfStagesParams = ({int plantId, int page});
+
+class GetListOfStagesUsecase implements Usecase<List<StageModel>, GetListOfStagesParams> {
   final PlantsRepository _plantsRepository;
 
   GetListOfStagesUsecase(this._plantsRepository);
 
   @override
-  Future<Either<Failure, List<StageModel>>> call(int plantId) async {
-    return await _plantsRepository.getListOfStages(plantId: plantId);
+  Future<Either<Failure, List<StageModel>>> call(GetListOfStagesParams params) async {
+    return await _plantsRepository.getListOfStages(plantId: params.plantId, page: params.page);
   }
 }

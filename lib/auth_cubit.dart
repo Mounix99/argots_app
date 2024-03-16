@@ -14,6 +14,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
     signInWithToken();
   }
 
+  /// Fetches the user from the repository and emits the state accordingly.
   Future<void> getUser() async {
     emit(state.copyWith(fetchUserState: RequestState.loading));
     final user = await _userRepository.getUser();
@@ -21,6 +22,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
         (user) => emit(state.copyWith(fetchUserState: RequestState.success, user: user)));
   }
 
+  /// Signs in with the token and emits the state accordingly.
   Future<void> signInWithToken() async {
     emit(state.copyWith(loginWithTokenState: RequestState.loading));
     final response = await _userAuthRepository.signInWithToken();
@@ -55,6 +57,8 @@ class AuthCubitState extends Equatable {
       loginWithTokenState: RequestState.initial,
     );
   }
+
+  bool get isLoading => fetchUserState.isLoading || loginWithTokenState.isLoading;
 
   @override
   List<Object?> get props => [user, fetchUserState, loginWithTokenState, error];

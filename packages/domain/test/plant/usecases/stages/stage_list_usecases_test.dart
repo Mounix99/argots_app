@@ -22,27 +22,28 @@ void main() {
   group("Domain/Plant/Get_list_of_stages", () {
     const List<StageModel> tStageModelList = [];
     const tPlantId = 1;
+    const page = 1;
 
     test("/Success/ = should get list of stages from the repository", () async {
-      when(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId")))
+      when(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId"), page: anyNamed("page")))
           .thenAnswer((_) async => const Right(tStageModelList));
 
-      final result = await getListOfStagesUsecase(tPlantId);
+      final result = await getListOfStagesUsecase((plantId: tPlantId, page: page));
 
       expect(result, const Right(tStageModelList));
 
-      verify(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId")));
+      verify(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId"), page: anyNamed("page")));
     });
 
     test("/Failure/ = should return Failure when getting list of stages from the repository fails", () async {
-      when(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId")))
+      when(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId"), page: anyNamed("page")))
           .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await getListOfStagesUsecase(tPlantId);
+      final result = await getListOfStagesUsecase((plantId: tPlantId, page: page));
 
       expect(result, const Left(RemoteSourceFailure()));
 
-      verify(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId")));
+      verify(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId"), page: anyNamed("page")));
     });
   });
 }

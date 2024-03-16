@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:agrost_app/features/authentication/signin/signin_screen.dart';
 import 'package:agrost_app/features/authentication/signup/signup_screen.dart';
 import 'package:agrost_app/features/home/plants/plants_page.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -11,7 +11,7 @@ import '../../features/home/fileds/fields_page.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/home/profile/profile_page.dart';
 import '../../features/splash/splash_screen.dart';
-import 'navigation_constants.dart';
+import 'argost_navigation_constants.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<AuthState> stream) {
@@ -80,11 +80,24 @@ class AgrostRouter {
                 ),
               ]),
               StatefulShellBranch(routes: [
-                GoRoute(
-                  name: Routes.plants.name,
-                  path: Routes.plants.path,
-                  builder: (context, state) => const PlantsPage(),
-                ),
+                StatefulShellRoute(
+                    builder: (_, __, shell) => shell,
+                    navigatorContainerBuilder: (_, shell, children) => PlantsScreen(shell: shell, children: children),
+                    branches: [
+                      StatefulShellBranch(routes: [
+                        GoRoute(
+                            name: Routes.userPlants.name,
+                            path: Routes.userPlants.path,
+                            builder: (context, state) => const SizedBox()),
+                      ]),
+                      StatefulShellBranch(routes: [
+                        GoRoute(
+                          name: Routes.marketPlace.name,
+                          path: Routes.marketPlace.path,
+                          builder: (context, state) => const SizedBox(),
+                        ),
+                      ]),
+                    ])
               ]),
               StatefulShellBranch(routes: [
                 GoRoute(
