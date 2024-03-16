@@ -12,7 +12,7 @@ class PlantRepositoryImplementation implements PlantsRepository {
 
   final Supabase supabase;
 
-  PlantRepositoryImplementation(this.supabase);
+  PlantRepositoryImplementation({required this.supabase});
 
   /// Plants
   @override
@@ -64,8 +64,11 @@ class PlantRepositoryImplementation implements PlantsRepository {
 
   @override
   Future<Either<Failure, List<PlantModel>>> getMarketPlants({required int page}) async {
+    const count = 20;
+    final offset = (page - 1) * count;
     try {
-      final response = await supabase.client.from(_plantTable).select().eq('public', true);
+      final response =
+          await supabase.client.from(_plantTable).select().eq('public', true).range(offset + 1, offset + 19);
       if (response.isNotEmpty) {
         final plants = response.map((e) => PlantModel.fromJson(e)).toList();
         return Future.value(Right(plants));
@@ -79,8 +82,11 @@ class PlantRepositoryImplementation implements PlantsRepository {
 
   @override
   Future<Either<Failure, List<PlantModel>>> getPlantsCreatedByUser({required String userId, required int page}) async {
+    const count = 20;
+    final offset = (page - 1) * count;
     try {
-      final response = await supabase.client.from(_plantTable).select().eq('author_id', userId);
+      final response =
+          await supabase.client.from(_plantTable).select().eq('author_id', userId).range(offset + 1, offset + 19);
       if (response.isNotEmpty) {
         final plants = response.map((e) => PlantModel.fromJson(e)).toList();
         return Future.value(Right(plants));
@@ -94,8 +100,11 @@ class PlantRepositoryImplementation implements PlantsRepository {
 
   @override
   Future<Either<Failure, List<PlantModel>>> getUserPlants({required String userId, required int page}) async {
+    const count = 20;
+    final offset = (page - 1) * count;
     try {
-      final response = await supabase.client.from(_plantTable).select().contains('used_by', userId);
+      final response =
+          await supabase.client.from(_plantTable).select().eq('used_by', '{$userId}').range(offset + 1, offset + 19);
       if (response.isNotEmpty) {
         final plants = response.map((e) => PlantModel.fromJson(e)).toList();
         return Future.value(Right(plants));
@@ -140,8 +149,11 @@ class PlantRepositoryImplementation implements PlantsRepository {
 
   @override
   Future<Either<Failure, List<StageModel>>> getListOfStages({required int plantId, required int page}) async {
+    const count = 20;
+    final offset = (page - 1) * count;
     try {
-      final response = await supabase.client.from(_stageTable).select().eq('plant_id', plantId);
+      final response =
+          await supabase.client.from(_stageTable).select().eq('plant_id', plantId).range(offset + 1, offset + 19);
       if (response.isNotEmpty) {
         final stages = response.map(StageModel.fromJson).toList();
         return Future.value(Right(stages));

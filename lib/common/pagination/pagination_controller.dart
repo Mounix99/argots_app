@@ -7,9 +7,9 @@ class PaginationScrollController {
   bool stopLoading = false;
   int currentPage = 1;
   double boundaryOffset = 0.5;
-  late Function({int nextPage}) loadAction;
+  late Function(int nextPage) loadAction;
 
-  void init({Function? initAction, required Function({int nextPage}) loadAction}) {
+  void init({Function? initAction, required Function(int nextPage) loadAction}) {
     if (initAction != null) {
       initAction();
     }
@@ -27,7 +27,7 @@ class PaginationScrollController {
       //load more data
       if (scrollController.offset >= scrollController.position.maxScrollExtent * boundaryOffset && !isLoading) {
         isLoading = true;
-        loadAction(nextPage: currentPage + 1).then((shouldStop) {
+        loadAction(currentPage + 1).then((shouldStop) {
           isLoading = false;
           currentPage++;
           boundaryOffset = 1 - 1 / (currentPage * 2);
@@ -41,7 +41,7 @@ class PaginationScrollController {
 }
 
 PaginationScrollController usePaginationScrollController(
-    {Function? initAction, required Function({int nextPage}) loadAction}) {
+    {Function? initAction, required Function(int page) loadAction}) {
   return use(_PaginationScrollControllerHook(initAction: initAction, loadAction: loadAction));
 }
 
@@ -49,7 +49,7 @@ class _PaginationScrollControllerHook extends Hook<PaginationScrollController> {
   const _PaginationScrollControllerHook({this.initAction, required this.loadAction});
 
   final Function? initAction;
-  final Function({int nextPage}) loadAction;
+  final Function(int nextPage) loadAction;
 
   @override
   _PaginationScrollControllerHookState createState() => _PaginationScrollControllerHookState();

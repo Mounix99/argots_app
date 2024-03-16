@@ -9,6 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../features/home/fileds/fields_page.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/home/plants/user_plants_list/user_plants_list_page.dart';
 import '../../features/home/profile/profile_page.dart';
 import '../../features/splash/splash_screen.dart';
 import 'argost_navigation_constants.dart';
@@ -88,7 +89,7 @@ class AgrostRouter {
                         GoRoute(
                             name: Routes.userPlants.name,
                             path: Routes.userPlants.path,
-                            builder: (context, state) => const SizedBox()),
+                            builder: (context, state) => MyPlantsPage.create()),
                       ]),
                       StatefulShellBranch(routes: [
                         GoRoute(

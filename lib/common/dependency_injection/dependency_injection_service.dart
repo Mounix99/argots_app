@@ -1,5 +1,7 @@
+import 'package:data/repository_implementation/plant_repository_implementation.dart';
 import 'package:data/repository_implementation/user_auth_repository_implementation.dart';
 import 'package:data/repository_implementation/user_repository_implementation.dart';
+import 'package:domain/plants/repositories/plant_repository.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
 import 'package:domain/user/repositories/user_repository.dart';
 import 'package:get_it/get_it.dart';
@@ -28,5 +30,6 @@ class DIService {
     getIt.registerLazySingleton<UserAuthRepository>(() => UserAuthRepositoryImplementation(
         supabase: getIt.get<Supabase>(), sharedPreferences: getIt.get<SharedPreferences>()));
     getIt.registerLazySingleton<UserRepository>(() => UserRepositoryImplementation(supabase: getIt.get<Supabase>()));
+    getIt.registerLazySingleton<PlantsRepository>(() => PlantRepositoryImplementation(supabase: getIt.get<Supabase>()));
   }
 }
