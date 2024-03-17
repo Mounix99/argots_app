@@ -5,7 +5,7 @@ import '../../../core/usecase_contract.dart';
 import '../../entities/plant_model.dart';
 import '../../repositories/plant_repository.dart';
 
-typedef GetPlantsCreatedByMeParams = ({String id, int page});
+typedef GetPlantsCreatedByMeParams = ({String id, int page, int size});
 
 class GetPlantsCreatedByMeUsecase implements Usecase<List<PlantModel>, GetPlantsCreatedByMeParams> {
   final PlantsRepository _plantsRepository;
@@ -14,6 +14,6 @@ class GetPlantsCreatedByMeUsecase implements Usecase<List<PlantModel>, GetPlants
 
   @override
   Future<Either<Failure, List<PlantModel>>> call(GetPlantsCreatedByMeParams params) {
-    return _plantsRepository.getPlantsCreatedByUser(userId: params.id, page: params.page);
+    return _plantsRepository.getPlantsCreatedByUser(userId: params.id, page: params.page, size: params.size);
   }
 }

@@ -12,11 +12,13 @@ abstract class PlantsRepository {
 
   Future<Either<Failure, Success>> deletePlant({required int plantId});
 
-  Future<Either<Failure, List<PlantModel>>> getPlantsCreatedByUser({required String userId, required int page});
+  Future<Either<Failure, List<PlantModel>>> getPlantsCreatedByUser(
+      {required String userId, required int page, required int size});
 
-  Future<Either<Failure, List<PlantModel>>> getUserPlants({required String userId, required int page});
+  Future<Either<Failure, List<PlantModel>>> getUserPlants(
+      {required String userId, required int page, required int size});
 
-  Future<Either<Failure, List<PlantModel>>> getMarketPlants({required int page});
+  Future<Either<Failure, List<PlantModel>>> getMarketPlants({required int page, required int size});
 
   Future<Either<Failure, PlantModel>> getPlantInfo({required int plantId});
 
@@ -26,7 +28,8 @@ abstract class PlantsRepository {
 
   Future<Either<Failure, Success>> deleteStage({required int stageId});
 
-  Future<Either<Failure, List<StageModel>>> getListOfStages({required int plantId, required int page});
+  Future<Either<Failure, List<StageModel>>> getListOfStages(
+      {required int plantId, required int page, required int size});
 
   Future<Either<Failure, StageModel>> getStageInfo({required int stageId});
 }

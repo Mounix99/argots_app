@@ -9,6 +9,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../features/home/fileds/fields_page.dart';
 import '../../features/home/home_screen.dart';
+import '../../features/home/plants/plant_market/plant_market_page.dart';
 import '../../features/home/plants/user_plants_list/user_plants_list_page.dart';
 import '../../features/home/profile/profile_page.dart';
 import '../../features/splash/splash_screen.dart';
@@ -95,7 +96,7 @@ class AgrostRouter {
                         GoRoute(
                           name: Routes.marketPlace.name,
                           path: Routes.marketPlace.path,
-                          builder: (context, state) => const SizedBox(),
+                          builder: (context, state) => PlantMarketPage.create(),
                         ),
                       ]),
                     ])

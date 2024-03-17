@@ -23,27 +23,32 @@ void main() {
     const List<StageModel> tStageModelList = [];
     const tPlantId = 1;
     const page = 1;
+    const size = 10;
 
     test("/Success/ = should get list of stages from the repository", () async {
-      when(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId"), page: anyNamed("page")))
+      when(mockPlantsRepository.getListOfStages(
+              plantId: anyNamed("plantId"), page: anyNamed("page"), size: anyNamed("size")))
           .thenAnswer((_) async => const Right(tStageModelList));
 
-      final result = await getListOfStagesUsecase((plantId: tPlantId, page: page));
+      final result = await getListOfStagesUsecase((plantId: tPlantId, page: page, size: size));
 
       expect(result, const Right(tStageModelList));
 
-      verify(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId"), page: anyNamed("page")));
+      verify(mockPlantsRepository.getListOfStages(
+          plantId: anyNamed("plantId"), page: anyNamed("page"), size: anyNamed("size")));
     });
 
     test("/Failure/ = should return Failure when getting list of stages from the repository fails", () async {
-      when(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId"), page: anyNamed("page")))
+      when(mockPlantsRepository.getListOfStages(
+              plantId: anyNamed("plantId"), page: anyNamed("page"), size: anyNamed("size")))
           .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await getListOfStagesUsecase((plantId: tPlantId, page: page));
+      final result = await getListOfStagesUsecase((plantId: tPlantId, page: page, size: size));
 
       expect(result, const Left(RemoteSourceFailure()));
 
-      verify(mockPlantsRepository.getListOfStages(plantId: anyNamed("plantId"), page: anyNamed("page")));
+      verify(mockPlantsRepository.getListOfStages(
+          plantId: anyNamed("plantId"), page: anyNamed("page"), size: anyNamed("size")));
     });
   });
 }

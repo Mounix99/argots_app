@@ -136,6 +136,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
   _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>> getPlantsCreatedByUser({
     required String? userId,
     required int? page,
+    required int? size,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -144,6 +145,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           {
             #userId: userId,
             #page: page,
+            #size: size,
           },
         ),
         returnValue: _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>.value(
@@ -155,6 +157,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {
               #userId: userId,
               #page: page,
+              #size: size,
             },
           ),
         )),
@@ -167,6 +170,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {
               #userId: userId,
               #page: page,
+              #size: size,
             },
           ),
         )),
@@ -176,6 +180,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
   _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>> getUserPlants({
     required String? userId,
     required int? page,
+    required int? size,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -184,6 +189,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           {
             #userId: userId,
             #page: page,
+            #size: size,
           },
         ),
         returnValue: _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>.value(
@@ -195,6 +201,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {
               #userId: userId,
               #page: page,
+              #size: size,
             },
           ),
         )),
@@ -207,18 +214,25 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {
               #userId: userId,
               #page: page,
+              #size: size,
             },
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>> getMarketPlants({required int? page}) =>
+  _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>> getMarketPlants({
+    required int? page,
+    required int? size,
+  }) =>
       (super.noSuchMethod(
         Invocation.method(
           #getMarketPlants,
           [],
-          {#page: page},
+          {
+            #page: page,
+            #size: size,
+          },
         ),
         returnValue: _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>.value(
             _FakeEither_0<_i5.Failure, List<_i7.PlantModel>>(
@@ -226,7 +240,10 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           Invocation.method(
             #getMarketPlants,
             [],
-            {#page: page},
+            {
+              #page: page,
+              #size: size,
+            },
           ),
         )),
         returnValueForMissingStub: _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>.value(
@@ -235,7 +252,10 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           Invocation.method(
             #getMarketPlants,
             [],
-            {#page: page},
+            {
+              #page: page,
+              #size: size,
+            },
           ),
         )),
       ) as _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>);
@@ -363,6 +383,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
   _i4.Future<_i2.Either<_i5.Failure, List<_i8.StageModel>>> getListOfStages({
     required int? plantId,
     required int? page,
+    required int? size,
   }) =>
       (super.noSuchMethod(
         Invocation.method(
@@ -371,6 +392,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           {
             #plantId: plantId,
             #page: page,
+            #size: size,
           },
         ),
         returnValue: _i4.Future<_i2.Either<_i5.Failure, List<_i8.StageModel>>>.value(
@@ -382,6 +404,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {
               #plantId: plantId,
               #page: page,
+              #size: size,
             },
           ),
         )),
@@ -394,6 +417,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {
               #plantId: plantId,
               #page: page,
+              #size: size,
             },
           ),
         )),

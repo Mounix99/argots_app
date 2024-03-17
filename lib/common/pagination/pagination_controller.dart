@@ -1,69 +1,46 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class PaginationScrollController {
-  late ScrollController scrollController;
-  bool isLoading = false;
-  bool stopLoading = false;
-  int currentPage = 1;
-  double boundaryOffset = 0.5;
-  late Function(int nextPage) loadAction;
+PagingController<int, Type> usePaginationScrollController<Type>(
+    {required Future<List<Type>> Function(int page, int size) loadAction}) {
+  return use(_PaginationScrollControllerHook(loadAction: loadAction));
+}
 
-  void init({Function? initAction, required Function(int nextPage) loadAction}) {
-    if (initAction != null) {
-      initAction();
-    }
-    this.loadAction = loadAction;
-    scrollController = ScrollController()..addListener(scrollListener);
-  }
+class _PaginationScrollControllerHook<Type> extends Hook<PagingController<int, Type>> {
+  const _PaginationScrollControllerHook({required this.loadAction, this.size = 20});
 
-  void dispose() {
-    scrollController.removeListener(scrollListener);
-    scrollController.dispose();
-  }
+  final Future<List<Type>> Function(int nextPage, int size) loadAction;
+  final int size;
 
-  void scrollListener() {
-    if (!stopLoading) {
-      //load more data
-      if (scrollController.offset >= scrollController.position.maxScrollExtent * boundaryOffset && !isLoading) {
-        isLoading = true;
-        loadAction(currentPage + 1).then((shouldStop) {
-          isLoading = false;
-          currentPage++;
-          boundaryOffset = 1 - 1 / (currentPage * 2);
-          if (shouldStop == true) {
-            stopLoading = true;
-          }
-        });
+  @override
+  _PaginationScrollControllerHookState<Type> createState() => _PaginationScrollControllerHookState<Type>();
+}
+
+class _PaginationScrollControllerHookState<Type>
+    extends HookState<PagingController<int, Type>, _PaginationScrollControllerHook<Type>> {
+  late final PagingController<int, Type> controller = PagingController<int, Type>(firstPageKey: 1);
+
+  @override
+  void initHook() => controller.addPageRequestListener((pageKey) => _fetchPage(pageKey));
+
+  Future<void> _fetchPage(int pageKey) async {
+    try {
+      final newItems = await hook.loadAction(pageKey, hook.size);
+      final isLastPage = newItems.length < hook.size;
+      if (isLastPage) {
+        controller.appendLastPage(newItems);
+      } else {
+        final nextPageKey = pageKey + newItems.length;
+        controller.appendPage(newItems, nextPageKey);
       }
+    } catch (error) {
+      controller.error = error;
     }
   }
-}
-
-PaginationScrollController usePaginationScrollController(
-    {Function? initAction, required Function(int page) loadAction}) {
-  return use(_PaginationScrollControllerHook(initAction: initAction, loadAction: loadAction));
-}
-
-class _PaginationScrollControllerHook extends Hook<PaginationScrollController> {
-  const _PaginationScrollControllerHook({this.initAction, required this.loadAction});
-
-  final Function? initAction;
-  final Function(int nextPage) loadAction;
 
   @override
-  _PaginationScrollControllerHookState createState() => _PaginationScrollControllerHookState();
-}
-
-class _PaginationScrollControllerHookState
-    extends HookState<PaginationScrollController, _PaginationScrollControllerHook> {
-  late final PaginationScrollController controller = PaginationScrollController();
-
-  @override
-  void initHook() => controller.init(loadAction: hook.loadAction, initAction: hook.initAction);
-
-  @override
-  PaginationScrollController build(BuildContext context) => controller;
+  PagingController<int, Type> build(BuildContext context) => controller;
 
   @override
   void dispose() => controller.dispose();

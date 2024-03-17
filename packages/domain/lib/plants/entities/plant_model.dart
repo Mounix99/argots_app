@@ -13,7 +13,7 @@ class PlantModel {
   final Iterable<String>? plantType;
   final bool public;
   final DateTime createdAt;
-  final DateTime lastUpdateAt;
+  final DateTime? lastUpdateAt;
   final String version;
   final String? photoUrl;
 
