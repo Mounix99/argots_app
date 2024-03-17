@@ -23,6 +23,11 @@ class MyPlantsCubit extends Cubit<MyPlantsState> {
     ));
     return state.plants;
   }
+
+  Future<void> refresh() async {
+    emit(MyPlantsState.initial());
+    getMyPlants();
+  }
 }
 
 class MyPlantsState extends Equatable {

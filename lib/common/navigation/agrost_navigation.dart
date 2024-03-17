@@ -23,9 +23,12 @@ class AgrostNavigator {
   void goToProfile() => context.goNamed(Routes.profile.name);
 
   /// Plants
-  void goToUserPlants() => context.goNamed(Routes.userPlants.name);
+  void goToUserPlants() => context.pushNamed(Routes.userPlants.name);
 
-  void goToMarketPlace() => context.goNamed(Routes.marketPlace.name);
+  void goToMarketPlace() => context.pushNamed(Routes.marketPlace.name);
+
+  /// Plant
+  void goToPlantDetails(String id) => context.pushNamed(Routes.plantDetails.name, pathParameters: {'id': id});
 
   void goBack<T>() => context.pop<T>();
 }

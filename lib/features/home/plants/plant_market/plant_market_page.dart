@@ -50,6 +50,7 @@ class PlantMarketListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+        onTap: () => context.navigator.goToPlantDetails(plant.id.toString()),
         leading: plant.photoUrl != null ? Image.network(plant.photoUrl!) : const Icon(Ionicons.leaf),
         title: Text(plant.title),
         subtitle: plant.description != null ? Text(plant.description!) : null,

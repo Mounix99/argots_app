@@ -16,13 +16,20 @@ enum Routes {
 
   /// Plants
   userPlants('/user_plants'),
-  marketPlace('/market_place');
+  marketPlace('/market_place'),
+
+  /// Plant
+  plantDetails('/plant_details');
 
   const Routes(this._path);
 
   final String _path;
 
   String get path => _path;
+
+  /// Use this method to get the path with parameters
+  /// Example: Routes.plantDetails.pathWithParams(':id')
+  String pathWithParams(String params) => '$_path/$params';
 }
 
 class NavigationKeys {

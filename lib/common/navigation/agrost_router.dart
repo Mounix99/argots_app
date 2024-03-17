@@ -12,6 +12,7 @@ import '../../features/home/home_screen.dart';
 import '../../features/home/plants/plant_market/plant_market_page.dart';
 import '../../features/home/plants/user_plants_list/user_plants_list_page.dart';
 import '../../features/home/profile/profile_page.dart';
+import '../../features/plant/plant_details/added_plant_details_screen.dart';
 import '../../features/splash/splash_screen.dart';
 import 'argost_navigation_constants.dart';
 
@@ -38,6 +39,7 @@ class AgrostRouter {
         initialLocation: Routes.splash.path,
         navigatorKey: NavigationKeys.rootNavigatorKey,
         refreshListenable: GoRouterRefreshStream(supabase.client.auth.onAuthStateChange),
+        debugLogDiagnostics: true,
         redirect: (context, state) {
           final user = supabase.client.auth.currentUser;
 
@@ -51,6 +53,7 @@ class AgrostRouter {
           return null;
         },
         routes: [
+          /// Auth routes
           GoRoute(
             name: Routes.splash.name,
             path: Routes.splash.path,
@@ -66,6 +69,8 @@ class AgrostRouter {
             path: Routes.signIn.path,
             builder: (context, state) => SignInScreen.create(),
           ),
+
+          /// Home routes
           StatefulShellRoute(
             parentNavigatorKey: NavigationKeys.rootNavigatorKey,
             builder: (_, __, shell) => shell,
@@ -99,7 +104,14 @@ class AgrostRouter {
                           builder: (context, state) => PlantMarketPage.create(),
                         ),
                       ]),
-                    ])
+                    ]),
+                TransitionGoRoute(
+                  name: Routes.plantDetails.name,
+                  path: Routes.plantDetails.pathWithParams(":id"),
+                  transitionType: TransitionType.slide,
+                  pageBuilder: (context, state) =>
+                      AddedPlantDetailsScreen.create(plantId: int.parse(state.pathParameters['id']!)),
+                )
               ]),
               StatefulShellBranch(routes: [
                 GoRoute(
@@ -112,4 +124,53 @@ class AgrostRouter {
           )
         ],
       );
+}
+
+enum TransitionType { fade, rotation, size, slide, scale }
+
+class TransitionGoRoute extends GoRoute {
+  TransitionGoRoute({
+    required super.name,
+    required super.path,
+    required TransitionType transitionType,
+    required Widget Function(BuildContext, GoRouterState) pageBuilder,
+  }) : super(
+          pageBuilder: (context, state) => CustomTransitionPage<void>(
+            key: state.pageKey,
+            transitionDuration: const Duration(milliseconds: 300),
+            child: pageBuilder(context, state),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              switch (transitionType) {
+                case TransitionType.fade:
+                  return FadeTransition(
+                    opacity: animation,
+                    child: child,
+                  );
+                case TransitionType.rotation:
+                  return RotationTransition(
+                    turns: animation,
+                    child: child,
+                  );
+                case TransitionType.size:
+                  return SizeTransition(
+                    sizeFactor: animation,
+                    child: child,
+                  );
+                case TransitionType.scale:
+                  return ScaleTransition(
+                    scale: animation,
+                    child: child,
+                  );
+                case TransitionType.slide:
+                  return SlideTransition(
+                    position: Tween<Offset>(
+                      begin: const Offset(1, 0),
+                      end: Offset.zero,
+                    ).animate(animation),
+                    child: child,
+                  );
+              }
+            },
+          ),
+        );
 }

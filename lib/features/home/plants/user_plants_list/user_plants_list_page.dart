@@ -27,11 +27,14 @@ class MyPlantsPage extends HookWidget {
         context.showSnackBar(message: state.errorMessage!);
       }
     }, builder: (context, state) {
-      return PagedListView(
-          pagingController: pagingController,
-          builderDelegate: PagedChildBuilderDelegate<PlantModel>(
-            itemBuilder: (context, plant, index) => MyPlantListItem(plant: plant),
-          ));
+      return RefreshIndicator(
+        onRefresh: context.read<MyPlantsCubit>().refresh,
+        child: PagedListView(
+            pagingController: pagingController,
+            builderDelegate: PagedChildBuilderDelegate<PlantModel>(
+              itemBuilder: (context, plant, index) => MyPlantListItem(plant: plant),
+            )),
+      );
     });
   }
 }
@@ -44,6 +47,7 @@ class MyPlantListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+      onTap: () => context.navigator.goToPlantDetails(plant.id.toString()),
       leading: plant.photoUrl != null ? Image.network(plant.photoUrl!) : const Icon(Ionicons.leaf),
       title: Text(plant.title),
       subtitle: plant.description != null ? Text(plant.description!) : null,
