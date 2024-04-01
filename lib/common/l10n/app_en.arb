@@ -7,7 +7,6 @@
   "plants" : "Plants",
   "profile" : "Profile",
 
-
   "email" : "Email",
   "password" : "Password",
   "confirm_password" : "Confirm password",
@@ -15,5 +14,14 @@
   "field_incorrect" : "This field is incorrect",
 
   "my_plants" : "My plants",
-  "plant_market" : "Plant market"
+  "plant_market" : "Plant market",
+
+  "plant_family" : "Plant family",
+  "soil_type" : "Soil type",
+  "description" : "Description",
+  "plant_published_publicly" : "Plant is published publicly",
+  "growth_stages" : "Growth stages",
+
+  "weeks": "{weeks,plural, =1{{weeks} week}other{{weeks} weeks}}",
+  "days": "{days,plural, =1{{days} day}other{{days} days}}"
 }
