@@ -101,10 +101,10 @@ packages:
     dependency: "direct dev"
     description:
       name: build_runner
-      sha256: "581bacf68f89ec8792f5e5a0b2c4decd1c948e97ce659dc783688c8a88fbec21"
+      sha256: "3ac61a79bfb6f6cc11f693591063a7f19a7af628dc52f141743edac5c16e8c22"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.8"
+    version: "2.4.9"
   build_runner_core:
     dependency: transitive
     description:
@@ -328,10 +328,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_bloc
-      sha256: "87325da1ac757fcc4813e6b34ed5dd61169973871fdf181d6c2109dd6935ece1"
+      sha256: f0ecf6e6eb955193ca60af2d5ca39565a86b8a142452c5b24d96fb477428f4d2
       url: "https://pub.dev"
     source: hosted
-    version: "8.1.4"
+    version: "8.1.5"
   flutter_easyloading:
     dependency: "direct main"
     description:
@@ -352,10 +352,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_lints
-      sha256: e2a421b7e59244faef694ba7b30562e489c2b489866e505074eb005cd7060db7
+      sha256: "9e8c3858111da373efc5aa341de011d9bd23e2c5c5e0c62bccf32438e192d7b1"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.2"
   flutter_localizations:
     dependency: "direct main"
     description: flutter
@@ -431,10 +431,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "7ecb2f391edbca5473db591b48555a8912dde60edd0fb3013bd6743033b2d3f8"
+      sha256: "5ed2687bc961f33a752017ccaa7edead3e5601b28b6376a5901bf24728556b85"
       url: "https://pub.dev"
     source: hosted
-    version: "13.2.1"
+    version: "13.2.2"
   google_fonts:
     dependency: "direct main"
     description:
@@ -567,10 +567,10 @@ packages:
     dependency: "direct main"
     description:
       name: intl
-      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
+      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
       url: "https://pub.dev"
     source: hosted
-    version: "0.18.1"
+    version: "0.19.0"
   io:
     dependency: transitive
     description:
@@ -831,10 +831,10 @@ packages:
     dependency: "direct main"
     description:
       name: reactive_forms
-      sha256: b7d64d8fe45c19f506c762e219f4c6a3bdcfc4842d6fba98f866be5fca75d8e5
+      sha256: "10771b3b8f7df3dc6942928cc55b2abb49c0a5eb56ca8ab1ff4084b2bd968044"
       url: "https://pub.dev"
     source: hosted
-    version: "16.1.1"
+    version: "17.0.0"
   realtime_client:
     dependency: transitive
     description:
