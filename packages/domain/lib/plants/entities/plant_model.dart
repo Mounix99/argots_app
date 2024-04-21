@@ -34,4 +34,34 @@ class PlantModel {
   Map<String, dynamic> toJson() => _$PlantModelToJson(this);
 
   factory PlantModel.fromJson(Map<String, dynamic> json) => _$PlantModelFromJson(json);
+
+  PlantModel copyWith({
+    int? id,
+    String? title,
+    String? description,
+    String? authorId,
+    Iterable<String>? soilType,
+    List<String>? usedBy,
+    Iterable<String>? plantType,
+    bool? public,
+    DateTime? createdAt,
+    DateTime? lastUpdateAt,
+    String? version,
+    String? photoUrl,
+  }) {
+    return PlantModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      authorId: authorId ?? this.authorId,
+      soilType: soilType ?? this.soilType,
+      usedBy: usedBy ?? this.usedBy,
+      plantType: plantType ?? this.plantType,
+      public: public ?? this.public,
+      createdAt: createdAt ?? this.createdAt,
+      lastUpdateAt: lastUpdateAt ?? this.lastUpdateAt,
+      version: version ?? this.version,
+      photoUrl: photoUrl ?? this.photoUrl,
+    );
+  }
 }

@@ -89,7 +89,8 @@ class AgrostRouter {
               StatefulShellBranch(routes: [
                 StatefulShellRoute(
                     builder: (_, __, shell) => shell,
-                    navigatorContainerBuilder: (_, shell, children) => PlantsScreen(shell: shell, children: children),
+                    navigatorContainerBuilder: (_, shell, children) =>
+                        PlantsScreen.create(shell: shell, children: children),
                     branches: [
                       StatefulShellBranch(routes: [
                         GoRoute(

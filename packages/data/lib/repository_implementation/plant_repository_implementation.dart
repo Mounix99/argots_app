@@ -178,4 +178,23 @@ class PlantRepositoryImplementation implements PlantsRepository {
       return Future.value(Left(RemoteSourceFailure(remoteError: e)));
     }
   }
+
+  @override
+  Future<Either<Failure, Success>> addPlantToUser({required int plantId, required String userId}) async {
+    try {
+      final plantResponse = await getPlantInfo(plantId: plantId);
+      if (plantResponse.isRight()) {
+        final plantModel = plantResponse.getOrElse(() => throw Exception());
+        final usedBy = plantModel.usedBy ?? <String>[];
+        if (!usedBy.contains(userId)) {
+          usedBy.add(userId);
+        }
+        return updatePlant(plantId: plantId, plantData: plantModel.copyWith(usedBy: usedBy).toJson());
+      } else {
+        return Future.value(const Left(RemoteSourceFailure(remoteError: 'Plant not found')));
+      }
+    } catch (e) {
+      return Future.value(Left(RemoteSourceFailure(remoteError: e)));
+    }
+  }
 }

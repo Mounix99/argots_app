@@ -9,6 +9,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:ionicons/ionicons.dart';
 
 import '../../../../common/pagination/pagination_controller.dart';
+import '../manage_plants_cubit.dart';
 
 class PlantMarketPage extends HookWidget {
   const PlantMarketPage({super.key});
@@ -22,22 +23,36 @@ class PlantMarketPage extends HookWidget {
     final paginationController = usePaginationScrollController<PlantModel>(
       loadAction: context.read<PlantMarketCubit>().getMarketPlants,
     );
-    return BlocConsumer<PlantMarketCubit, PlantMarketState>(
-      listener: (context, state) {
-        if (state.plantMarketRequestState.isError && state.errorMessage != null) {
-          context.showSnackBar(message: state.errorMessage!);
-        }
-      },
-      builder: (context, state) {
-        return RefreshIndicator(
-            onRefresh: context.read<PlantMarketCubit>().refresh,
-            child: PagedListView<int, PlantModel>(
-              pagingController: paginationController,
-              builderDelegate: PagedChildBuilderDelegate<PlantModel>(
-                itemBuilder: (context, plant, index) => PlantMarketListItem(plant: plant),
-              ),
-            ));
-      },
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<PlantMarketCubit, PlantMarketState>(
+          listener: (context, state) {
+            if (state.plantMarketRequestState.isError && state.errorMessage != null) {
+              context.showSnackBar(message: state.errorMessage!);
+            }
+          },
+        ),
+        BlocListener<ManagePlantsCubit, ManagePlantsState>(
+          listener: (context, state) {
+            if (state.addPlantToUserRequestState.isSuccess || state.removePlantFromUserRequestState.isSuccess) {
+              context.read<PlantMarketCubit>().refresh();
+              context.read<ManagePlantsCubit>().refresh();
+            }
+          },
+        ),
+      ],
+      child: BlocBuilder<PlantMarketCubit, PlantMarketState>(
+        builder: (context, state) {
+          return RefreshIndicator(
+              onRefresh: context.read<PlantMarketCubit>().refresh,
+              child: PagedListView<int, PlantModel>(
+                pagingController: paginationController,
+                builderDelegate: PagedChildBuilderDelegate<PlantModel>(
+                  itemBuilder: (context, plant, index) => PlantMarketListItem(plant: plant),
+                ),
+              ));
+        },
+      ),
     );
   }
 }
@@ -55,10 +70,12 @@ class PlantMarketListItem extends StatelessWidget {
         title: Text(plant.title),
         subtitle: plant.description != null ? Text(plant.description!) : null,
         trailing: plant.usedBy?.contains(context.user!.id) == true
-            ? IconButton(icon: const Icon(Ionicons.checkmark_done), onPressed: () {})
+            ? IconButton(
+                icon: const Icon(Ionicons.checkmark_done),
+                onPressed: () => context.read<ManagePlantsCubit>().removePlantFromUser(plant.id))
             : IconButton(
                 icon: const Icon(Ionicons.add),
-                onPressed: () => context.read<PlantMarketCubit>().addPlantToUser(plant, context.user!.id),
+                onPressed: () => context.read<ManagePlantsCubit>().addPlantToUser(plant.id),
               ));
   }
 }

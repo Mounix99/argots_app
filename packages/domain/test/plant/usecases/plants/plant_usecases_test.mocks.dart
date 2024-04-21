@@ -3,14 +3,14 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i5;
 
 import 'package:dartz/dartz.dart' as _i2;
-import 'package:domain/core/errors/failure.dart' as _i5;
-import 'package:domain/core/success_objects/success_object.dart' as _i6;
-import 'package:domain/plants/entities/plant_model.dart' as _i7;
+import 'package:domain/core/errors/failure.dart' as _i6;
+import 'package:domain/core/success_objects/success_object.dart' as _i7;
+import 'package:domain/plants/entities/plant_model.dart' as _i3;
 import 'package:domain/plants/entities/stage_model.dart' as _i8;
-import 'package:domain/plants/repositories/plant_repository.dart' as _i3;
+import 'package:domain/plants/repositories/plant_repository.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i9;
 
@@ -47,19 +47,29 @@ class _FakeDateTime_1 extends _i1.SmartFake implements DateTime {
         );
 }
 
+class _FakePlantModel_2 extends _i1.SmartFake implements _i3.PlantModel {
+  _FakePlantModel_2(
+    Object parent,
+    Invocation parentInvocation,
+  ) : super(
+          parent,
+          parentInvocation,
+        );
+}
+
 /// A class which mocks [PlantsRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
+class MockPlantsRepository extends _i1.Mock implements _i4.PlantsRepository {
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Success>> addPlant({required Map<String, dynamic>? plantData}) =>
+  _i5.Future<_i2.Either<_i6.Failure, _i7.Success>> addPlant({required Map<String, dynamic>? plantData}) =>
       (super.noSuchMethod(
         Invocation.method(
           #addPlant,
           [],
           {#plantData: plantData},
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+        returnValue: _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
           this,
           Invocation.method(
             #addPlant,
@@ -68,7 +78,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+            _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
           this,
           Invocation.method(
             #addPlant,
@@ -76,10 +86,10 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {#plantData: plantData},
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Success>> updatePlant({
+  _i5.Future<_i2.Either<_i6.Failure, _i7.Success>> updatePlant({
     required int? plantId,
     required Map<String, dynamic>? plantData,
   }) =>
@@ -92,7 +102,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             #plantData: plantData,
           },
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+        returnValue: _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
           this,
           Invocation.method(
             #updatePlant,
@@ -104,7 +114,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+            _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
           this,
           Invocation.method(
             #updatePlant,
@@ -115,16 +125,16 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Success>> deletePlant({required int? plantId}) => (super.noSuchMethod(
+  _i5.Future<_i2.Either<_i6.Failure, _i7.Success>> deletePlant({required int? plantId}) => (super.noSuchMethod(
         Invocation.method(
           #deletePlant,
           [],
           {#plantId: plantId},
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+        returnValue: _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
           this,
           Invocation.method(
             #deletePlant,
@@ -133,7 +143,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+            _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
           this,
           Invocation.method(
             #deletePlant,
@@ -141,10 +151,10 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {#plantId: plantId},
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>> getPlantsCreatedByUser({
+  _i5.Future<_i2.Either<_i6.Failure, List<_i3.PlantModel>>> getPlantsCreatedByUser({
     required String? userId,
     required int? page,
     required int? size,
@@ -159,8 +169,8 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             #size: size,
           },
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>.value(
-            _FakeEither_0<_i5.Failure, List<_i7.PlantModel>>(
+        returnValue: _i5.Future<_i2.Either<_i6.Failure, List<_i3.PlantModel>>>.value(
+            _FakeEither_0<_i6.Failure, List<_i3.PlantModel>>(
           this,
           Invocation.method(
             #getPlantsCreatedByUser,
@@ -172,8 +182,8 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             },
           ),
         )),
-        returnValueForMissingStub: _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>.value(
-            _FakeEither_0<_i5.Failure, List<_i7.PlantModel>>(
+        returnValueForMissingStub: _i5.Future<_i2.Either<_i6.Failure, List<_i3.PlantModel>>>.value(
+            _FakeEither_0<_i6.Failure, List<_i3.PlantModel>>(
           this,
           Invocation.method(
             #getPlantsCreatedByUser,
@@ -185,10 +195,10 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, List<_i3.PlantModel>>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>> getUserPlants({
+  _i5.Future<_i2.Either<_i6.Failure, List<_i3.PlantModel>>> getUserPlants({
     required String? userId,
     required int? page,
     required int? size,
@@ -203,8 +213,8 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             #size: size,
           },
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>.value(
-            _FakeEither_0<_i5.Failure, List<_i7.PlantModel>>(
+        returnValue: _i5.Future<_i2.Either<_i6.Failure, List<_i3.PlantModel>>>.value(
+            _FakeEither_0<_i6.Failure, List<_i3.PlantModel>>(
           this,
           Invocation.method(
             #getUserPlants,
@@ -216,8 +226,8 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             },
           ),
         )),
-        returnValueForMissingStub: _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>.value(
-            _FakeEither_0<_i5.Failure, List<_i7.PlantModel>>(
+        returnValueForMissingStub: _i5.Future<_i2.Either<_i6.Failure, List<_i3.PlantModel>>>.value(
+            _FakeEither_0<_i6.Failure, List<_i3.PlantModel>>(
           this,
           Invocation.method(
             #getUserPlants,
@@ -229,10 +239,10 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, List<_i3.PlantModel>>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>> getMarketPlants({
+  _i5.Future<_i2.Either<_i6.Failure, List<_i3.PlantModel>>> getMarketPlants({
     required int? page,
     required int? size,
   }) =>
@@ -245,8 +255,8 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             #size: size,
           },
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>.value(
-            _FakeEither_0<_i5.Failure, List<_i7.PlantModel>>(
+        returnValue: _i5.Future<_i2.Either<_i6.Failure, List<_i3.PlantModel>>>.value(
+            _FakeEither_0<_i6.Failure, List<_i3.PlantModel>>(
           this,
           Invocation.method(
             #getMarketPlants,
@@ -257,8 +267,8 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             },
           ),
         )),
-        returnValueForMissingStub: _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>.value(
-            _FakeEither_0<_i5.Failure, List<_i7.PlantModel>>(
+        returnValueForMissingStub: _i5.Future<_i2.Either<_i6.Failure, List<_i3.PlantModel>>>.value(
+            _FakeEither_0<_i6.Failure, List<_i3.PlantModel>>(
           this,
           Invocation.method(
             #getMarketPlants,
@@ -269,17 +279,17 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i7.PlantModel>>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, List<_i3.PlantModel>>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i7.PlantModel>> getPlantInfo({required int? plantId}) => (super.noSuchMethod(
+  _i5.Future<_i2.Either<_i6.Failure, _i3.PlantModel>> getPlantInfo({required int? plantId}) => (super.noSuchMethod(
         Invocation.method(
           #getPlantInfo,
           [],
           {#plantId: plantId},
         ),
         returnValue:
-            _i4.Future<_i2.Either<_i5.Failure, _i7.PlantModel>>.value(_FakeEither_0<_i5.Failure, _i7.PlantModel>(
+            _i5.Future<_i2.Either<_i6.Failure, _i3.PlantModel>>.value(_FakeEither_0<_i6.Failure, _i3.PlantModel>(
           this,
           Invocation.method(
             #getPlantInfo,
@@ -288,7 +298,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i7.PlantModel>>.value(_FakeEither_0<_i5.Failure, _i7.PlantModel>(
+            _i5.Future<_i2.Either<_i6.Failure, _i3.PlantModel>>.value(_FakeEither_0<_i6.Failure, _i3.PlantModel>(
           this,
           Invocation.method(
             #getPlantInfo,
@@ -296,17 +306,56 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {#plantId: plantId},
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i7.PlantModel>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, _i3.PlantModel>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Success>> addStage({required Map<String, dynamic>? stageData}) =>
+  _i5.Future<_i2.Either<_i6.Failure, _i7.Success>> addPlantToUser({
+    required int? plantId,
+    required String? userId,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addPlantToUser,
+          [],
+          {
+            #plantId: plantId,
+            #userId: userId,
+          },
+        ),
+        returnValue: _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
+          this,
+          Invocation.method(
+            #addPlantToUser,
+            [],
+            {
+              #plantId: plantId,
+              #userId: userId,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
+          this,
+          Invocation.method(
+            #addPlantToUser,
+            [],
+            {
+              #plantId: plantId,
+              #userId: userId,
+            },
+          ),
+        )),
+      ) as _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>);
+
+  @override
+  _i5.Future<_i2.Either<_i6.Failure, _i7.Success>> addStage({required Map<String, dynamic>? stageData}) =>
       (super.noSuchMethod(
         Invocation.method(
           #addStage,
           [],
           {#stageData: stageData},
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+        returnValue: _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
           this,
           Invocation.method(
             #addStage,
@@ -315,7 +364,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+            _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
           this,
           Invocation.method(
             #addStage,
@@ -323,10 +372,10 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {#stageData: stageData},
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Success>> updateStage({
+  _i5.Future<_i2.Either<_i6.Failure, _i7.Success>> updateStage({
     required int? stageId,
     required Map<String, dynamic>? stageData,
   }) =>
@@ -339,7 +388,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             #stageData: stageData,
           },
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+        returnValue: _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
           this,
           Invocation.method(
             #updateStage,
@@ -351,7 +400,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+            _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
           this,
           Invocation.method(
             #updateStage,
@@ -362,16 +411,16 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Success>> deleteStage({required int? stageId}) => (super.noSuchMethod(
+  _i5.Future<_i2.Either<_i6.Failure, _i7.Success>> deleteStage({required int? stageId}) => (super.noSuchMethod(
         Invocation.method(
           #deleteStage,
           [],
           {#stageId: stageId},
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+        returnValue: _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
           this,
           Invocation.method(
             #deleteStage,
@@ -380,7 +429,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+            _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
           this,
           Invocation.method(
             #deleteStage,
@@ -388,10 +437,10 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {#stageId: stageId},
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, List<_i8.StageModel>>> getListOfStages({
+  _i5.Future<_i2.Either<_i6.Failure, List<_i8.StageModel>>> getListOfStages({
     required int? plantId,
     required int? page,
     required int? size,
@@ -406,8 +455,8 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             #size: size,
           },
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, List<_i8.StageModel>>>.value(
-            _FakeEither_0<_i5.Failure, List<_i8.StageModel>>(
+        returnValue: _i5.Future<_i2.Either<_i6.Failure, List<_i8.StageModel>>>.value(
+            _FakeEither_0<_i6.Failure, List<_i8.StageModel>>(
           this,
           Invocation.method(
             #getListOfStages,
@@ -419,8 +468,8 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             },
           ),
         )),
-        returnValueForMissingStub: _i4.Future<_i2.Either<_i5.Failure, List<_i8.StageModel>>>.value(
-            _FakeEither_0<_i5.Failure, List<_i8.StageModel>>(
+        returnValueForMissingStub: _i5.Future<_i2.Either<_i6.Failure, List<_i8.StageModel>>>.value(
+            _FakeEither_0<_i6.Failure, List<_i8.StageModel>>(
           this,
           Invocation.method(
             #getListOfStages,
@@ -432,17 +481,17 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             },
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, List<_i8.StageModel>>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, List<_i8.StageModel>>>);
 
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i8.StageModel>> getStageInfo({required int? stageId}) => (super.noSuchMethod(
+  _i5.Future<_i2.Either<_i6.Failure, _i8.StageModel>> getStageInfo({required int? stageId}) => (super.noSuchMethod(
         Invocation.method(
           #getStageInfo,
           [],
           {#stageId: stageId},
         ),
         returnValue:
-            _i4.Future<_i2.Either<_i5.Failure, _i8.StageModel>>.value(_FakeEither_0<_i5.Failure, _i8.StageModel>(
+            _i5.Future<_i2.Either<_i6.Failure, _i8.StageModel>>.value(_FakeEither_0<_i6.Failure, _i8.StageModel>(
           this,
           Invocation.method(
             #getStageInfo,
@@ -451,7 +500,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
           ),
         )),
         returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i8.StageModel>>.value(_FakeEither_0<_i5.Failure, _i8.StageModel>(
+            _i5.Future<_i2.Either<_i6.Failure, _i8.StageModel>>.value(_FakeEither_0<_i6.Failure, _i8.StageModel>(
           this,
           Invocation.method(
             #getStageInfo,
@@ -459,13 +508,13 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {#stageId: stageId},
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i8.StageModel>>);
+      ) as _i5.Future<_i2.Either<_i6.Failure, _i8.StageModel>>);
 }
 
 /// A class which mocks [PlantModel].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockPlantModel extends _i1.Mock implements _i7.PlantModel {
+class MockPlantModel extends _i1.Mock implements _i3.PlantModel {
   @override
   int get id => (super.noSuchMethod(
         Invocation.getter(#id),
@@ -541,4 +590,82 @@ class MockPlantModel extends _i1.Mock implements _i7.PlantModel {
         returnValue: <String, dynamic>{},
         returnValueForMissingStub: <String, dynamic>{},
       ) as Map<String, dynamic>);
+
+  @override
+  _i3.PlantModel copyWith({
+    int? id,
+    String? title,
+    String? description,
+    String? authorId,
+    Iterable<String>? soilType,
+    List<String>? usedBy,
+    Iterable<String>? plantType,
+    bool? public,
+    DateTime? createdAt,
+    DateTime? lastUpdateAt,
+    String? version,
+    String? photoUrl,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #copyWith,
+          [],
+          {
+            #id: id,
+            #title: title,
+            #description: description,
+            #authorId: authorId,
+            #soilType: soilType,
+            #usedBy: usedBy,
+            #plantType: plantType,
+            #public: public,
+            #createdAt: createdAt,
+            #lastUpdateAt: lastUpdateAt,
+            #version: version,
+            #photoUrl: photoUrl,
+          },
+        ),
+        returnValue: _FakePlantModel_2(
+          this,
+          Invocation.method(
+            #copyWith,
+            [],
+            {
+              #id: id,
+              #title: title,
+              #description: description,
+              #authorId: authorId,
+              #soilType: soilType,
+              #usedBy: usedBy,
+              #plantType: plantType,
+              #public: public,
+              #createdAt: createdAt,
+              #lastUpdateAt: lastUpdateAt,
+              #version: version,
+              #photoUrl: photoUrl,
+            },
+          ),
+        ),
+        returnValueForMissingStub: _FakePlantModel_2(
+          this,
+          Invocation.method(
+            #copyWith,
+            [],
+            {
+              #id: id,
+              #title: title,
+              #description: description,
+              #authorId: authorId,
+              #soilType: soilType,
+              #usedBy: usedBy,
+              #plantType: plantType,
+              #public: public,
+              #createdAt: createdAt,
+              #lastUpdateAt: lastUpdateAt,
+              #version: version,
+              #photoUrl: photoUrl,
+            },
+          ),
+        ),
+      ) as _i3.PlantModel);
 }

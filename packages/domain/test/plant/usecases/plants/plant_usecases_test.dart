@@ -3,6 +3,7 @@ import 'package:domain/core/errors/failure.dart';
 import 'package:domain/core/success_objects/success_object.dart';
 import 'package:domain/plants/entities/plant_model.dart';
 import 'package:domain/plants/repositories/plant_repository.dart';
+import 'package:domain/plants/usecases/plant_usecases/add_plant_to_user_usecase.dart';
 import 'package:domain/plants/usecases/plant_usecases/add_plant_usecase.dart';
 import 'package:domain/plants/usecases/plant_usecases/delete_plant_usecase.dart';
 import 'package:domain/plants/usecases/plant_usecases/get_plant_info_usecase.dart';
@@ -20,6 +21,7 @@ void main() {
   late UpdatePlantUseCase updatePlantUseCase;
   late DeletePlantUseCase deletePlantUseCase;
   late GetPlantInfoUseCase getPlantInfoUseCase;
+  late AddPlantToUserUseCase addPlantToUserUseCase;
 
   setUp(() {
     mockPlantsRepository = MockPlantsRepository();
@@ -27,6 +29,7 @@ void main() {
     updatePlantUseCase = UpdatePlantUseCase(mockPlantsRepository);
     deletePlantUseCase = DeletePlantUseCase(mockPlantsRepository);
     getPlantInfoUseCase = GetPlantInfoUseCase(mockPlantsRepository);
+    addPlantToUserUseCase = AddPlantToUserUseCase(mockPlantsRepository);
   });
 
   group("Domain/Plant/Add_plant", () {
@@ -131,6 +134,33 @@ void main() {
       expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.getPlantInfo(plantId: anyNamed("plantId")));
+    });
+  });
+
+  group("Domain/Plant/Add_plant_to_user", () {
+    const tPlantId = 1;
+    const tUserId = "1";
+
+    test("/Success/ = should add plant to user in the repository", () async {
+      when(mockPlantsRepository.addPlantToUser(plantId: anyNamed("plantId"), userId: anyNamed("userId")))
+          .thenAnswer((_) async => Right(RemoteSourceSuccess()));
+
+      final result = await addPlantToUserUseCase((plantId: tPlantId, userId: tUserId));
+
+      expect(result, Right(RemoteSourceSuccess()));
+
+      verify(mockPlantsRepository.addPlantToUser(plantId: anyNamed("plantId"), userId: anyNamed("userId")));
+    });
+
+    test("/Failure/ = should return Failure when adding plant to user in the repository fails", () async {
+      when(mockPlantsRepository.addPlantToUser(plantId: anyNamed("plantId"), userId: anyNamed("userId")))
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
+
+      final result = await addPlantToUserUseCase((plantId: tPlantId, userId: tUserId));
+
+      expect(result, const Left(RemoteSourceFailure()));
+
+      verify(mockPlantsRepository.addPlantToUser(plantId: anyNamed("plantId"), userId: anyNamed("userId")));
     });
   });
 }

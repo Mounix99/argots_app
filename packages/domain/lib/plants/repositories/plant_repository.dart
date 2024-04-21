@@ -6,6 +6,8 @@ import '../entities/plant_model.dart';
 import '../entities/stage_model.dart';
 
 abstract class PlantsRepository {
+  /// Plants
+
   Future<Either<Failure, Success>> addPlant({required Map<String, dynamic> plantData});
 
   Future<Either<Failure, Success>> updatePlant({required int plantId, required Map<String, dynamic> plantData});
@@ -21,6 +23,10 @@ abstract class PlantsRepository {
   Future<Either<Failure, List<PlantModel>>> getMarketPlants({required int page, required int size});
 
   Future<Either<Failure, PlantModel>> getPlantInfo({required int plantId});
+
+  Future<Either<Failure, Success>> addPlantToUser({required int plantId, required String userId});
+
+  /// Stages
 
   Future<Either<Failure, Success>> addStage({required Map<String, dynamic> stageData});
 

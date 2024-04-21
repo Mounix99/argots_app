@@ -16,7 +16,7 @@ dependencies:
   equatable: 2.0.5
   dartz: ^0.10.1
   mockito: ^5.4.4
-  supabase_flutter: ^2.5.0
+  supabase_flutter: ^2.5.1
 
 dev_dependencies:
   flutter_test:
