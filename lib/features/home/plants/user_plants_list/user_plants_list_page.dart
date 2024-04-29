@@ -26,6 +26,9 @@ class MyPlantsPage extends HookWidget {
       if (state.myPlantsRequestState.isError && state.errorMessage != null) {
         context.showSnackBar(message: state.errorMessage!);
       }
+      if (state.myPlantsRequestState.isSuccess) {
+        pagingController.itemList = state.plants;
+      }
     }, builder: (context, state) {
       return RefreshIndicator(
         onRefresh: context.read<MyPlantsCubit>().refresh,

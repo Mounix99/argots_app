@@ -7,7 +7,7 @@ part of 'plant_model.dart';
 // **************************************************************************
 
 PlantModel _$PlantModelFromJson(Map<String, dynamic> json) => PlantModel(
-      id: json['id'] as int,
+      id: (json['id'] as num).toInt(),
       title: json['title'] as String,
       description: json['description'] as String?,
       authorId: json['author_id'] as String,

@@ -24,12 +24,13 @@ class ManagePlantsCubit extends Cubit<ManagePlantsState> {
 
   void removePlantFromUser(int plantId) {
     emit(state.copyWith(removePlantFromUserRequestState: RequestState.loading));
-    // _plantsRepository.removePlant(plantId: plantId).then((result) {
-    //   emit(result.fold(
-    //     (failure) => state.copyWith(removePlantFromUserRequestState: RequestState.error, errorMessage: failure.error.toString()),
-    //     (data) => state.copyWith(removePlantFromUserRequestState: RequestState.success),
-    //   ));
-    // });
+    _plantsRepository.removePlantFromUser(plantId: plantId, userId: userId).then((result) {
+      emit(result.fold(
+        (failure) =>
+            state.copyWith(removePlantFromUserRequestState: RequestState.error, errorMessage: failure.error.toString()),
+        (data) => state.copyWith(removePlantFromUserRequestState: RequestState.success),
+      ));
+    });
   }
 
   Future<void> refresh() async {

@@ -7,6 +7,7 @@ import 'package:domain/plants/usecases/plant_usecases/add_plant_to_user_usecase.
 import 'package:domain/plants/usecases/plant_usecases/add_plant_usecase.dart';
 import 'package:domain/plants/usecases/plant_usecases/delete_plant_usecase.dart';
 import 'package:domain/plants/usecases/plant_usecases/get_plant_info_usecase.dart';
+import 'package:domain/plants/usecases/plant_usecases/remove_plant_from_user.dart';
 import 'package:domain/plants/usecases/plant_usecases/update_plant_usecase.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
@@ -22,6 +23,7 @@ void main() {
   late DeletePlantUseCase deletePlantUseCase;
   late GetPlantInfoUseCase getPlantInfoUseCase;
   late AddPlantToUserUseCase addPlantToUserUseCase;
+  late RemovePlantToUserUseCase removePlantToUserUseCase;
 
   setUp(() {
     mockPlantsRepository = MockPlantsRepository();
@@ -30,6 +32,7 @@ void main() {
     deletePlantUseCase = DeletePlantUseCase(mockPlantsRepository);
     getPlantInfoUseCase = GetPlantInfoUseCase(mockPlantsRepository);
     addPlantToUserUseCase = AddPlantToUserUseCase(mockPlantsRepository);
+    removePlantToUserUseCase = RemovePlantToUserUseCase(mockPlantsRepository);
   });
 
   group("Domain/Plant/Add_plant", () {
@@ -161,6 +164,33 @@ void main() {
       expect(result, const Left(RemoteSourceFailure()));
 
       verify(mockPlantsRepository.addPlantToUser(plantId: anyNamed("plantId"), userId: anyNamed("userId")));
+    });
+  });
+
+  group("Domain/Plant/Remove_plant_from_user", () {
+    const tPlantId = 1;
+    const tUserId = "1";
+
+    test("/Success/ = should remove plant from user in the repository", () async {
+      when(mockPlantsRepository.removePlantFromUser(plantId: anyNamed("plantId"), userId: anyNamed("userId")))
+          .thenAnswer((_) async => Right(RemoteSourceSuccess()));
+
+      final result = await removePlantToUserUseCase((plantId: tPlantId, userId: tUserId));
+
+      expect(result, Right(RemoteSourceSuccess()));
+
+      verify(mockPlantsRepository.removePlantFromUser(plantId: anyNamed("plantId"), userId: anyNamed("userId")));
+    });
+
+    test("/Failure/ = should return Failure when removing plant from user in the repository fails", () async {
+      when(mockPlantsRepository.removePlantFromUser(plantId: anyNamed("plantId"), userId: anyNamed("userId")))
+          .thenAnswer((_) async => const Left(RemoteSourceFailure()));
+
+      final result = await removePlantToUserUseCase((plantId: tPlantId, userId: tUserId));
+
+      expect(result, const Left(RemoteSourceFailure()));
+
+      verify(mockPlantsRepository.removePlantFromUser(plantId: anyNamed("plantId"), userId: anyNamed("userId")));
     });
   });
 }

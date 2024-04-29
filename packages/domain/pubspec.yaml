@@ -12,18 +12,18 @@ dependencies:
     sdk: flutter
 
   path: ^1.9.0
-  json_annotation: ^4.8.1
+  json_annotation: ^4.9.0
   equatable: 2.0.5
   dartz: ^0.10.1
   mockito: ^5.4.4
-  supabase_flutter: ^2.5.1
+  supabase_flutter: ^2.5.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^3.0.2
   build_runner: ^2.4.9
-  json_serializable: ^6.7.1
+  json_serializable: ^6.8.0
   analyzer: ^6.4.1
 
 # For information on the generic Dart part of this file, see the

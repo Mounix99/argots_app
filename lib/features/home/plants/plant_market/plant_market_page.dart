@@ -30,6 +30,9 @@ class PlantMarketPage extends HookWidget {
             if (state.plantMarketRequestState.isError && state.errorMessage != null) {
               context.showSnackBar(message: state.errorMessage!);
             }
+            if (state.plantMarketRequestState.isSuccess) {
+              paginationController.itemList = state.plants;
+            }
           },
         ),
         BlocListener<ManagePlantsCubit, ManagePlantsState>(
@@ -65,6 +68,9 @@ class PlantMarketListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+        onLongPress: plant.usedBy?.contains(context.user!.id) == true
+            ? () => context.read<ManagePlantsCubit>().removePlantFromUser(plant.id)
+            : null,
         onTap: () => context.navigator.goToPlantDetails(plant.id.toString()),
         leading: plant.photoUrl != null ? Image.network(plant.photoUrl!) : const Icon(Ionicons.leaf),
         title: Text(plant.title),

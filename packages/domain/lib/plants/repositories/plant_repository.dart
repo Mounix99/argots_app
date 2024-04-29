@@ -26,6 +26,8 @@ abstract class PlantsRepository {
 
   Future<Either<Failure, Success>> addPlantToUser({required int plantId, required String userId});
 
+  Future<Either<Failure, Success>> removePlantFromUser({required int plantId, required String userId});
+
   /// Stages
 
   Future<Either<Failure, Success>> addStage({required Map<String, dynamic> stageData});

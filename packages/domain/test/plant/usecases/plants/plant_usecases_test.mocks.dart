@@ -348,6 +348,45 @@ class MockPlantsRepository extends _i1.Mock implements _i4.PlantsRepository {
       ) as _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>);
 
   @override
+  _i5.Future<_i2.Either<_i6.Failure, _i7.Success>> removePlantFromUser({
+    required int? plantId,
+    required String? userId,
+  }) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #removePlantFromUser,
+          [],
+          {
+            #plantId: plantId,
+            #userId: userId,
+          },
+        ),
+        returnValue: _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
+          this,
+          Invocation.method(
+            #removePlantFromUser,
+            [],
+            {
+              #plantId: plantId,
+              #userId: userId,
+            },
+          ),
+        )),
+        returnValueForMissingStub:
+            _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>.value(_FakeEither_0<_i6.Failure, _i7.Success>(
+          this,
+          Invocation.method(
+            #removePlantFromUser,
+            [],
+            {
+              #plantId: plantId,
+              #userId: userId,
+            },
+          ),
+        )),
+      ) as _i5.Future<_i2.Either<_i6.Failure, _i7.Success>>);
+
+  @override
   _i5.Future<_i2.Either<_i6.Failure, _i7.Success>> addStage({required Map<String, dynamic>? stageData}) =>
       (super.noSuchMethod(
         Invocation.method(

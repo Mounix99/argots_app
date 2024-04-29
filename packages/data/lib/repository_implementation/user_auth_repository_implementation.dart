@@ -61,7 +61,7 @@ class UserAuthRepositoryImplementation implements UserAuthRepository {
   Future<Either<Failure, AuthResponse>> signInWithToken() async {
     try {
       final sessionString = sharedPreferences.getString(_sessionKey);
-      if (sessionString != null) {
+      if (sessionString != null && supabase.client.auth.currentUser == null) {
         final response = await supabase.client.auth.recoverSession(sessionString);
         return Right(response);
       }
