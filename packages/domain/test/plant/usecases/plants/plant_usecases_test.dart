@@ -38,13 +38,15 @@ void main() {
   group("Domain/Plant/Add_plant", () {
     final Map<String, dynamic> tPlantModel = {};
 
+    const tPlantId = 1;
+
     test("/Success/ = should add plant to the repository", () async {
       when(mockPlantsRepository.addPlant(plantData: anyNamed("plantData")))
-          .thenAnswer((_) async => Right(RemoteSourceSuccess()));
+          .thenAnswer((_) async => const Right(tPlantId));
 
       final result = await addPlantUseCase(tPlantModel);
 
-      expect(result, Right(RemoteSourceSuccess()));
+      expect(result, const Right(tPlantId));
 
       verify(mockPlantsRepository.addPlant(plantData: anyNamed("plantData")));
     });

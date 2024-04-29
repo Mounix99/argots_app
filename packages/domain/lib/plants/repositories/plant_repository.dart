@@ -8,7 +8,7 @@ import '../entities/stage_model.dart';
 abstract class PlantsRepository {
   /// Plants
 
-  Future<Either<Failure, Success>> addPlant({required Map<String, dynamic> plantData});
+  Future<Either<Failure, int>> addPlant({required Map<String, dynamic> plantData});
 
   Future<Either<Failure, Success>> updatePlant({required int plantId, required Map<String, dynamic> plantData});
 

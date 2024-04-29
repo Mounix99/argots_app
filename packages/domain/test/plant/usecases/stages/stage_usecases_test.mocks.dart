@@ -41,14 +41,13 @@ class _FakeEither_0<L, R> extends _i1.SmartFake implements _i2.Either<L, R> {
 /// See the documentation for Mockito's code generation for more information.
 class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
   @override
-  _i4.Future<_i2.Either<_i5.Failure, _i6.Success>> addPlant({required Map<String, dynamic>? plantData}) =>
-      (super.noSuchMethod(
+  _i4.Future<_i2.Either<_i5.Failure, int>> addPlant({required Map<String, dynamic>? plantData}) => (super.noSuchMethod(
         Invocation.method(
           #addPlant,
           [],
           {#plantData: plantData},
         ),
-        returnValue: _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+        returnValue: _i4.Future<_i2.Either<_i5.Failure, int>>.value(_FakeEither_0<_i5.Failure, int>(
           this,
           Invocation.method(
             #addPlant,
@@ -56,8 +55,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {#plantData: plantData},
           ),
         )),
-        returnValueForMissingStub:
-            _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>.value(_FakeEither_0<_i5.Failure, _i6.Success>(
+        returnValueForMissingStub: _i4.Future<_i2.Either<_i5.Failure, int>>.value(_FakeEither_0<_i5.Failure, int>(
           this,
           Invocation.method(
             #addPlant,
@@ -65,7 +63,7 @@ class MockPlantsRepository extends _i1.Mock implements _i3.PlantsRepository {
             {#plantData: plantData},
           ),
         )),
-      ) as _i4.Future<_i2.Either<_i5.Failure, _i6.Success>>);
+      ) as _i4.Future<_i2.Either<_i5.Failure, int>>);
 
   @override
   _i4.Future<_i2.Either<_i5.Failure, _i6.Success>> updatePlant({

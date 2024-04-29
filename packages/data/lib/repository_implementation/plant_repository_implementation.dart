@@ -33,10 +33,10 @@ class PlantRepositoryImplementation implements PlantsRepository {
   }
 
   @override
-  Future<Either<Failure, Success>> addPlant({required Map<String, dynamic> plantData}) async {
+  Future<Either<Failure, int>> addPlant({required Map<String, dynamic> plantData}) async {
     try {
-      await supabase.client.from(_plantTable).insert(plantData);
-      return Future.value(Right(RemoteSourceSuccess()));
+      final plant = await supabase.client.from(_plantTable).insert(plantData).select("id");
+      return Future.value(Right(plant.first['id'] as int));
     } catch (e) {
       return Future.value(Left(RemoteSourceFailure(remoteError: e)));
     }

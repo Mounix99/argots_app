@@ -9,12 +9,12 @@ import 'package:ionicons/ionicons.dart';
 
 import '../../../common/dependency_injection/dependency_injection_service.dart';
 
-class AddedPlantDetailsScreen extends StatelessWidget {
-  const AddedPlantDetailsScreen({super.key});
+class MyPlantDetailsScreen extends StatelessWidget {
+  const MyPlantDetailsScreen({super.key});
 
   static Widget create({required int plantId}) {
     return BlocProvider(
-        create: (_) => PlantDetailsCubit(DIService.get(), plantId: plantId), child: const AddedPlantDetailsScreen());
+        create: (_) => PlantDetailsCubit(DIService.get(), plantId: plantId), child: const MyPlantDetailsScreen());
   }
 
   @override

@@ -23,5 +23,7 @@
   "growth_stages" : "Growth stages",
 
   "weeks": "{weeks,plural, =1{{weeks} тиждень}other{{weeks} тижнів}}",
-  "days": "{days,plural, =1{{days} день}other{{days} дні}}"
+  "days": "{days,plural, =1{{days} день}other{{days} дні}}",
+
+  "create_plant" : "Створити рослину"
 }
