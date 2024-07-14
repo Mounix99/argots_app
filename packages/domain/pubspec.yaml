@@ -16,15 +16,15 @@ dependencies:
   equatable: 2.0.5
   dartz: ^0.10.1
   mockito: ^5.4.4
-  supabase_flutter: ^2.5.2
+  supabase_flutter: ^2.5.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.2
-  build_runner: ^2.4.9
+  flutter_lints: ^4.0.0
+  build_runner: ^2.4.11
   json_serializable: ^6.8.0
-  analyzer: ^6.4.1
+  analyzer: ^6.7.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
