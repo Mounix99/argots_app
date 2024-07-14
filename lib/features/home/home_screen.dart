@@ -1,4 +1,4 @@
-import 'package:agrost_app/auth_cubit.dart';
+import 'package:agrost_app/features/authentication/auth_cubit.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

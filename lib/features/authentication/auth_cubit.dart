@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
+import '../../common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
 
 class AuthCubit extends Cubit<AuthCubitState> {
   final UserAuthRepository _userAuthRepository;

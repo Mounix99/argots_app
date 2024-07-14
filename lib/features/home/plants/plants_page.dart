@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../common/dependency_injection/dependency_injection_service.dart';
-import '../../plant/create_plant/create_plant_page.dart';
+import '../../plant/edit_plant/edit_plant_page.dart';
 import 'manage_plants_cubit.dart';
 
 class PlantsScreen extends HookWidget {
@@ -39,7 +39,7 @@ class PlantsScreen extends HookWidget {
               ],
             )),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => CreatePlantPage.push(context),
+          onPressed: () => EditPlantPage.pushCreate(context),
           child: const Icon(Icons.add),
         ),
         body: TabBarView(

@@ -25,5 +25,11 @@
   "weeks": "{weeks,plural, =1{{weeks} тиждень}other{{weeks} тижнів}}",
   "days": "{days,plural, =1{{days} день}other{{days} дні}}",
 
-  "create_plant" : "Створити рослину"
+  "create_plant" : "Створити рослину",
+  "update_plant" : "Редагувати рослину",
+  "basic_information" : "Основна інформація",
+  "plant_name" : "Назва рослини",
+  "plant_name_hint" : "Введіть назву рослини",
+  "plant_description" : "Опис рослини",
+  "plant_description_hint" : "Введіть опис рослини"
 }

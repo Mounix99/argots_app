@@ -102,7 +102,7 @@ class PlantRepositoryImplementation implements PlantsRepository {
     final offset = (page - 1) * size;
     try {
       final response =
-          await supabase.client.from(_plantTable).select().eq('used_by', '{$userId}').range(offset, offset + 19);
+          await supabase.client.from(_plantTable).select().contains('used_by', '{$userId}').range(offset, offset + 19);
       if (response.isNotEmpty) {
         final plants = response.map((e) => PlantModel.fromJson(e)).toList();
         return Future.value(Right(plants));

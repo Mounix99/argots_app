@@ -25,5 +25,11 @@
   "weeks": "{weeks,plural, =1{{weeks} week}other{{weeks} weeks}}",
   "days": "{days,plural, =1{{days} day}other{{days} days}}",
 
-  "create_plant" : "Create plant"
+  "create_plant" : "Create plant",
+  "update_plant" : "Update plant",
+  "basic_information" : "Basic information",
+  "plant_name" : "Plant name",
+  "plant_name_hint" : "Enter plant name",
+  "plant_description" : "Plant description",
+  "plant_description_hint" : "Enter plant description"
 }

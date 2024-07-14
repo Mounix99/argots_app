@@ -44,7 +44,9 @@ class AgrostRouter {
           final user = supabase.client.auth.currentUser;
 
           if (state.matchedLocation == state.namedLocation(Routes.splash.name)) {
-            if (user == null) {
+            if (user == null &&
+                (state.matchedLocation != state.namedLocation(Routes.signIn.name) ||
+                    state.matchedLocation != state.namedLocation(Routes.signUp.name))) {
               return state.namedLocation(Routes.signIn.name);
             } else {
               return state.namedLocation(Routes.fields.name);
