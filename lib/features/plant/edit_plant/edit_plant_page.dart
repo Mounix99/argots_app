@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 import '../../../common/dependency_injection/dependency_injection_service.dart';
+import '../general_plant_values_and_options/soil_type.dart';
 import 'edit_plant_cubit.dart';
 import '/common/extensions/sized_box_extensions.dart';
 
@@ -62,7 +63,11 @@ class EditPlantPage extends StatelessWidget {
                           hintText: context.strings.plant_description_hint),
                     ),
                     Space.h(12),
-                    ReactiveDropdownField(formControlName: EditPlantFormFields.soilType.name, items: const [])
+                    ReactiveDropdownField(
+                        formControlName: EditPlantFormFields.soilType.name,
+                        items: SoilType.values
+                            .map((e) => DropdownMenuItem(value: e, child: Text(e.nameByLocal(context.locale))))
+                            .toList())
                   ])),
                 ],
               ),

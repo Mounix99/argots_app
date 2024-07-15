@@ -15,6 +15,8 @@ extension OfContext on BuildContext {
 
   ColorScheme get colorScheme => theme.colorScheme;
 
+  Locale get locale => Localizations.localeOf(this);
+
   FocusScopeNode get focus => FocusScope.of(this);
 
   AgrostNavigator get navigator => AgrostNavigator.of(this);

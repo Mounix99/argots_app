@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 
 import '../../../common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
+import '../general_plant_values_and_options/soil_type.dart';
 
 enum EditPlantFormFields { title, description, soilType, plantType, public, version, photoUrl }
 
@@ -30,7 +31,8 @@ class EditPlantCubit extends Cubit<EditPlantState> {
     form = FormGroup({
       EditPlantFormFields.title.name: FormControl<String>(validators: [Validators.required], value: plantModel?.title),
       EditPlantFormFields.description.name: FormControl<String?>(value: plantModel?.description),
-      EditPlantFormFields.soilType.name: FormControl<Iterable<String>>(value: plantModel?.soilType),
+      EditPlantFormFields.soilType.name:
+          FormControl<Iterable<SoilType>>(value: plantModel?.soilType?.map((e) => SoilType.fromString(e))),
       EditPlantFormFields.plantType.name: FormControl<Iterable<String>>(value: plantModel?.plantType),
       EditPlantFormFields.public.name:
           FormControl<bool>(validators: [Validators.required], value: plantModel?.public ?? true),
