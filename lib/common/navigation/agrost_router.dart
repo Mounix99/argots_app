@@ -73,7 +73,7 @@ class AgrostRouter {
           /// Home routes
           StatefulShellRoute(
             parentNavigatorKey: NavigationKeys.rootNavigatorKey,
-            builder: (_, __, shell) => shell,
+            builder: (_, _, shell) => shell,
             navigatorContainerBuilder: (_, shellNavigator, children) => HomeNavigation(
               navigationShell: shellNavigator,
               children: children,
@@ -88,7 +88,7 @@ class AgrostRouter {
               ]),
               StatefulShellBranch(routes: [
                 StatefulShellRoute(
-                    builder: (_, __, shell) => shell,
+                    builder: (_, _, shell) => shell,
                     navigatorContainerBuilder: (_, shell, children) =>
                         PlantsScreen.create(shell: shell, children: children),
                     branches: [

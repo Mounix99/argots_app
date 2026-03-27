@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'common/dependency_injection/dependency_injection_service.dart';
 import 'common/navigation/agrost_router.dart';
-import 'package:flutter_gen/gen_l10n/agrost_localizations.dart';
+import 'package:agrost_app/common/l10n/agrost_localizations.dart';
 
 import 'auth_cubit.dart';
 
@@ -23,7 +23,7 @@ class AgrostApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AuthCubit, AuthCubitState>(
-      builder: (_, __) => MaterialApp.router(
+      builder: (_, _) => MaterialApp.router(
         routerConfig: AgrostRouter(DIService.get()).router,
         localizationsDelegates: AppLocalizations.localizationsDelegates,
         supportedLocales: AppLocalizations.supportedLocales,

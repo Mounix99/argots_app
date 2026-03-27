@@ -7,21 +7,24 @@ part of 'plant_model.dart';
 // **************************************************************************
 
 PlantModel _$PlantModelFromJson(Map<String, dynamic> json) => PlantModel(
-      id: (json['id'] as num).toInt(),
-      title: json['title'] as String,
-      description: json['description'] as String?,
-      authorId: json['author_id'] as String,
-      soilType: (json['soil_type'] as List<dynamic>?)?.map((e) => e as String),
-      usedBy: (json['used_by'] as List<dynamic>?)?.map((e) => e as String).toList(),
-      plantType: (json['plant_type'] as List<dynamic>?)?.map((e) => e as String),
-      public: json['public'] as bool,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      lastUpdateAt: json['last_update_at'] == null ? null : DateTime.parse(json['last_update_at'] as String),
-      version: json['version'] as String,
-      photoUrl: json['photo_url'] as String?,
-    );
+  id: (json['id'] as num).toInt(),
+  title: json['title'] as String,
+  description: json['description'] as String?,
+  authorId: json['author_id'] as String,
+  soilType: (json['soil_type'] as List<dynamic>?)?.map((e) => e as String),
+  usedBy: (json['used_by'] as List<dynamic>?)?.map((e) => e as String).toList(),
+  plantType: (json['plant_type'] as List<dynamic>?)?.map((e) => e as String),
+  public: json['public'] as bool,
+  createdAt: DateTime.parse(json['created_at'] as String),
+  lastUpdateAt: json['last_update_at'] == null
+      ? null
+      : DateTime.parse(json['last_update_at'] as String),
+  version: json['version'] as String,
+  photoUrl: json['photo_url'] as String?,
+);
 
-Map<String, dynamic> _$PlantModelToJson(PlantModel instance) => <String, dynamic>{
+Map<String, dynamic> _$PlantModelToJson(PlantModel instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,

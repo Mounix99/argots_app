@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
 import 'package:domain/plants/entities/stage_model.dart';
 import 'package:domain/plants/repositories/plant_repository.dart';
@@ -15,6 +15,7 @@ void main() {
   late GetListOfStagesUsecase getListOfStagesUsecase;
 
   setUp(() {
+    provideDummy<Either<Failure, List<StageModel>>>(const Right([]));
     mockPlantsRepository = MockPlantsRepository();
     getListOfStagesUsecase = GetListOfStagesUsecase(mockPlantsRepository);
   });

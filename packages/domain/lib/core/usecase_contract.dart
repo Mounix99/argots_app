@@ -1,11 +1,11 @@
-import "package:dartz/dartz.dart";
+import "package:fpdart/fpdart.dart";
 
 import "errors/failure.dart";
 
-abstract interface class Usecase<Type, ParamMap> {
-  Future<Either<Failure, Type>> call(ParamMap params);
+abstract interface class Usecase<T, P> {
+  Future<Either<Failure, T>> call(P params);
 }
 
-abstract interface class UsecaseNoParam<Type> {
-  Future<Either<Failure, Type>> call();
+abstract interface class UsecaseNoParam<T> {
+  Future<Either<Failure, T>> call();
 }

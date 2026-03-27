@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
 
 import '../../../core/usecase_contract.dart';

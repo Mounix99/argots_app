@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
 import 'package:domain/user/repositories/user_repository.dart';
 import 'package:domain/user/usecases/user_usecases/get_user_usecase.dart';
@@ -17,6 +17,7 @@ void main() {
   // late DeleteUserUsecase deleteUserUsecase;
 
   setUp(() {
+    provideDummy<Either<Failure, User?>>(const Right(null));
     mockUserRepository = MockUserRepository();
     getUserUsecase = GetUserUsecase(mockUserRepository);
     // updateUserUsecase = UpdateUserUsecase(mockUserRepository);

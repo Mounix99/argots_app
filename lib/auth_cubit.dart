@@ -18,7 +18,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
   Future<void> getUser() async {
     emit(state.copyWith(fetchUserState: RequestState.loading));
     final user = await _userRepository.getUser();
-    user.fold((failure) => emit(state.copyWith(fetchUserState: RequestState.error, error: failure)),
+    user.match((failure) => emit(state.copyWith(fetchUserState: RequestState.error, error: failure)),
         (user) => emit(state.copyWith(fetchUserState: RequestState.success, user: user)));
   }
 
@@ -26,7 +26,7 @@ class AuthCubit extends Cubit<AuthCubitState> {
   Future<void> signInWithToken() async {
     emit(state.copyWith(loginWithTokenState: RequestState.loading));
     final response = await _userAuthRepository.signInWithToken();
-    response.fold((failure) => emit(state.copyWith(loginWithTokenState: RequestState.error, error: failure)),
+    response.match((failure) => emit(state.copyWith(loginWithTokenState: RequestState.error, error: failure)),
         (authResponse) => emit(state.copyWith(loginWithTokenState: RequestState.success, user: authResponse.user)));
   }
 }

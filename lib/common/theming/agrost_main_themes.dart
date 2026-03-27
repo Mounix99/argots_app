@@ -17,7 +17,7 @@ class AgrostTheming {
       iconTheme: const IconThemeData(size: 24),
       appBarTheme: const AppBarTheme(centerTitle: false),
       navigationBarTheme: const NavigationBarThemeData(labelBehavior: NavigationDestinationLabelBehavior.alwaysHide),
-      tabBarTheme: const TabBarTheme(indicatorSize: TabBarIndicatorSize.tab),
+      tabBarTheme: const TabBarThemeData(indicatorSize: TabBarIndicatorSize.tab),
       switchTheme: const SwitchThemeData(splashRadius: 1),
       inputDecorationTheme: InputDecorationTheme(
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(15.0)),

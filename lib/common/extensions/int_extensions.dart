@@ -1,4 +1,4 @@
-import 'package:flutter_gen/gen_l10n/agrost_localizations.dart';
+import 'package:agrost_app/common/l10n/agrost_localizations.dart';
 
 extension DurationExtensions on int {
   String formatAsDuration(AppLocalizations strings) {

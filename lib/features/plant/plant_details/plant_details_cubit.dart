@@ -17,7 +17,7 @@ class PlantDetailsCubit extends Cubit<PlantDetailsState> {
   Future<PlantModel?> getPlantDetails() async {
     emit(state.copyWith(plantDetailsRequestState: RequestState.loading));
     final result = await _plantsRepository.getPlantInfo(plantId: plantId);
-    emit(result.fold(
+    emit(result.match(
       (failure) => state.copyWith(plantDetailsRequestState: RequestState.error, errorMessage: failure.error.toString()),
       (data) => state.copyWith(plantDetailsRequestState: RequestState.success, plant: data),
     ));
@@ -27,7 +27,7 @@ class PlantDetailsCubit extends Cubit<PlantDetailsState> {
   Future<List<StageModel>> getStages([int page = 1, int size = 20]) async {
     emit(state.copyWith(stagesRequestState: RequestState.loading));
     final result = await _plantsRepository.getListOfStages(plantId: plantId, page: page, size: size);
-    emit(result.fold(
+    emit(result.match(
       (failure) => state.copyWith(stagesRequestState: RequestState.error, errorMessage: failure.error.toString()),
       (data) => state.copyWith(stagesRequestState: RequestState.success, stages: data),
     ));

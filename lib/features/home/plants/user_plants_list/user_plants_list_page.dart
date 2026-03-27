@@ -22,23 +22,28 @@ class MyPlantsPage extends HookWidget {
     final pagingController = usePaginationScrollController<PlantModel>(
       loadAction: context.read<MyPlantsCubit>().getMyPlants,
     );
-    return BlocConsumer<MyPlantsCubit, MyPlantsState>(listener: (context, state) {
-      if (state.myPlantsRequestState.isError && state.errorMessage != null) {
-        context.showSnackBar(message: state.errorMessage!);
-      }
-      if (state.myPlantsRequestState.isSuccess) {
-        pagingController.itemList = state.plants;
-      }
-    }, builder: (context, state) {
-      return RefreshIndicator(
-        onRefresh: context.read<MyPlantsCubit>().refresh,
-        child: PagedListView(
-            pagingController: pagingController,
-            builderDelegate: PagedChildBuilderDelegate<PlantModel>(
-              itemBuilder: (context, plant, index) => MyPlantListItem(plant: plant),
-            )),
-      );
-    });
+    return BlocConsumer<MyPlantsCubit, MyPlantsState>(
+      listener: (context, state) {
+        if (state.myPlantsRequestState.isError && state.errorMessage != null) {
+          context.showSnackBar(message: state.errorMessage!);
+        }
+      },
+      builder: (context, state) {
+        return RefreshIndicator(
+          onRefresh: context.read<MyPlantsCubit>().refresh,
+          child: PagingListener(
+            controller: pagingController,
+            builder: (context, state, fetchNextPage) => PagedListView<int, PlantModel>(
+              state: state,
+              fetchNextPage: fetchNextPage,
+              builderDelegate: PagedChildBuilderDelegate<PlantModel>(
+                itemBuilder: (context, plant, index) => MyPlantListItem(plant: plant),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 

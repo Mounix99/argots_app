@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
 import 'package:domain/core/success_objects/success_object.dart';
 import 'package:domain/plants/entities/plant_model.dart';
@@ -26,6 +26,8 @@ void main() {
   late RemovePlantToUserUseCase removePlantToUserUseCase;
 
   setUp(() {
+    provideDummy<Either<Failure, Success>>(Right(RemoteSourceSuccess()));
+    provideDummy<Either<Failure, PlantModel>>(const Left(RemoteSourceFailure()));
     mockPlantsRepository = MockPlantsRepository();
     addPlantUseCase = AddPlantUseCase(mockPlantsRepository);
     updatePlantUseCase = UpdatePlantUseCase(mockPlantsRepository);

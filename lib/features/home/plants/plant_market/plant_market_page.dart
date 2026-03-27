@@ -30,9 +30,6 @@ class PlantMarketPage extends HookWidget {
             if (state.plantMarketRequestState.isError && state.errorMessage != null) {
               context.showSnackBar(message: state.errorMessage!);
             }
-            if (state.plantMarketRequestState.isSuccess) {
-              paginationController.itemList = state.plants;
-            }
           },
         ),
         BlocListener<ManagePlantsCubit, ManagePlantsState>(
@@ -47,13 +44,18 @@ class PlantMarketPage extends HookWidget {
       child: BlocBuilder<PlantMarketCubit, PlantMarketState>(
         builder: (context, state) {
           return RefreshIndicator(
-              onRefresh: context.read<PlantMarketCubit>().refresh,
-              child: PagedListView<int, PlantModel>(
-                pagingController: paginationController,
+            onRefresh: context.read<PlantMarketCubit>().refresh,
+            child: PagingListener(
+              controller: paginationController,
+              builder: (context, state, fetchNextPage) => PagedListView<int, PlantModel>(
+                state: state,
+                fetchNextPage: fetchNextPage,
                 builderDelegate: PagedChildBuilderDelegate<PlantModel>(
                   itemBuilder: (context, plant, index) => PlantMarketListItem(plant: plant),
                 ),
-              ));
+              ),
+            ),
+          );
         },
       ),
     );

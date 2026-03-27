@@ -7,17 +7,18 @@ part of 'stage_model.dart';
 // **************************************************************************
 
 StageModel _$StageModelFromJson(Map<String, dynamic> json) => StageModel(
-      id: (json['id'] as num).toInt(),
-      title: json['title'] as String,
-      description: json['description'] as String?,
-      createdAt: DateTime.parse(json['created_at'] as String),
-      lastUpdateAt: DateTime.parse(json['last_update_at'] as String),
-      plantId: (json['plant_id'] as num).toInt(),
-      authorId: json['author_id'] as String,
-      duration: (json['duration'] as num).toInt(),
-    );
+  id: (json['id'] as num).toInt(),
+  title: json['title'] as String,
+  description: json['description'] as String?,
+  createdAt: DateTime.parse(json['created_at'] as String),
+  lastUpdateAt: DateTime.parse(json['last_update_at'] as String),
+  plantId: (json['plant_id'] as num).toInt(),
+  authorId: json['author_id'] as String,
+  duration: (json['duration'] as num).toInt(),
+);
 
-Map<String, dynamic> _$StageModelToJson(StageModel instance) => <String, dynamic>{
+Map<String, dynamic> _$StageModelToJson(StageModel instance) =>
+    <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,

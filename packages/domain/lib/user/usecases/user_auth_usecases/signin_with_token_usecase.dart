@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/usecase_contract.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

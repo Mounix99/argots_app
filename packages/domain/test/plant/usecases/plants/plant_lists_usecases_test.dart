@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
 import 'package:domain/plants/entities/plant_model.dart';
 import 'package:domain/plants/repositories/plant_repository.dart';
@@ -19,6 +19,7 @@ void main() {
   late GetUserPlantsUsecase getUserPlatsUsecase;
 
   setUp(() {
+    provideDummy<Either<Failure, List<PlantModel>>>(const Right([]));
     mockPlantsRepository = MockPlantsRepository();
     getMarketPlantsUsecase = GetMarketPlantsUsecase(mockPlantsRepository);
     getListOfMyPlantsUsecase = GetPlantsCreatedByMeUsecase(mockPlantsRepository);

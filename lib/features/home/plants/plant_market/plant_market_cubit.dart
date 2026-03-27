@@ -15,7 +15,7 @@ class PlantMarketCubit extends Cubit<PlantMarketState> {
   Future<List<PlantModel>> getMarketPlants([int page = 1, int size = 20]) async {
     emit(state.copyWith(plantMarketRequestState: RequestState.loading, page: page));
     final result = await _plantsRepository.getMarketPlants(page: state.page, size: size);
-    emit(result.fold(
+    emit(result.match(
       (failure) => state.copyWith(plantMarketRequestState: RequestState.error, errorMessage: failure.error.toString()),
       (data) => state.copyWith(plantMarketRequestState: RequestState.success, plants: data),
     ));

@@ -17,7 +17,7 @@ class MyPlantsCubit extends Cubit<MyPlantsState> {
   Future<List<PlantModel>> getMyPlants([int page = 1, int size = 20]) async {
     emit(state.copyWith(myPlantsRequestState: RequestState.loading, page: page));
     final result = await _plantsRepository.getUserPlants(userId: userId, page: state.page, size: size);
-    emit(result.fold(
+    emit(result.match(
       (failure) => state.copyWith(myPlantsRequestState: RequestState.error, errorMessage: failure.error.toString()),
       (data) => state.copyWith(myPlantsRequestState: RequestState.success, plants: data, page: page),
     ));

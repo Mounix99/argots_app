@@ -14,7 +14,7 @@ class ManagePlantsCubit extends Cubit<ManagePlantsState> {
   void addPlantToUser(int plantId) {
     emit(state.copyWith(addPlantToUserRequestState: RequestState.loading));
     _plantsRepository.addPlantToUser(plantId: plantId, userId: userId).withProgress().then((value) {
-      emit(value.fold(
+      emit(value.match(
         (failure) =>
             state.copyWith(addPlantToUserRequestState: RequestState.error, errorMessage: failure.error.toString()),
         (data) => state.copyWith(addPlantToUserRequestState: RequestState.success),
@@ -25,7 +25,7 @@ class ManagePlantsCubit extends Cubit<ManagePlantsState> {
   void removePlantFromUser(int plantId) {
     emit(state.copyWith(removePlantFromUserRequestState: RequestState.loading));
     _plantsRepository.removePlantFromUser(plantId: plantId, userId: userId).then((result) {
-      emit(result.fold(
+      emit(result.match(
         (failure) =>
             state.copyWith(removePlantFromUserRequestState: RequestState.error, errorMessage: failure.error.toString()),
         (data) => state.copyWith(removePlantFromUserRequestState: RequestState.success),

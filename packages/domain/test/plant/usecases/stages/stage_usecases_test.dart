@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
 import 'package:domain/core/success_objects/success_object.dart';
 import 'package:domain/plants/repositories/plant_repository.dart';
@@ -19,6 +19,7 @@ void main() {
   late DeleteStageUseCase deleteStageUseCase;
 
   setUp(() {
+    provideDummy<Either<Failure, Success>>(Right(RemoteSourceSuccess()));
     mockPlantsRepository = MockPlantsRepository();
     addStageUseCase = AddStageUseCase(mockPlantsRepository);
     updateStageUseCase = UpdateStageUseCase(mockPlantsRepository);

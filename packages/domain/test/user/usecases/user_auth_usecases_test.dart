@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
 import 'package:domain/core/success_objects/success_object.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
@@ -23,6 +23,8 @@ void main() {
   late SignInWithTokenUsecase signInWithTokenUsecase;
 
   setUp(() {
+    provideDummy<Either<Failure, AuthResponse>>(Right(AuthResponse()));
+    provideDummy<Either<Failure, Success>>(Right(RemoteSourceSuccess()));
     mockUserAuthRepository = MockUserAuthRepository();
     signUpUseCase = SignUpUsecase(mockUserAuthRepository);
     signInUseCase = SignInUsecase(mockUserAuthRepository);

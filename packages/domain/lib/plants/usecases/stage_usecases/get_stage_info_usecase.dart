@@ -1,17 +1,17 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 
 import '../../../core/errors/failure.dart';
 import '../../../core/usecase_contract.dart';
-import '../../entities/plant_model.dart';
+import '../../entities/stage_model.dart';
 import '../../repositories/plant_repository.dart';
 
-class GetStageInfoUseCase implements Usecase<PlantModel, int> {
+class GetStageInfoUseCase implements Usecase<StageModel, int> {
   final PlantsRepository _plantsRepository;
 
   GetStageInfoUseCase(this._plantsRepository);
 
   @override
-  Future<Either<Failure, PlantModel>> call(int plantId) async {
-    return await _plantsRepository.getPlantInfo(plantId: plantId);
+  Future<Either<Failure, StageModel>> call(int stageId) async {
+    return await _plantsRepository.getStageInfo(stageId: stageId);
   }
 }

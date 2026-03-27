@@ -1,4 +1,4 @@
-import 'package:dartz/dartz.dart';
+import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
 import 'package:domain/core/success_objects/success_object.dart';
 import 'package:domain/plants/entities/plant_model.dart';
@@ -184,7 +184,7 @@ class PlantRepositoryImplementation implements PlantsRepository {
     try {
       final plantResponse = await getPlantInfo(plantId: plantId);
       if (plantResponse.isRight()) {
-        final plantModel = plantResponse.getOrElse(() => throw Exception());
+        final plantModel = plantResponse.getOrElse((_) => throw Exception());
         final usedBy = plantModel.usedBy ?? <String>[];
         if (!usedBy.contains(userId)) {
           usedBy.add(userId);
@@ -203,7 +203,7 @@ class PlantRepositoryImplementation implements PlantsRepository {
     try {
       final plantResponse = await getPlantInfo(plantId: plantId);
       if (plantResponse.isRight()) {
-        final plantModel = plantResponse.getOrElse(() => throw Exception());
+        final plantModel = plantResponse.getOrElse((_) => throw Exception());
         final usedBy = plantModel.usedBy ?? <String>[];
         if (usedBy.contains(userId)) {
           usedBy.remove(userId);
