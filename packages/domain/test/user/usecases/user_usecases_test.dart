@@ -3,7 +3,7 @@ import 'package:domain/core/errors/failure.dart';
 import 'package:domain/user/entities/app_user.dart';
 import 'package:domain/user/repositories/user_repository.dart';
 import 'package:domain/user/usecases/user_usecases/get_user_usecase.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -12,14 +12,14 @@ import 'user_usecases_test.mocks.dart';
 @GenerateNiceMocks([MockSpec<UserRepository>(as: #MockUserRepository)])
 void main() {
   late MockUserRepository mockUserRepository;
-  late GetUserUsecase getUserUsecase;
+  late GetUserUseCase getUserUsecase;
 
   const testUser = AppUser(id: 'test-id', email: 'test@example.com');
 
   setUp(() {
     provideDummy<Either<Failure, AppUser?>>(const Right(null));
     mockUserRepository = MockUserRepository();
-    getUserUsecase = GetUserUsecase(mockUserRepository);
+    getUserUsecase = GetUserUseCase(mockUserRepository);
   });
 
   group("Domain/User/GetUser", () {

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
-import 'argost_navigation_constants.dart';
+import 'agrost_navigation_constants.dart';
 
 class AgrostNavigator {
   final BuildContext context;

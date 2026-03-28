@@ -6,7 +6,7 @@ import 'package:domain/user/repositories/user_auth_repository.dart';
 import 'package:domain/user/usecases/user_auth_usecases/signin_usecase.dart';
 import 'package:domain/user/usecases/user_auth_usecases/signout_usecase.dart';
 import 'package:domain/user/usecases/user_auth_usecases/signup_usecase.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -15,9 +15,9 @@ import 'user_auth_usecases_test.mocks.dart';
 @GenerateNiceMocks([MockSpec<UserAuthRepository>(as: #MockUserAuthRepository)])
 void main() {
   late MockUserAuthRepository mockUserAuthRepository;
-  late SignUpUsecase signUpUseCase;
-  late SignInUsecase signInUseCase;
-  late SignOutUsecase signOutUseCase;
+  late SignUpUseCase signUpUseCase;
+  late SignInUseCase signInUseCase;
+  late SignOutUseCase signOutUseCase;
 
   const testUser = AppUser(id: 'test-id', email: 'test@example.com');
 
@@ -25,20 +25,20 @@ void main() {
     provideDummy<Either<Failure, AppUser>>(Right(testUser));
     provideDummy<Either<Failure, Success>>(Right(RemoteSourceSuccess()));
     mockUserAuthRepository = MockUserAuthRepository();
-    signUpUseCase = SignUpUsecase(mockUserAuthRepository);
-    signInUseCase = SignInUsecase(mockUserAuthRepository);
-    signOutUseCase = SignOutUsecase(mockUserAuthRepository);
+    signUpUseCase = SignUpUseCase(mockUserAuthRepository);
+    signInUseCase = SignInUseCase(mockUserAuthRepository);
+    signOutUseCase = SignOutUseCase(mockUserAuthRepository);
   });
 
   group("Domain/User/SignUp", () {
-    final Map<String, dynamic> userData = {"email": "test@example.com", "password": "password123", "data": <String, dynamic>{}};
+    const signUpParams = (email: "test@example.com", password: "password123", data: null);
 
     test("/Success/ = should register user successfully", () async {
       when(mockUserAuthRepository.signUpWithEmail(
               email: anyNamed("email"), password: anyNamed("password"), data: anyNamed("data")))
           .thenAnswer((_) async => Right(testUser));
 
-      final Either<Failure, AppUser> result = await signUpUseCase(userData);
+      final Either<Failure, AppUser> result = await signUpUseCase(signUpParams);
 
       expect(result, Right(testUser));
 
@@ -51,7 +51,7 @@ void main() {
               email: anyNamed("email"), password: anyNamed("password"), data: anyNamed("data")))
           .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await signUpUseCase(userData);
+      final result = await signUpUseCase(signUpParams);
 
       expect(result, const Left(RemoteSourceFailure()));
 
@@ -61,13 +61,13 @@ void main() {
   });
 
   group("Domain/User/SignIn", () {
-    final Map<String, dynamic> userData = {"email": "test@example.com", "password": "password123"};
+    const signInParams = (email: "test@example.com", password: "password123");
 
     test("/Success/ = should sign in user successfully", () async {
       when(mockUserAuthRepository.signInWithEmail(email: anyNamed("email"), password: anyNamed("password")))
           .thenAnswer((_) async => Right(testUser));
 
-      final Either<Failure, AppUser> result = await signInUseCase(userData);
+      final Either<Failure, AppUser> result = await signInUseCase(signInParams);
 
       expect(result, Right(testUser));
 
@@ -78,7 +78,7 @@ void main() {
       when(mockUserAuthRepository.signInWithEmail(email: anyNamed("email"), password: anyNamed("password")))
           .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await signInUseCase(userData);
+      final result = await signInUseCase(signInParams);
 
       expect(result, const Left(RemoteSourceFailure()));
 

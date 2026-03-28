@@ -2,20 +2,22 @@ import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
 import 'package:domain/user/entities/app_user.dart';
 import 'package:domain/user/repositories/user_repository.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-class UserRepositoryImplementation extends UserRepository {
-  UserRepositoryImplementation({required this.supabase});
+import '../remote_data_source/user_remote_data_source.dart';
 
-  final Supabase supabase;
+class UserRepositoryImplementation implements UserRepository {
+  final UserRemoteDataSource _remoteDataSource;
+
+  UserRepositoryImplementation({required UserRemoteDataSource remoteDataSource})
+      : _remoteDataSource = remoteDataSource;
 
   @override
-  Future<Either<Failure, AppUser?>> getUser() {
+  Future<Either<Failure, AppUser?>> getUser() async {
     try {
-      final user = supabase.client.auth.currentUser;
-      return Future.value(Right(user != null ? _toAppUser(user) : null));
+      final user = await _remoteDataSource.getUser();
+      return Right(user);
     } catch (e) {
-      return Future.value(Left(RemoteSourceFailure(remoteError: e.toString())));
+      return Left(RemoteSourceFailure(remoteError: e.toString()));
     }
   }
 
@@ -28,10 +30,4 @@ class UserRepositoryImplementation extends UserRepository {
   Future<Either<Failure, AppUser>> deleteUser(AppUser user) {
     throw UnimplementedError();
   }
-
-  AppUser _toAppUser(User user) => AppUser(
-        id: user.id,
-        email: user.email ?? '',
-        createdAt: user.createdAt.isNotEmpty ? DateTime.tryParse(user.createdAt) : null,
-      );
 }

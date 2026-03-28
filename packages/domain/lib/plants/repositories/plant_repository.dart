@@ -8,9 +8,9 @@ import '../entities/stage_model.dart';
 abstract class PlantsRepository {
   /// Plants
 
-  Future<Either<Failure, Success>> addPlant({required Map<String, dynamic> plantData});
+  Future<Either<Failure, Success>> addPlant({required PlantModel plant});
 
-  Future<Either<Failure, Success>> updatePlant({required int plantId, required Map<String, dynamic> plantData});
+  Future<Either<Failure, Success>> updatePlant({required PlantModel plant});
 
   Future<Either<Failure, Success>> deletePlant({required int plantId});
 
@@ -30,9 +30,9 @@ abstract class PlantsRepository {
 
   /// Stages
 
-  Future<Either<Failure, Success>> addStage({required Map<String, dynamic> stageData});
+  Future<Either<Failure, Success>> addStage({required StageModel stage});
 
-  Future<Either<Failure, Success>> updateStage({required int stageId, required Map<String, dynamic> stageData});
+  Future<Either<Failure, Success>> updateStage({required StageModel stage});
 
   Future<Either<Failure, Success>> deleteStage({required int stageId});
 

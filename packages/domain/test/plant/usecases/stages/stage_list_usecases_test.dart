@@ -3,7 +3,7 @@ import 'package:domain/core/errors/failure.dart';
 import 'package:domain/plants/entities/stage_model.dart';
 import 'package:domain/plants/repositories/plant_repository.dart';
 import 'package:domain/plants/usecases/stage_usecases/get_list_of_stages_usecase.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -12,12 +12,12 @@ import 'stage_list_usecases_test.mocks.dart';
 @GenerateNiceMocks([MockSpec<PlantsRepository>(as: #MockPlantsRepository)])
 void main() {
   late MockPlantsRepository mockPlantsRepository;
-  late GetListOfStagesUsecase getListOfStagesUsecase;
+  late GetListOfStagesUseCase getListOfStagesUsecase;
 
   setUp(() {
     provideDummy<Either<Failure, List<StageModel>>>(const Right([]));
     mockPlantsRepository = MockPlantsRepository();
-    getListOfStagesUsecase = GetListOfStagesUsecase(mockPlantsRepository);
+    getListOfStagesUsecase = GetListOfStagesUseCase(mockPlantsRepository);
   });
 
   group("Domain/Plant/Get_list_of_stages", () {

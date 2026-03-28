@@ -3,6 +3,8 @@ import 'package:agrost_app/common/extensions/int_extensions.dart';
 import 'package:agrost_app/features/plant/plant_details/plant_details_cubit.dart';
 import 'package:domain/plants/entities/plant_model.dart';
 import 'package:domain/plants/entities/stage_model.dart';
+import 'package:domain/plants/usecases/plant_usecases/get_plant_info_usecase.dart';
+import 'package:domain/plants/usecases/stage_usecases/get_list_of_stages_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ionicons/ionicons.dart';
@@ -14,7 +16,12 @@ class AddedPlantDetailsScreen extends StatelessWidget {
 
   static Widget create({required int plantId}) {
     return BlocProvider(
-        create: (_) => PlantDetailsCubit(DIService.get(), plantId: plantId), child: const AddedPlantDetailsScreen());
+        create: (_) => PlantDetailsCubit(
+              DIService.get<GetPlantInfoUseCase>(),
+              DIService.get<GetListOfStagesUseCase>(),
+              plantId: plantId,
+            ),
+        child: const AddedPlantDetailsScreen());
   }
 
   @override

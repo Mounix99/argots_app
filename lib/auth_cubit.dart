@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:domain/user/entities/app_user.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
+import 'package:domain/user/usecases/user_auth_usecases/signout_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -46,11 +47,12 @@ final class Unauthenticated extends AuthState {
 }
 
 class AuthCubit extends Cubit<AuthState> {
-  AuthCubit(this._authRepository) : super(const AuthUnknown()) {
+  AuthCubit(this._authRepository, this._signOutUseCase) : super(const AuthUnknown()) {
     _initialize();
   }
 
   final UserAuthRepository _authRepository;
+  final SignOutUseCase _signOutUseCase;
   late final StreamSubscription<AppUser?> _authSubscription;
 
   void _initialize() {
@@ -68,7 +70,7 @@ class AuthCubit extends Cubit<AuthState> {
     });
   }
 
-  Future<void> signOut() => _authRepository.signOut();
+  Future<void> signOut() => _signOutUseCase();
 
   @override
   Future<void> close() {

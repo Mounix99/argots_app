@@ -5,7 +5,7 @@ import '../../../core/usecase_contract.dart';
 import '../../entities/stage_model.dart';
 import '../../repositories/plant_repository.dart';
 
-class GetStageInfoUseCase implements Usecase<StageModel, int> {
+class GetStageInfoUseCase implements UseCase<StageModel, int> {
   final PlantsRepository _plantsRepository;
 
   GetStageInfoUseCase(this._plantsRepository);

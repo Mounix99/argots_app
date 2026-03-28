@@ -1,36 +1,35 @@
-import 'package:agrost_app/common/extensions/future_extensions.dart';
-import 'package:agrost_app/common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
-import 'package:domain/plants/repositories/plant_repository.dart';
+import 'package:agrost_app/common/state_management/base/request_state.dart';
+import 'package:domain/plants/usecases/plant_usecases/add_plant_to_user_usecase.dart';
+import 'package:domain/plants/usecases/plant_usecases/remove_plant_from_user.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ManagePlantsCubit extends Cubit<ManagePlantsState> {
-  final PlantsRepository _plantsRepository;
-
+  final AddPlantToUserUseCase _addPlantToUserUseCase;
+  final RemovePlantFromUserUseCase _removePlantFromUserUseCase;
   final String userId;
 
-  ManagePlantsCubit(this._plantsRepository, this.userId) : super(ManagePlantsState.initial());
+  ManagePlantsCubit(this._addPlantToUserUseCase, this._removePlantFromUserUseCase, this.userId)
+      : super(ManagePlantsState.initial());
 
-  void addPlantToUser(int plantId) {
+  Future<void> addPlantToUser(int plantId) async {
     emit(state.copyWith(addPlantToUserRequestState: RequestState.loading));
-    _plantsRepository.addPlantToUser(plantId: plantId, userId: userId).withProgress().then((value) {
-      emit(value.match(
-        (failure) =>
-            state.copyWith(addPlantToUserRequestState: RequestState.error, errorMessage: failure.error.toString()),
-        (data) => state.copyWith(addPlantToUserRequestState: RequestState.success),
-      ));
-    });
+    final result = await _addPlantToUserUseCase((plantId: plantId, userId: userId));
+    emit(result.match(
+      (failure) =>
+          state.copyWith(addPlantToUserRequestState: RequestState.error, errorMessage: failure.error.toString()),
+      (_) => state.copyWith(addPlantToUserRequestState: RequestState.success),
+    ));
   }
 
-  void removePlantFromUser(int plantId) {
+  Future<void> removePlantFromUser(int plantId) async {
     emit(state.copyWith(removePlantFromUserRequestState: RequestState.loading));
-    _plantsRepository.removePlantFromUser(plantId: plantId, userId: userId).then((result) {
-      emit(result.match(
-        (failure) =>
-            state.copyWith(removePlantFromUserRequestState: RequestState.error, errorMessage: failure.error.toString()),
-        (data) => state.copyWith(removePlantFromUserRequestState: RequestState.success),
-      ));
-    });
+    final result = await _removePlantFromUserUseCase((plantId: plantId, userId: userId));
+    emit(result.match(
+      (failure) =>
+          state.copyWith(removePlantFromUserRequestState: RequestState.error, errorMessage: failure.error.toString()),
+      (_) => state.copyWith(removePlantFromUserRequestState: RequestState.success),
+    ));
   }
 
   Future<void> refresh() async {
@@ -67,6 +66,7 @@ class ManagePlantsState extends Equatable {
       removePlantFromUserRequestState: RequestState.initial,
     );
   }
+
   @override
-  List<Object?> get props => [addPlantToUserRequestState, removePlantFromUserRequestState];
+  List<Object?> get props => [addPlantToUserRequestState, removePlantFromUserRequestState, errorMessage];
 }

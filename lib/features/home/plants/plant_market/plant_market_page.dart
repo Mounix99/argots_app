@@ -2,6 +2,8 @@ import 'package:agrost_app/common/dependency_injection/dependency_injection_serv
 import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:agrost_app/features/home/plants/plant_market/plant_market_cubit.dart';
 import 'package:domain/plants/entities/plant_model.dart';
+import 'package:domain/plants/usecases/plant_usecases/add_plant_to_user_usecase.dart';
+import 'package:domain/plants/usecases/plant_usecases/get_market_plants_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -15,7 +17,13 @@ class PlantMarketPage extends HookWidget {
   const PlantMarketPage({super.key});
 
   static Widget create() {
-    return BlocProvider(create: (_) => PlantMarketCubit(DIService.get()), child: const PlantMarketPage());
+    return BlocProvider(
+      create: (_) => PlantMarketCubit(
+        DIService.get<GetMarketPlantsUseCase>(),
+        DIService.get<AddPlantToUserUseCase>(),
+      ),
+      child: const PlantMarketPage(),
+    );
   }
 
   @override

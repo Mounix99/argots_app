@@ -2,10 +2,10 @@ import "package:fpdart/fpdart.dart";
 
 import "errors/failure.dart";
 
-abstract interface class Usecase<T, P> {
+abstract interface class UseCase<T, P> {
   Future<Either<Failure, T>> call(P params);
 }
 
-abstract interface class UsecaseNoParam<T> {
+abstract interface class UseCaseNoParam<T> {
   Future<Either<Failure, T>> call();
 }

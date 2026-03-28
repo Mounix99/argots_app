@@ -7,10 +7,10 @@ import '../../repositories/plant_repository.dart';
 
 typedef GetListOfStagesParams = ({int plantId, int page, int size});
 
-class GetListOfStagesUsecase implements Usecase<List<StageModel>, GetListOfStagesParams> {
+class GetListOfStagesUseCase implements UseCase<List<StageModel>, GetListOfStagesParams> {
   final PlantsRepository _plantsRepository;
 
-  GetListOfStagesUsecase(this._plantsRepository);
+  GetListOfStagesUseCase(this._plantsRepository);
 
   @override
   Future<Either<Failure, List<StageModel>>> call(GetListOfStagesParams params) async {

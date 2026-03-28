@@ -7,7 +7,7 @@ import '../../repositories/plant_repository.dart';
 
 typedef AddPlantToUserParams = ({int plantId, String userId});
 
-class AddPlantToUserUseCase implements Usecase<Success, AddPlantToUserParams> {
+class AddPlantToUserUseCase implements UseCase<Success, AddPlantToUserParams> {
   final PlantsRepository _plantsRepository;
 
   AddPlantToUserUseCase(this._plantsRepository);

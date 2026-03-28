@@ -3,15 +3,15 @@
 // Do not manually edit this file.
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'dart:async' as _i4;
+import 'dart:async' as _i3;
 
 import 'package:domain/core/errors/failure.dart' as _i6;
-import 'package:domain/core/success_objects/success_object.dart' as _i7;
-import 'package:domain/user/entities/app_user.dart' as _i5;
+import 'package:domain/core/success_objects/success_object.dart' as _i8;
+import 'package:domain/user/entities/app_user.dart' as _i4;
 import 'package:domain/user/repositories/user_auth_repository.dart' as _i2;
-import 'package:fpdart/fpdart.dart' as _i3;
+import 'package:fpdart/fpdart.dart' as _i5;
 import 'package:mockito/mockito.dart' as _i1;
-import 'package:mockito/src/dummies.dart' as _i8;
+import 'package:mockito/src/dummies.dart' as _i7;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -31,24 +31,19 @@ import 'package:mockito/src/dummies.dart' as _i8;
 /// A class which mocks [UserAuthRepository].
 ///
 /// See the documentation for Mockito's code generation for more information.
-class MockUserAuthRepository extends _i1.Mock implements _i2.UserAuthRepository {
+class MockUserAuthRepository extends _i1.Mock
+    implements _i2.UserAuthRepository {
   @override
-  _i5.AppUser? get currentUser => (super.noSuchMethod(
-        Invocation.getter(#currentUser),
-        returnValueForMissingStub: null,
-      ) as _i5.AppUser?);
-
-  @override
-  Stream<_i5.AppUser?> get authStateChanges =>
+  _i3.Stream<_i4.AppUser?> get authStateChanges =>
       (super.noSuchMethod(
             Invocation.getter(#authStateChanges),
-            returnValue: Stream<_i5.AppUser?>.empty(),
-            returnValueForMissingStub: Stream<_i5.AppUser?>.empty(),
+            returnValue: _i3.Stream<_i4.AppUser?>.empty(),
+            returnValueForMissingStub: _i3.Stream<_i4.AppUser?>.empty(),
           )
-          as Stream<_i5.AppUser?>);
+          as _i3.Stream<_i4.AppUser?>);
 
   @override
-  _i4.Future<_i3.Either<_i6.Failure, _i5.AppUser>> signUpWithEmail({
+  _i3.Future<_i5.Either<_i6.Failure, _i4.AppUser>> signUpWithEmail({
     required String? email,
     required String? password,
     Map<String, dynamic>? data,
@@ -59,20 +54,19 @@ class MockUserAuthRepository extends _i1.Mock implements _i2.UserAuthRepository 
               #password: password,
               #data: data,
             }),
-            returnValue:
-                _i4.Future<_i3.Either<_i6.Failure, _i5.AppUser>>.value(
-                  _i8.dummyValue<_i3.Either<_i6.Failure, _i5.AppUser>>(
-                    this,
-                    Invocation.method(#signUpWithEmail, [], {
-                      #email: email,
-                      #password: password,
-                      #data: data,
-                    }),
-                  ),
-                ),
+            returnValue: _i3.Future<_i5.Either<_i6.Failure, _i4.AppUser>>.value(
+              _i7.dummyValue<_i5.Either<_i6.Failure, _i4.AppUser>>(
+                this,
+                Invocation.method(#signUpWithEmail, [], {
+                  #email: email,
+                  #password: password,
+                  #data: data,
+                }),
+              ),
+            ),
             returnValueForMissingStub:
-                _i4.Future<_i3.Either<_i6.Failure, _i5.AppUser>>.value(
-                  _i8.dummyValue<_i3.Either<_i6.Failure, _i5.AppUser>>(
+                _i3.Future<_i5.Either<_i6.Failure, _i4.AppUser>>.value(
+                  _i7.dummyValue<_i5.Either<_i6.Failure, _i4.AppUser>>(
                     this,
                     Invocation.method(#signUpWithEmail, [], {
                       #email: email,
@@ -82,10 +76,10 @@ class MockUserAuthRepository extends _i1.Mock implements _i2.UserAuthRepository 
                   ),
                 ),
           )
-          as _i4.Future<_i3.Either<_i6.Failure, _i5.AppUser>>);
+          as _i3.Future<_i5.Either<_i6.Failure, _i4.AppUser>>);
 
   @override
-  _i4.Future<_i3.Either<_i6.Failure, _i5.AppUser>> signInWithEmail({
+  _i3.Future<_i5.Either<_i6.Failure, _i4.AppUser>> signInWithEmail({
     required String? email,
     required String? password,
   }) =>
@@ -94,19 +88,18 @@ class MockUserAuthRepository extends _i1.Mock implements _i2.UserAuthRepository 
               #email: email,
               #password: password,
             }),
-            returnValue:
-                _i4.Future<_i3.Either<_i6.Failure, _i5.AppUser>>.value(
-                  _i8.dummyValue<_i3.Either<_i6.Failure, _i5.AppUser>>(
-                    this,
-                    Invocation.method(#signInWithEmail, [], {
-                      #email: email,
-                      #password: password,
-                    }),
-                  ),
-                ),
+            returnValue: _i3.Future<_i5.Either<_i6.Failure, _i4.AppUser>>.value(
+              _i7.dummyValue<_i5.Either<_i6.Failure, _i4.AppUser>>(
+                this,
+                Invocation.method(#signInWithEmail, [], {
+                  #email: email,
+                  #password: password,
+                }),
+              ),
+            ),
             returnValueForMissingStub:
-                _i4.Future<_i3.Either<_i6.Failure, _i5.AppUser>>.value(
-                  _i8.dummyValue<_i3.Either<_i6.Failure, _i5.AppUser>>(
+                _i3.Future<_i5.Either<_i6.Failure, _i4.AppUser>>.value(
+                  _i7.dummyValue<_i5.Either<_i6.Failure, _i4.AppUser>>(
                     this,
                     Invocation.method(#signInWithEmail, [], {
                       #email: email,
@@ -115,25 +108,25 @@ class MockUserAuthRepository extends _i1.Mock implements _i2.UserAuthRepository 
                   ),
                 ),
           )
-          as _i4.Future<_i3.Either<_i6.Failure, _i5.AppUser>>);
+          as _i3.Future<_i5.Either<_i6.Failure, _i4.AppUser>>);
 
   @override
-  _i4.Future<_i3.Either<_i6.Failure, _i7.Success>> signOut() =>
+  _i3.Future<_i5.Either<_i6.Failure, _i8.Success>> signOut() =>
       (super.noSuchMethod(
             Invocation.method(#signOut, []),
-            returnValue: _i4.Future<_i3.Either<_i6.Failure, _i7.Success>>.value(
-              _i8.dummyValue<_i3.Either<_i6.Failure, _i7.Success>>(
+            returnValue: _i3.Future<_i5.Either<_i6.Failure, _i8.Success>>.value(
+              _i7.dummyValue<_i5.Either<_i6.Failure, _i8.Success>>(
                 this,
                 Invocation.method(#signOut, []),
               ),
             ),
             returnValueForMissingStub:
-                _i4.Future<_i3.Either<_i6.Failure, _i7.Success>>.value(
-                  _i8.dummyValue<_i3.Either<_i6.Failure, _i7.Success>>(
+                _i3.Future<_i5.Either<_i6.Failure, _i8.Success>>.value(
+                  _i7.dummyValue<_i5.Either<_i6.Failure, _i8.Success>>(
                     this,
                     Invocation.method(#signOut, []),
                   ),
                 ),
           )
-          as _i4.Future<_i3.Either<_i6.Failure, _i7.Success>>);
+          as _i3.Future<_i5.Either<_i6.Failure, _i8.Success>>);
 }

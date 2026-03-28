@@ -6,6 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'common/dependency_injection/dependency_injection_service.dart';
 import 'package:agrost_app/common/l10n/agrost_localizations.dart';
 
+import 'package:domain/user/usecases/user_auth_usecases/signout_usecase.dart';
+
 import 'auth_cubit.dart';
 
 void main() async {
@@ -18,7 +20,7 @@ class AgrostApp extends StatelessWidget {
 
   static Widget create() {
     return BlocProvider(
-      create: (context) => AuthCubit(DIService.get()),
+      create: (context) => AuthCubit(DIService.get(), DIService.get<SignOutUseCase>()),
       child: const AgrostApp(),
     );
   }

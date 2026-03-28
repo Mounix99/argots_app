@@ -1,48 +1,42 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:equatable/equatable.dart';
 
-part 'plant_model.g.dart';
-
-@JsonSerializable(fieldRename: FieldRename.snake)
-class PlantModel {
+class PlantModel extends Equatable {
   final int id;
   final String title;
   final String? description;
   final String authorId;
-  final Iterable<String>? soilType;
+  final List<String>? soilType;
   final List<String>? usedBy;
-  final Iterable<String>? plantType;
+  final List<String>? plantType;
   final bool public;
   final DateTime createdAt;
   final DateTime? lastUpdateAt;
   final String version;
   final String? photoUrl;
 
-  PlantModel(
-      {required this.id,
-      required this.title,
-      this.description,
-      required this.authorId,
-      this.soilType,
-      this.usedBy,
-      this.plantType,
-      required this.public,
-      required this.createdAt,
-      required this.lastUpdateAt,
-      required this.version,
-      this.photoUrl});
-
-  Map<String, dynamic> toJson() => _$PlantModelToJson(this);
-
-  factory PlantModel.fromJson(Map<String, dynamic> json) => _$PlantModelFromJson(json);
+  const PlantModel({
+    required this.id,
+    required this.title,
+    this.description,
+    required this.authorId,
+    this.soilType,
+    this.usedBy,
+    this.plantType,
+    required this.public,
+    required this.createdAt,
+    this.lastUpdateAt,
+    required this.version,
+    this.photoUrl,
+  });
 
   PlantModel copyWith({
     int? id,
     String? title,
     String? description,
     String? authorId,
-    Iterable<String>? soilType,
+    List<String>? soilType,
     List<String>? usedBy,
-    Iterable<String>? plantType,
+    List<String>? plantType,
     bool? public,
     DateTime? createdAt,
     DateTime? lastUpdateAt,
@@ -64,4 +58,20 @@ class PlantModel {
       photoUrl: photoUrl ?? this.photoUrl,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        id,
+        title,
+        description,
+        authorId,
+        soilType,
+        usedBy,
+        plantType,
+        public,
+        createdAt,
+        lastUpdateAt,
+        version,
+        photoUrl,
+      ];
 }

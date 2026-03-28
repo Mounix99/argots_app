@@ -5,7 +5,7 @@ import 'package:domain/plants/repositories/plant_repository.dart';
 import 'package:domain/plants/usecases/plant_usecases/get_market_plants_usecase.dart';
 import 'package:domain/plants/usecases/plant_usecases/get_plants_created_by_me_usecase.dart';
 import 'package:domain/plants/usecases/plant_usecases/get_user_plants_usecase.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
@@ -14,16 +14,16 @@ import 'plant_lists_usecases_test.mocks.dart';
 @GenerateNiceMocks([MockSpec<PlantsRepository>(as: #MockPlantsRepository)])
 void main() {
   late MockPlantsRepository mockPlantsRepository;
-  late GetMarketPlantsUsecase getMarketPlantsUsecase;
-  late GetPlantsCreatedByMeUsecase getListOfMyPlantsUsecase;
-  late GetUserPlantsUsecase getUserPlatsUsecase;
+  late GetMarketPlantsUseCase getMarketPlantsUsecase;
+  late GetPlantsCreatedByMeUseCase getListOfMyPlantsUsecase;
+  late GetUserPlantsUseCase getUserPlatsUsecase;
 
   setUp(() {
     provideDummy<Either<Failure, List<PlantModel>>>(const Right([]));
     mockPlantsRepository = MockPlantsRepository();
-    getMarketPlantsUsecase = GetMarketPlantsUsecase(mockPlantsRepository);
-    getListOfMyPlantsUsecase = GetPlantsCreatedByMeUsecase(mockPlantsRepository);
-    getUserPlatsUsecase = GetUserPlantsUsecase(mockPlantsRepository);
+    getMarketPlantsUsecase = GetMarketPlantsUseCase(mockPlantsRepository);
+    getListOfMyPlantsUsecase = GetPlantsCreatedByMeUseCase(mockPlantsRepository);
+    getUserPlatsUsecase = GetUserPlantsUseCase(mockPlantsRepository);
   });
 
   group("Domain/Plant/Get_market_plants", () {

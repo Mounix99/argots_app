@@ -5,7 +5,7 @@ import '../../../core/usecase_contract.dart';
 import '../../entities/plant_model.dart';
 import '../../repositories/plant_repository.dart';
 
-class GetPlantInfoUseCase implements Usecase<PlantModel, int> {
+class GetPlantInfoUseCase implements UseCase<PlantModel, int> {
   final PlantsRepository _plantsRepository;
 
   GetPlantInfoUseCase(this._plantsRepository);

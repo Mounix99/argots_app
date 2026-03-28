@@ -5,12 +5,12 @@ import '../../../core/success_objects/success_object.dart';
 import '../../../core/usecase_contract.dart';
 import '../../repositories/plant_repository.dart';
 
-typedef RemovePlantToUserParams = ({int plantId, String userId});
+typedef RemovePlantFromUserParams = ({int plantId, String userId});
 
-class RemovePlantToUserUseCase implements Usecase<Success, RemovePlantToUserParams> {
+class RemovePlantFromUserUseCase implements UseCase<Success, RemovePlantFromUserParams> {
   final PlantsRepository _plantsRepository;
 
-  RemovePlantToUserUseCase(this._plantsRepository);
+  RemovePlantFromUserUseCase(this._plantsRepository);
 
   @override
   Future<Either<Failure, Success>> call(params) async {

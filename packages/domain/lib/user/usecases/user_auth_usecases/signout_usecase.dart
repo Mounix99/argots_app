@@ -5,10 +5,10 @@ import 'package:domain/user/repositories/user_auth_repository.dart';
 import '../../../core/errors/failure.dart';
 import '../../../core/usecase_contract.dart';
 
-class SignOutUsecase implements UsecaseNoParam<Success> {
+class SignOutUseCase implements UseCaseNoParam<Success> {
   final UserAuthRepository _userAuthRepository;
 
-  SignOutUsecase(this._userAuthRepository);
+  SignOutUseCase(this._userAuthRepository);
 
   @override
   Future<Either<Failure, Success>> call() async {

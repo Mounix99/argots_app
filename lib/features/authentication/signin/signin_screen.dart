@@ -1,7 +1,8 @@
 import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
-import 'package:agrost_app/common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
+import 'package:agrost_app/common/state_management/base/request_state.dart';
 import 'package:agrost_app/features/authentication/signin/signin_cubit.dart';
+import 'package:domain/user/usecases/user_auth_usecases/signin_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -12,7 +13,7 @@ class SignInScreen extends HookWidget {
 
   static Widget create() {
     return BlocProvider(
-      create: (context) => SignInCubit(DIService.get()),
+      create: (_) => SignInCubit(DIService.get<SignInUseCase>()),
       child: const SignInScreen(),
     );
   }

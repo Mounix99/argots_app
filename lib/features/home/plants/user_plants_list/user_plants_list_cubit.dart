@@ -1,22 +1,21 @@
 import 'package:domain/plants/entities/plant_model.dart';
-import 'package:domain/plants/repositories/plant_repository.dart';
+import 'package:domain/plants/usecases/plant_usecases/get_user_plants_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../../common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
+import '../../../../common/state_management/base/request_state.dart';
 
 class MyPlantsCubit extends Cubit<MyPlantsState> {
-  final PlantsRepository _plantsRepository;
-
+  final GetUserPlantsUseCase _getUserPlantsUseCase;
   final String userId;
 
-  MyPlantsCubit(this._plantsRepository, {required this.userId}) : super(MyPlantsState.initial()) {
+  MyPlantsCubit(this._getUserPlantsUseCase, {required this.userId}) : super(MyPlantsState.initial()) {
     getMyPlants();
   }
 
   Future<List<PlantModel>> getMyPlants([int page = 1, int size = 20]) async {
     emit(state.copyWith(myPlantsRequestState: RequestState.loading, page: page));
-    final result = await _plantsRepository.getUserPlants(userId: userId, page: state.page, size: size);
+    final result = await _getUserPlantsUseCase((id: userId, page: state.page, size: size));
     emit(result.match(
       (failure) => state.copyWith(myPlantsRequestState: RequestState.error, errorMessage: failure.error.toString()),
       (data) => state.copyWith(myPlantsRequestState: RequestState.success, plants: data, page: page),
@@ -32,10 +31,8 @@ class MyPlantsCubit extends Cubit<MyPlantsState> {
 
 class MyPlantsState extends Equatable {
   final List<PlantModel> plants;
-
   final RequestState myPlantsRequestState;
   final String? errorMessage;
-
   final int page;
 
   const MyPlantsState({

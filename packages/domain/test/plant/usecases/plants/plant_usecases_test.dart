@@ -9,13 +9,23 @@ import 'package:domain/plants/usecases/plant_usecases/delete_plant_usecase.dart'
 import 'package:domain/plants/usecases/plant_usecases/get_plant_info_usecase.dart';
 import 'package:domain/plants/usecases/plant_usecases/remove_plant_from_user.dart';
 import 'package:domain/plants/usecases/plant_usecases/update_plant_usecase.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'plant_usecases_test.mocks.dart';
 
-@GenerateNiceMocks([MockSpec<PlantsRepository>(as: #MockPlantsRepository), MockSpec<PlantModel>(as: #MockPlantModel)])
+final _tPlantModel = PlantModel(
+  id: 1,
+  title: 'Test Plant',
+  authorId: 'author-1',
+  public: true,
+  createdAt: DateTime(2024),
+  lastUpdateAt: null,
+  version: '1.0',
+);
+
+@GenerateNiceMocks([MockSpec<PlantsRepository>(as: #MockPlantsRepository)])
 void main() {
   late MockPlantsRepository mockPlantsRepository;
   late AddPlantUseCase addPlantUseCase;
@@ -23,7 +33,7 @@ void main() {
   late DeletePlantUseCase deletePlantUseCase;
   late GetPlantInfoUseCase getPlantInfoUseCase;
   late AddPlantToUserUseCase addPlantToUserUseCase;
-  late RemovePlantToUserUseCase removePlantToUserUseCase;
+  late RemovePlantFromUserUseCase removePlantFromUserUseCase;
 
   setUp(() {
     provideDummy<Either<Failure, Success>>(Right(RemoteSourceSuccess()));
@@ -34,59 +44,54 @@ void main() {
     deletePlantUseCase = DeletePlantUseCase(mockPlantsRepository);
     getPlantInfoUseCase = GetPlantInfoUseCase(mockPlantsRepository);
     addPlantToUserUseCase = AddPlantToUserUseCase(mockPlantsRepository);
-    removePlantToUserUseCase = RemovePlantToUserUseCase(mockPlantsRepository);
+    removePlantFromUserUseCase = RemovePlantFromUserUseCase(mockPlantsRepository);
   });
 
   group("Domain/Plant/Add_plant", () {
-    final Map<String, dynamic> tPlantModel = {};
-
     test("/Success/ = should add plant to the repository", () async {
-      when(mockPlantsRepository.addPlant(plantData: anyNamed("plantData")))
+      when(mockPlantsRepository.addPlant(plant: anyNamed("plant")))
           .thenAnswer((_) async => Right(RemoteSourceSuccess()));
 
-      final result = await addPlantUseCase(tPlantModel);
+      final result = await addPlantUseCase(_tPlantModel);
 
       expect(result, Right(RemoteSourceSuccess()));
 
-      verify(mockPlantsRepository.addPlant(plantData: anyNamed("plantData")));
+      verify(mockPlantsRepository.addPlant(plant: anyNamed("plant")));
     });
 
     test("/Failure/ = should return Failure when adding plant to the repository fails", () async {
-      when(mockPlantsRepository.addPlant(plantData: anyNamed("plantData")))
+      when(mockPlantsRepository.addPlant(plant: anyNamed("plant")))
           .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await addPlantUseCase(tPlantModel);
+      final result = await addPlantUseCase(_tPlantModel);
 
       expect(result, const Left(RemoteSourceFailure()));
 
-      verify(mockPlantsRepository.addPlant(plantData: anyNamed("plantData")));
+      verify(mockPlantsRepository.addPlant(plant: anyNamed("plant")));
     });
   });
 
   group("Domain/Plant/Update_plant", () {
-    const tPlantId = 1;
-    final Map<String, dynamic> tPlantModel = {};
-
     test("/Success/ = should update plant to the repository", () async {
-      when(mockPlantsRepository.updatePlant(plantData: tPlantModel, plantId: anyNamed("plantId")))
+      when(mockPlantsRepository.updatePlant(plant: anyNamed("plant")))
           .thenAnswer((_) async => Right(RemoteSourceSuccess()));
 
-      final result = await updatePlantUseCase((tPlantModel, tPlantId));
+      final result = await updatePlantUseCase(_tPlantModel);
 
       expect(result, Right(RemoteSourceSuccess()));
 
-      verify(mockPlantsRepository.updatePlant(plantData: tPlantModel, plantId: anyNamed("plantId")));
+      verify(mockPlantsRepository.updatePlant(plant: anyNamed("plant")));
     });
 
     test("/Failure/ = should return Failure when updating plant to the repository fails", () async {
-      when(mockPlantsRepository.updatePlant(plantData: tPlantModel, plantId: anyNamed("plantId")))
+      when(mockPlantsRepository.updatePlant(plant: anyNamed("plant")))
           .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await updatePlantUseCase((tPlantModel, tPlantId));
+      final result = await updatePlantUseCase(_tPlantModel);
 
       expect(result, const Left(RemoteSourceFailure()));
 
-      verify(mockPlantsRepository.updatePlant(plantData: tPlantModel, plantId: anyNamed("plantId")));
+      verify(mockPlantsRepository.updatePlant(plant: anyNamed("plant")));
     });
   });
 
@@ -118,14 +123,14 @@ void main() {
 
   group("Domain/Plant/Get_plant_info", () {
     const tPlantId = 1;
-    final tPlantModel = MockPlantModel();
 
     test("/Success/ = should get plant info from the repository", () async {
-      when(mockPlantsRepository.getPlantInfo(plantId: anyNamed("plantId"))).thenAnswer((_) async => Right(tPlantModel));
+      when(mockPlantsRepository.getPlantInfo(plantId: anyNamed("plantId")))
+          .thenAnswer((_) async => Right(_tPlantModel));
 
       final result = await getPlantInfoUseCase(tPlantId);
 
-      expect(result, Right(tPlantModel));
+      expect(result, Right(_tPlantModel));
 
       verify(mockPlantsRepository.getPlantInfo(plantId: anyNamed("plantId")));
     });
@@ -177,7 +182,7 @@ void main() {
       when(mockPlantsRepository.removePlantFromUser(plantId: anyNamed("plantId"), userId: anyNamed("userId")))
           .thenAnswer((_) async => Right(RemoteSourceSuccess()));
 
-      final result = await removePlantToUserUseCase((plantId: tPlantId, userId: tUserId));
+      final result = await removePlantFromUserUseCase((plantId: tPlantId, userId: tUserId));
 
       expect(result, Right(RemoteSourceSuccess()));
 
@@ -188,7 +193,7 @@ void main() {
       when(mockPlantsRepository.removePlantFromUser(plantId: anyNamed("plantId"), userId: anyNamed("userId")))
           .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await removePlantToUserUseCase((plantId: tPlantId, userId: tUserId));
+      final result = await removePlantFromUserUseCase((plantId: tPlantId, userId: tUserId));
 
       expect(result, const Left(RemoteSourceFailure()));
 

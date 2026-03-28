@@ -5,7 +5,7 @@ import '../../../core/success_objects/success_object.dart';
 import '../../../core/usecase_contract.dart';
 import '../../repositories/plant_repository.dart';
 
-class DeleteStageUseCase implements Usecase<Success, int> {
+class DeleteStageUseCase implements UseCase<Success, int> {
   final PlantsRepository _plantsRepository;
 
   DeleteStageUseCase(this._plantsRepository);

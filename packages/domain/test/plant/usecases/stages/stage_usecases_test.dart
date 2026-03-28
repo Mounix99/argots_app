@@ -1,15 +1,27 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
 import 'package:domain/core/success_objects/success_object.dart';
+import 'package:domain/plants/entities/stage_model.dart';
 import 'package:domain/plants/repositories/plant_repository.dart';
 import 'package:domain/plants/usecases/stage_usecases/add_stage_usecase.dart';
 import 'package:domain/plants/usecases/stage_usecases/delete_stage_usecase.dart';
 import 'package:domain/plants/usecases/stage_usecases/update_stage_usecase.dart';
-import 'package:flutter_test/flutter_test.dart';
+import 'package:test/test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
 
 import 'stage_usecases_test.mocks.dart';
+
+final _tStageModel = StageModel(
+  id: 1,
+  title: 'Test Stage',
+  description: null,
+  createdAt: DateTime(2024),
+  lastUpdateAt: DateTime(2024),
+  plantId: 1,
+  authorId: 'author-1',
+  duration: 30,
+);
 
 @GenerateNiceMocks([MockSpec<PlantsRepository>(as: #MockPlantsRepository)])
 void main() {
@@ -27,55 +39,50 @@ void main() {
   });
 
   group("Domain/Plant/Add_stage", () {
-    final Map<String, dynamic> tStageModel = {};
-
     test("/Success/ = should successfully add stage to the repository", () async {
-      when(mockPlantsRepository.addStage(stageData: anyNamed("stageData")))
+      when(mockPlantsRepository.addStage(stage: anyNamed("stage")))
           .thenAnswer((_) async => Right(RemoteSourceSuccess()));
 
-      final result = await addStageUseCase(tStageModel);
+      final result = await addStageUseCase(_tStageModel);
 
       expect(result, Right(RemoteSourceSuccess()));
 
-      verify(mockPlantsRepository.addStage(stageData: anyNamed("stageData")));
+      verify(mockPlantsRepository.addStage(stage: anyNamed("stage")));
     });
 
     test("/Failure/ = should return Failure when adding stage to the repository fails", () async {
-      when(mockPlantsRepository.addStage(stageData: anyNamed("stageData")))
+      when(mockPlantsRepository.addStage(stage: anyNamed("stage")))
           .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await addStageUseCase(tStageModel);
+      final result = await addStageUseCase(_tStageModel);
 
       expect(result, const Left(RemoteSourceFailure()));
 
-      verify(mockPlantsRepository.addStage(stageData: anyNamed("stageData")));
+      verify(mockPlantsRepository.addStage(stage: anyNamed("stage")));
     });
   });
 
   group("Domain/Plant/Update_stage", () {
-    const tStageId = 1;
-    final Map<String, dynamic> tStageModel = {};
-
     test("/Success/ = should successfully update stage with the repository request", () async {
-      when(mockPlantsRepository.updateStage(stageId: anyNamed("stageId"), stageData: anyNamed("stageData")))
+      when(mockPlantsRepository.updateStage(stage: anyNamed("stage")))
           .thenAnswer((_) async => Right(RemoteSourceSuccess()));
 
-      final result = await updateStageUseCase((tStageModel, tStageId));
+      final result = await updateStageUseCase(_tStageModel);
 
       expect(result, Right(RemoteSourceSuccess()));
 
-      verify(mockPlantsRepository.updateStage(stageId: anyNamed("stageId"), stageData: anyNamed("stageData")));
+      verify(mockPlantsRepository.updateStage(stage: anyNamed("stage")));
     });
 
     test("/Failure/ = should return Failure when updating stage to the repository fails", () async {
-      when(mockPlantsRepository.updateStage(stageId: anyNamed("stageId"), stageData: anyNamed("stageData")))
+      when(mockPlantsRepository.updateStage(stage: anyNamed("stage")))
           .thenAnswer((_) async => const Left(RemoteSourceFailure()));
 
-      final result = await updateStageUseCase((tStageModel, tStageId));
+      final result = await updateStageUseCase(_tStageModel);
 
       expect(result, const Left(RemoteSourceFailure()));
 
-      verify(mockPlantsRepository.updateStage(stageId: anyNamed("stageId"), stageData: anyNamed("stageData")));
+      verify(mockPlantsRepository.updateStage(stage: anyNamed("stage")));
     });
   });
 

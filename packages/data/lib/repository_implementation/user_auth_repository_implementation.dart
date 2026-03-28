@@ -5,20 +5,19 @@ import 'package:domain/user/entities/app_user.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+import '../remote_data_source/user_auth_remote_data_source.dart';
+
 class UserAuthRepositoryImplementation implements UserAuthRepository {
-  UserAuthRepositoryImplementation({required this.supabase});
+  final UserAuthRemoteDataSource _remoteDataSource;
 
-  final Supabase supabase;
-
-  @override
-  AppUser? get currentUser {
-    final user = supabase.client.auth.currentUser;
-    return user != null ? _toAppUser(user) : null;
-  }
+  UserAuthRepositoryImplementation({required UserAuthRemoteDataSource remoteDataSource})
+      : _remoteDataSource = remoteDataSource;
 
   @override
-  Stream<AppUser?> get authStateChanges => supabase.client.auth.onAuthStateChange
-      .map((data) => data.session?.user != null ? _toAppUser(data.session!.user) : null);
+  AppUser? get currentUser => _remoteDataSource.currentUser;
+
+  @override
+  Stream<AppUser?> get authStateChanges => _remoteDataSource.authStateChanges;
 
   @override
   Future<Either<Failure, AppUser>> signUpWithEmail({
@@ -27,16 +26,12 @@ class UserAuthRepositoryImplementation implements UserAuthRepository {
     Map<String, dynamic>? data,
   }) async {
     try {
-      final response = await supabase.client.auth.signUp(
+      final user = await _remoteDataSource.signUpWithEmail(
         email: email,
         password: password,
         data: data,
       );
-      final user = response.user;
-      if (user == null) {
-        return const Left(RemoteSourceFailure(remoteError: 'Sign up succeeded but no user was returned'));
-      }
-      return Right(_toAppUser(user));
+      return Right(user);
     } catch (error) {
       final message = error is AuthException ? error.message : error.toString();
       return Left(RemoteSourceFailure(remoteError: message));
@@ -49,15 +44,11 @@ class UserAuthRepositoryImplementation implements UserAuthRepository {
     required String password,
   }) async {
     try {
-      final response = await supabase.client.auth.signInWithPassword(
+      final user = await _remoteDataSource.signInWithEmail(
         email: email,
         password: password,
       );
-      final user = response.user;
-      if (user == null) {
-        return const Left(RemoteSourceFailure(remoteError: 'Sign in succeeded but no user was returned'));
-      }
-      return Right(_toAppUser(user));
+      return Right(user);
     } catch (error) {
       final message = error is AuthException ? error.message : error.toString();
       return Left(RemoteSourceFailure(remoteError: message));
@@ -67,16 +58,10 @@ class UserAuthRepositoryImplementation implements UserAuthRepository {
   @override
   Future<Either<Failure, Success>> signOut() async {
     try {
-      await supabase.client.auth.signOut();
+      await _remoteDataSource.signOut();
       return Right(RemoteSourceSuccess());
     } catch (error) {
       return Left(RemoteSourceFailure(remoteError: error.toString()));
     }
   }
-
-  AppUser _toAppUser(User user) => AppUser(
-        id: user.id,
-        email: user.email ?? '',
-        createdAt: user.createdAt.isNotEmpty ? DateTime.tryParse(user.createdAt) : null,
-      );
 }

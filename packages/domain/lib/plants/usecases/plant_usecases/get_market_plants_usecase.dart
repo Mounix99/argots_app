@@ -7,10 +7,10 @@ import '../../repositories/plant_repository.dart';
 
 typedef GetMarketPlantsParams = ({int page, int size});
 
-class GetMarketPlantsUsecase implements Usecase<List<PlantModel>, GetMarketPlantsParams> {
+class GetMarketPlantsUseCase implements UseCase<List<PlantModel>, GetMarketPlantsParams> {
   final PlantsRepository _plantsRepository;
 
-  GetMarketPlantsUsecase(this._plantsRepository);
+  GetMarketPlantsUseCase(this._plantsRepository);
 
   @override
   Future<Either<Failure, List<PlantModel>>> call(GetMarketPlantsParams params) async {

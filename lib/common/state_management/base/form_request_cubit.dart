@@ -1,5 +1,4 @@
-import 'package:agrost_app/common/extensions/future_extensions.dart';
-import 'package:agrost_app/common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
+import 'package:agrost_app/common/state_management/base/request_state.dart';
 import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,7 +12,7 @@ abstract class FormRequestCubit<T> extends Cubit<FormRequestState> {
     Future<Either<Failure, T>> Function() request,
   ) async {
     emit(state.copyWith(requestState: RequestState.loading));
-    final result = await request().withProgress();
+    final result = await request();
     result.match(
       (failure) => emit(state.copyWith(
         requestState: RequestState.error,

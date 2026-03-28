@@ -6,9 +6,9 @@
 import 'dart:async' as _i3;
 
 import 'package:domain/core/errors/failure.dart' as _i5;
-import 'package:domain/user/entities/app_user.dart' as _i4;
+import 'package:domain/user/entities/app_user.dart' as _i6;
 import 'package:domain/user/repositories/user_repository.dart' as _i2;
-import 'package:fpdart/fpdart.dart' as _i6;
+import 'package:fpdart/fpdart.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i7;
 
@@ -32,62 +32,67 @@ import 'package:mockito/src/dummies.dart' as _i7;
 /// See the documentation for Mockito's code generation for more information.
 class MockUserRepository extends _i1.Mock implements _i2.UserRepository {
   @override
-  _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser?>> getUser() =>
+  _i3.Future<_i4.Either<_i5.Failure, _i6.AppUser?>> getUser() =>
       (super.noSuchMethod(
             Invocation.method(#getUser, []),
-            returnValue: _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser?>>.value(
-              _i7.dummyValue<_i6.Either<_i5.Failure, _i4.AppUser?>>(
-                this,
-                Invocation.method(#getUser, []),
-              ),
-            ),
+            returnValue:
+                _i3.Future<_i4.Either<_i5.Failure, _i6.AppUser?>>.value(
+                  _i7.dummyValue<_i4.Either<_i5.Failure, _i6.AppUser?>>(
+                    this,
+                    Invocation.method(#getUser, []),
+                  ),
+                ),
             returnValueForMissingStub:
-                _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser?>>.value(
-                  _i7.dummyValue<_i6.Either<_i5.Failure, _i4.AppUser?>>(
+                _i3.Future<_i4.Either<_i5.Failure, _i6.AppUser?>>.value(
+                  _i7.dummyValue<_i4.Either<_i5.Failure, _i6.AppUser?>>(
                     this,
                     Invocation.method(#getUser, []),
                   ),
                 ),
           )
-          as _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser?>>);
+          as _i3.Future<_i4.Either<_i5.Failure, _i6.AppUser?>>);
 
   @override
-  _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>> updateUser(_i4.AppUser? user) =>
+  _i3.Future<_i4.Either<_i5.Failure, _i6.AppUser>> updateUser(
+    _i6.AppUser? user,
+  ) =>
       (super.noSuchMethod(
             Invocation.method(#updateUser, [user]),
-            returnValue: _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>>.value(
-              _i7.dummyValue<_i6.Either<_i5.Failure, _i4.AppUser>>(
+            returnValue: _i3.Future<_i4.Either<_i5.Failure, _i6.AppUser>>.value(
+              _i7.dummyValue<_i4.Either<_i5.Failure, _i6.AppUser>>(
                 this,
                 Invocation.method(#updateUser, [user]),
               ),
             ),
             returnValueForMissingStub:
-                _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>>.value(
-                  _i7.dummyValue<_i6.Either<_i5.Failure, _i4.AppUser>>(
+                _i3.Future<_i4.Either<_i5.Failure, _i6.AppUser>>.value(
+                  _i7.dummyValue<_i4.Either<_i5.Failure, _i6.AppUser>>(
                     this,
                     Invocation.method(#updateUser, [user]),
                   ),
                 ),
           )
-          as _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>>);
+          as _i3.Future<_i4.Either<_i5.Failure, _i6.AppUser>>);
 
   @override
-  _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>> deleteUser(_i4.AppUser? user) =>
+  _i3.Future<_i4.Either<_i5.Failure, _i6.AppUser>> deleteUser(
+    _i6.AppUser? user,
+  ) =>
       (super.noSuchMethod(
             Invocation.method(#deleteUser, [user]),
-            returnValue: _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>>.value(
-              _i7.dummyValue<_i6.Either<_i5.Failure, _i4.AppUser>>(
+            returnValue: _i3.Future<_i4.Either<_i5.Failure, _i6.AppUser>>.value(
+              _i7.dummyValue<_i4.Either<_i5.Failure, _i6.AppUser>>(
                 this,
                 Invocation.method(#deleteUser, [user]),
               ),
             ),
             returnValueForMissingStub:
-                _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>>.value(
-                  _i7.dummyValue<_i6.Either<_i5.Failure, _i4.AppUser>>(
+                _i3.Future<_i4.Either<_i5.Failure, _i6.AppUser>>.value(
+                  _i7.dummyValue<_i4.Either<_i5.Failure, _i6.AppUser>>(
                     this,
                     Invocation.method(#deleteUser, [user]),
                   ),
                 ),
           )
-          as _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>>);
+          as _i3.Future<_i4.Either<_i5.Failure, _i6.AppUser>>);
 }

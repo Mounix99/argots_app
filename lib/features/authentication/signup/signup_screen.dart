@@ -1,7 +1,8 @@
 import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
-import 'package:agrost_app/common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
+import 'package:agrost_app/common/state_management/base/request_state.dart';
 import 'package:agrost_app/features/authentication/signup/signup_cubit.dart';
+import 'package:domain/user/usecases/user_auth_usecases/signup_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -12,7 +13,7 @@ class SignUpScreen extends HookWidget {
 
   static Widget create() {
     return BlocProvider(
-      create: (_) => SignUpCubit(DIService.get()),
+      create: (_) => SignUpCubit(DIService.get<SignUpUseCase>()),
       child: const SignUpScreen(),
     );
   }
@@ -60,7 +61,7 @@ class SignUpScreen extends HookWidget {
                         ),
                         const SizedBox(height: 40),
                         ReactiveTextField<String>(
-                          formControlName: SingUpFormFields.email.name,
+                          formControlName: SignUpFormFields.email.name,
                           decoration: InputDecoration(
                             labelText: context.strings.email,
                             prefixIcon: const Icon(Icons.email_outlined),
@@ -74,7 +75,7 @@ class SignUpScreen extends HookWidget {
                         ),
                         const SizedBox(height: 16),
                         ReactiveTextField<String>(
-                          formControlName: SingUpFormFields.password.name,
+                          formControlName: SignUpFormFields.password.name,
                           obscureText: obscurePassword.value,
                           decoration: InputDecoration(
                             labelText: context.strings.password,
@@ -94,7 +95,7 @@ class SignUpScreen extends HookWidget {
                         ),
                         const SizedBox(height: 16),
                         ReactiveTextField<String>(
-                          formControlName: SingUpFormFields.confirmPassword.name,
+                          formControlName: SignUpFormFields.confirmPassword.name,
                           obscureText: obscureConfirm.value,
                           decoration: InputDecoration(
                             labelText: context.strings.confirm_password,

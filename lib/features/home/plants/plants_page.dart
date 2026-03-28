@@ -1,4 +1,6 @@
 import 'package:agrost_app/common/extensions/context_extensions.dart';
+import 'package:domain/plants/usecases/plant_usecases/add_plant_to_user_usecase.dart';
+import 'package:domain/plants/usecases/plant_usecases/remove_plant_from_user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -15,7 +17,11 @@ class PlantsScreen extends HookWidget {
 
   static Widget create({required StatefulNavigationShell shell, required List<Widget> children}) {
     return BlocProvider(
-        create: (context) => ManagePlantsCubit(DIService.get(), context.user!.id),
+        create: (context) => ManagePlantsCubit(
+              DIService.get<AddPlantToUserUseCase>(),
+              DIService.get<RemovePlantFromUserUseCase>(),
+              context.user!.id,
+            ),
         child: PlantsScreen(
           shell: shell,
           children: children,

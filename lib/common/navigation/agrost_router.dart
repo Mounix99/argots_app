@@ -8,14 +8,14 @@ import 'package:domain/user/repositories/user_auth_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../features/home/fileds/fields_page.dart';
+import '../../features/home/fields/fields_page.dart';
 import '../../features/home/home_screen.dart';
 import '../../features/home/plants/plant_market/plant_market_page.dart';
 import '../../features/home/plants/user_plants_list/user_plants_list_page.dart';
 import '../../features/home/profile/profile_page.dart';
 import '../../features/plant/plant_details/added_plant_details_screen.dart';
 import '../../features/splash/splash_screen.dart';
-import 'argost_navigation_constants.dart';
+import 'agrost_navigation_constants.dart';
 
 class GoRouterRefreshStream extends ChangeNotifier {
   GoRouterRefreshStream(Stream<Object?> stream) {
