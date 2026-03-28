@@ -1,18 +1,12 @@
-import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
+import 'package:agrost_app/auth_cubit.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
-import 'package:agrost_app/features/home/profile/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
-  static Widget create() {
-    return BlocProvider(
-      create: (context) => ProfileCubit(DIService.get()),
-      child: const ProfilePage(),
-    );
-  }
+  static Widget create() => const ProfilePage();
 
   @override
   Widget build(BuildContext context) {
@@ -20,19 +14,21 @@ class ProfilePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(context.strings.profile),
       ),
-      body: BlocConsumer<ProfileCubit, ProfileState>(
-        listener: (context, state) {
-          if (state.signOutState.isSuccess) {
-            context.navigator.goToSplash();
-          }
-        },
-        builder: (context, state) {
+      body: BlocBuilder<AuthCubit, AuthState>(
+        builder: (context, authState) {
           return Center(
             child: ListView(
+              shrinkWrap: true,
+              padding: const EdgeInsets.all(16.0),
               children: [
-                Text(context.user?.email ?? "", textAlign: TextAlign.center),
+                Text(
+                  authState.user?.email ?? '',
+                  textAlign: TextAlign.center,
+                  style: context.textTheme.titleMedium,
+                ),
+                const SizedBox(height: 24),
                 TextButton(
-                  onPressed: () => context.read<ProfileCubit>().signOut(),
+                  onPressed: () => context.read<AuthCubit>().signOut(),
                   child: Text(context.strings.sign_out),
                 ),
               ],

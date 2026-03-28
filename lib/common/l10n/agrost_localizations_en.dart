@@ -18,6 +18,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get sign_up => 'Sign up';
 
   @override
+  String get sign_up_success => 'Account created! Check your email to confirm.';
+
+  @override
   String get fields => 'Fields';
 
   @override

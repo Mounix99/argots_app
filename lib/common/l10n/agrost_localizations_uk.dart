@@ -18,6 +18,10 @@ class AppLocalizationsUk extends AppLocalizations {
   String get sign_up => 'Зареєструватися';
 
   @override
+  String get sign_up_success =>
+      'Акаунт створено! Перевірте пошту для підтвердження.';
+
+  @override
   String get fields => 'Поля';
 
   @override

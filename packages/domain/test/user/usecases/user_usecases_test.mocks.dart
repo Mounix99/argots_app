@@ -6,11 +6,11 @@
 import 'dart:async' as _i3;
 
 import 'package:domain/core/errors/failure.dart' as _i5;
+import 'package:domain/user/entities/app_user.dart' as _i4;
 import 'package:domain/user/repositories/user_repository.dart' as _i2;
-import 'package:fpdart/fpdart.dart' as _i4;
+import 'package:fpdart/fpdart.dart' as _i6;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i7;
-import 'package:supabase_flutter/supabase_flutter.dart' as _i6;
 
 // ignore_for_file: type=lint
 // ignore_for_file: avoid_redundant_argument_values
@@ -32,133 +32,62 @@ import 'package:supabase_flutter/supabase_flutter.dart' as _i6;
 /// See the documentation for Mockito's code generation for more information.
 class MockUserRepository extends _i1.Mock implements _i2.UserRepository {
   @override
-  _i3.Future<_i4.Either<_i5.Failure, _i6.User?>> getUser() =>
+  _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser?>> getUser() =>
       (super.noSuchMethod(
             Invocation.method(#getUser, []),
-            returnValue: _i3.Future<_i4.Either<_i5.Failure, _i6.User?>>.value(
-              _i7.dummyValue<_i4.Either<_i5.Failure, _i6.User?>>(
+            returnValue: _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser?>>.value(
+              _i7.dummyValue<_i6.Either<_i5.Failure, _i4.AppUser?>>(
                 this,
                 Invocation.method(#getUser, []),
               ),
             ),
             returnValueForMissingStub:
-                _i3.Future<_i4.Either<_i5.Failure, _i6.User?>>.value(
-                  _i7.dummyValue<_i4.Either<_i5.Failure, _i6.User?>>(
+                _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser?>>.value(
+                  _i7.dummyValue<_i6.Either<_i5.Failure, _i4.AppUser?>>(
                     this,
                     Invocation.method(#getUser, []),
                   ),
                 ),
           )
-          as _i3.Future<_i4.Either<_i5.Failure, _i6.User?>>);
+          as _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser?>>);
 
   @override
-  _i3.Future<_i4.Either<_i5.Failure, _i6.User>> updateUser(_i6.User? user) =>
+  _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>> updateUser(_i4.AppUser? user) =>
       (super.noSuchMethod(
             Invocation.method(#updateUser, [user]),
-            returnValue: _i3.Future<_i4.Either<_i5.Failure, _i6.User>>.value(
-              _i7.dummyValue<_i4.Either<_i5.Failure, _i6.User>>(
+            returnValue: _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>>.value(
+              _i7.dummyValue<_i6.Either<_i5.Failure, _i4.AppUser>>(
                 this,
                 Invocation.method(#updateUser, [user]),
               ),
             ),
             returnValueForMissingStub:
-                _i3.Future<_i4.Either<_i5.Failure, _i6.User>>.value(
-                  _i7.dummyValue<_i4.Either<_i5.Failure, _i6.User>>(
+                _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>>.value(
+                  _i7.dummyValue<_i6.Either<_i5.Failure, _i4.AppUser>>(
                     this,
                     Invocation.method(#updateUser, [user]),
                   ),
                 ),
           )
-          as _i3.Future<_i4.Either<_i5.Failure, _i6.User>>);
+          as _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>>);
 
   @override
-  _i3.Future<_i4.Either<_i5.Failure, _i6.User>> deleteUser(_i6.User? user) =>
+  _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>> deleteUser(_i4.AppUser? user) =>
       (super.noSuchMethod(
             Invocation.method(#deleteUser, [user]),
-            returnValue: _i3.Future<_i4.Either<_i5.Failure, _i6.User>>.value(
-              _i7.dummyValue<_i4.Either<_i5.Failure, _i6.User>>(
+            returnValue: _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>>.value(
+              _i7.dummyValue<_i6.Either<_i5.Failure, _i4.AppUser>>(
                 this,
                 Invocation.method(#deleteUser, [user]),
               ),
             ),
             returnValueForMissingStub:
-                _i3.Future<_i4.Either<_i5.Failure, _i6.User>>.value(
-                  _i7.dummyValue<_i4.Either<_i5.Failure, _i6.User>>(
+                _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>>.value(
+                  _i7.dummyValue<_i6.Either<_i5.Failure, _i4.AppUser>>(
                     this,
                     Invocation.method(#deleteUser, [user]),
                   ),
                 ),
           )
-          as _i3.Future<_i4.Either<_i5.Failure, _i6.User>>);
-}
-
-/// A class which mocks [User].
-///
-/// See the documentation for Mockito's code generation for more information.
-class MockUser extends _i1.Mock implements _i6.User {
-  @override
-  String get id =>
-      (super.noSuchMethod(
-            Invocation.getter(#id),
-            returnValue: _i7.dummyValue<String>(this, Invocation.getter(#id)),
-            returnValueForMissingStub: _i7.dummyValue<String>(
-              this,
-              Invocation.getter(#id),
-            ),
-          )
-          as String);
-
-  @override
-  Map<String, dynamic> get appMetadata =>
-      (super.noSuchMethod(
-            Invocation.getter(#appMetadata),
-            returnValue: <String, dynamic>{},
-            returnValueForMissingStub: <String, dynamic>{},
-          )
-          as Map<String, dynamic>);
-
-  @override
-  String get aud =>
-      (super.noSuchMethod(
-            Invocation.getter(#aud),
-            returnValue: _i7.dummyValue<String>(this, Invocation.getter(#aud)),
-            returnValueForMissingStub: _i7.dummyValue<String>(
-              this,
-              Invocation.getter(#aud),
-            ),
-          )
-          as String);
-
-  @override
-  String get createdAt =>
-      (super.noSuchMethod(
-            Invocation.getter(#createdAt),
-            returnValue: _i7.dummyValue<String>(
-              this,
-              Invocation.getter(#createdAt),
-            ),
-            returnValueForMissingStub: _i7.dummyValue<String>(
-              this,
-              Invocation.getter(#createdAt),
-            ),
-          )
-          as String);
-
-  @override
-  bool get isAnonymous =>
-      (super.noSuchMethod(
-            Invocation.getter(#isAnonymous),
-            returnValue: false,
-            returnValueForMissingStub: false,
-          )
-          as bool);
-
-  @override
-  Map<String, dynamic> toJson() =>
-      (super.noSuchMethod(
-            Invocation.method(#toJson, []),
-            returnValue: <String, dynamic>{},
-            returnValueForMissingStub: <String, dynamic>{},
-          )
-          as Map<String, dynamic>);
+          as _i3.Future<_i6.Either<_i5.Failure, _i4.AppUser>>);
 }

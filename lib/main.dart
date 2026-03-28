@@ -2,8 +2,8 @@ import 'package:agrost_app/common/theming/agrost_main_themes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:go_router/go_router.dart';
 import 'common/dependency_injection/dependency_injection_service.dart';
-import 'common/navigation/agrost_router.dart';
 import 'package:agrost_app/common/l10n/agrost_localizations.dart';
 
 import 'auth_cubit.dart';
@@ -17,20 +17,21 @@ class AgrostApp extends StatelessWidget {
   const AgrostApp({super.key});
 
   static Widget create() {
-    return BlocProvider(create: (context) => AuthCubit(DIService.get(), DIService.get()), child: const AgrostApp());
+    return BlocProvider(
+      create: (context) => AuthCubit(DIService.get()),
+      child: const AgrostApp(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthCubitState>(
-      builder: (_, _) => MaterialApp.router(
-        routerConfig: AgrostRouter(DIService.get()).router,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        builder: EasyLoading.init(),
-        theme: AgrostTheming.lightTheme,
-        darkTheme: AgrostTheming.darkTheme,
-      ),
+    return MaterialApp.router(
+      routerConfig: DIService.get<GoRouter>(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      builder: EasyLoading.init(),
+      theme: AgrostTheming.lightTheme,
+      darkTheme: AgrostTheming.darkTheme,
     );
   }
 }

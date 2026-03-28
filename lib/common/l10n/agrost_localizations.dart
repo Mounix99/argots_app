@@ -116,6 +116,12 @@ abstract class AppLocalizations {
   /// **'Sign up'**
   String get sign_up;
 
+  /// No description provided for @sign_up_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Account created! Check your email to confirm.'**
+  String get sign_up_success;
+
   /// No description provided for @fields.
   ///
   /// In en, this message translates to:

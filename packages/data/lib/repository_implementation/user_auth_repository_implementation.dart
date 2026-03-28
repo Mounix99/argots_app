@@ -1,48 +1,66 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
 import 'package:domain/core/success_objects/success_object.dart';
+import 'package:domain/user/entities/app_user.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class UserAuthRepositoryImplementation implements UserAuthRepository {
-  UserAuthRepositoryImplementation({required this.supabase, required this.sharedPreferences});
-  final Supabase supabase;
-  final SharedPreferences sharedPreferences;
+  UserAuthRepositoryImplementation({required this.supabase});
 
-  static const String _sessionKey = 'user_session';
+  final Supabase supabase;
 
   @override
-  Future<Either<Failure, AuthResponse>> signUpWithEmail(
-      {required String email, required String password, Map<String, dynamic>? data}) async {
+  AppUser? get currentUser {
+    final user = supabase.client.auth.currentUser;
+    return user != null ? _toAppUser(user) : null;
+  }
+
+  @override
+  Stream<AppUser?> get authStateChanges => supabase.client.auth.onAuthStateChange
+      .map((data) => data.session?.user != null ? _toAppUser(data.session!.user) : null);
+
+  @override
+  Future<Either<Failure, AppUser>> signUpWithEmail({
+    required String email,
+    required String password,
+    Map<String, dynamic>? data,
+  }) async {
     try {
       final response = await supabase.client.auth.signUp(
         email: email,
         password: password,
         data: data,
       );
-      if (response.session != null) {
-        await sharedPreferences.setString(_sessionKey, response.session!.toJson().toString());
+      final user = response.user;
+      if (user == null) {
+        return const Left(RemoteSourceFailure(remoteError: 'Sign up succeeded but no user was returned'));
       }
-      return Right(response);
+      return Right(_toAppUser(user));
     } catch (error) {
-      return Left(RemoteSourceFailure(remoteError: error));
+      final message = error is AuthException ? error.message : error.toString();
+      return Left(RemoteSourceFailure(remoteError: message));
     }
   }
 
   @override
-  Future<Either<Failure, AuthResponse>> signInWithEmail({required String email, required String password}) async {
+  Future<Either<Failure, AppUser>> signInWithEmail({
+    required String email,
+    required String password,
+  }) async {
     try {
       final response = await supabase.client.auth.signInWithPassword(
         email: email,
         password: password,
       );
-      if (response.session != null) {
-        await sharedPreferences.setString(_sessionKey, response.session!.toJson().toString());
+      final user = response.user;
+      if (user == null) {
+        return const Left(RemoteSourceFailure(remoteError: 'Sign in succeeded but no user was returned'));
       }
-      return Right(response);
+      return Right(_toAppUser(user));
     } catch (error) {
-      return Left(RemoteSourceFailure(remoteError: error));
+      final message = error is AuthException ? error.message : error.toString();
+      return Left(RemoteSourceFailure(remoteError: message));
     }
   }
 
@@ -50,24 +68,15 @@ class UserAuthRepositoryImplementation implements UserAuthRepository {
   Future<Either<Failure, Success>> signOut() async {
     try {
       await supabase.client.auth.signOut();
-      await sharedPreferences.remove(_sessionKey);
       return Right(RemoteSourceSuccess());
     } catch (error) {
-      return Left(RemoteSourceFailure(remoteError: error));
+      return Left(RemoteSourceFailure(remoteError: error.toString()));
     }
   }
 
-  @override
-  Future<Either<Failure, AuthResponse>> signInWithToken() async {
-    try {
-      final sessionString = sharedPreferences.getString(_sessionKey);
-      if (sessionString != null && supabase.client.auth.currentUser == null) {
-        final response = await supabase.client.auth.recoverSession(sessionString);
-        return Right(response);
-      }
-      return Future.value(const Left(RemoteSourceFailure(remoteError: 'No session found')));
-    } catch (error) {
-      return Future.value(Left(RemoteSourceFailure(remoteError: error.toString())));
-    }
-  }
+  AppUser _toAppUser(User user) => AppUser(
+        id: user.id,
+        email: user.email ?? '',
+        createdAt: user.createdAt.isNotEmpty ? DateTime.tryParse(user.createdAt) : null,
+      );
 }

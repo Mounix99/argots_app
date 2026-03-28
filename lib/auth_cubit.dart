@@ -1,65 +1,78 @@
+import 'dart:async';
+
+import 'package:domain/user/entities/app_user.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
-import 'package:domain/user/repositories/user_repository.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'common/state_management/supabase_auth_cubit/supabase_auth_cubit_state.dart';
+sealed class AuthState extends Equatable {
+  const AuthState();
 
-class AuthCubit extends Cubit<AuthCubitState> {
-  final UserAuthRepository _userAuthRepository;
-  final UserRepository _userRepository;
-
-  AuthCubit(this._userAuthRepository, this._userRepository) : super(AuthCubitState.initial()) {
-    signInWithToken();
-  }
-
-  /// Fetches the user from the repository and emits the state accordingly.
-  Future<void> getUser() async {
-    emit(state.copyWith(fetchUserState: RequestState.loading));
-    final user = await _userRepository.getUser();
-    user.match((failure) => emit(state.copyWith(fetchUserState: RequestState.error, error: failure)),
-        (user) => emit(state.copyWith(fetchUserState: RequestState.success, user: user)));
-  }
-
-  /// Signs in with the token and emits the state accordingly.
-  Future<void> signInWithToken() async {
-    emit(state.copyWith(loginWithTokenState: RequestState.loading));
-    final response = await _userAuthRepository.signInWithToken();
-    response.match((failure) => emit(state.copyWith(loginWithTokenState: RequestState.error, error: failure)),
-        (authResponse) => emit(state.copyWith(loginWithTokenState: RequestState.success, user: authResponse.user)));
-  }
+  AppUser? get user => null;
+  bool get isAuthenticated => false;
+  bool get isUnknown => false;
 }
 
-class AuthCubitState extends Equatable {
-  final User? user;
-  final RequestState fetchUserState;
-  final RequestState loginWithTokenState;
-  final dynamic error;
-
-  const AuthCubitState(
-      {required this.user, required this.fetchUserState, this.error, required this.loginWithTokenState});
-
-  AuthCubitState copyWith(
-      {User? user, RequestState? fetchUserState, RequestState? loginWithTokenState, dynamic error}) {
-    return AuthCubitState(
-      user: user ?? this.user,
-      fetchUserState: fetchUserState ?? this.fetchUserState,
-      loginWithTokenState: loginWithTokenState ?? this.loginWithTokenState,
-      error: error ?? this.error,
-    );
-  }
-
-  factory AuthCubitState.initial() {
-    return const AuthCubitState(
-      user: null,
-      fetchUserState: RequestState.initial,
-      loginWithTokenState: RequestState.initial,
-    );
-  }
-
-  bool get isLoading => fetchUserState.isLoading || loginWithTokenState.isLoading;
+final class AuthUnknown extends AuthState {
+  const AuthUnknown();
 
   @override
-  List<Object?> get props => [user, fetchUserState, loginWithTokenState, error];
+  bool get isUnknown => true;
+
+  @override
+  List<Object?> get props => [];
+}
+
+final class Authenticated extends AuthState {
+  const Authenticated(this._user);
+
+  final AppUser _user;
+
+  @override
+  AppUser get user => _user;
+
+  @override
+  bool get isAuthenticated => true;
+
+  @override
+  List<Object?> get props => [_user];
+}
+
+final class Unauthenticated extends AuthState {
+  const Unauthenticated();
+
+  @override
+  List<Object?> get props => [];
+}
+
+class AuthCubit extends Cubit<AuthState> {
+  AuthCubit(this._authRepository) : super(const AuthUnknown()) {
+    _initialize();
+  }
+
+  final UserAuthRepository _authRepository;
+  late final StreamSubscription<AppUser?> _authSubscription;
+
+  void _initialize() {
+    final currentUser = _authRepository.currentUser;
+    if (currentUser != null) {
+      emit(Authenticated(currentUser));
+    }
+
+    _authSubscription = _authRepository.authStateChanges.listen((user) {
+      if (user != null) {
+        emit(Authenticated(user));
+      } else {
+        emit(const Unauthenticated());
+      }
+    });
+  }
+
+  Future<void> signOut() => _authRepository.signOut();
+
+  @override
+  Future<void> close() {
+    _authSubscription.cancel();
+    return super.close();
+  }
 }

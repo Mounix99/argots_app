@@ -1,9 +1,9 @@
 import 'package:fpdart/fpdart.dart';
 import 'package:domain/core/errors/failure.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:domain/user/entities/app_user.dart';
 
 abstract class UserRepository {
-  Future<Either<Failure, User?>> getUser();
-  Future<Either<Failure, User>> updateUser(User user);
-  Future<Either<Failure, User>> deleteUser(User user);
+  Future<Either<Failure, AppUser?>> getUser();
+  Future<Either<Failure, AppUser>> updateUser(AppUser user);
+  Future<Either<Failure, AppUser>> deleteUser(AppUser user);
 }

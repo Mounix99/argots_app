@@ -5,45 +5,22 @@ import 'package:domain/core/errors/failure.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-abstract class SupabaseAuthRequestCubit<T> extends Cubit<SupabaseAuthCubitState> {
-  SupabaseAuthRequestCubit() : super(SupabaseAuthCubitState.initial());
+abstract class FormRequestCubit<T> extends Cubit<FormRequestState> {
+  FormRequestCubit() : super(FormRequestState.initial());
 
-  void emitLoading() {
-    emit(state.copyWith(requestState: RequestState.loading, data: state.data));
-  }
-
-  void emitSuccess(T data) {
-    emit(state.copyWith(requestState: RequestState.success, data: Right(data)));
-  }
-
-  void emitError(String errorMessage) {
-    emit(state.copyWith(
+  @protected
+  Future<Either<Failure, T>> requestData(
+    Future<Either<Failure, T>> Function() request,
+  ) async {
+    emit(state.copyWith(requestState: RequestState.loading));
+    final result = await request().withProgress();
+    result.match(
+      (failure) => emit(state.copyWith(
         requestState: RequestState.error,
-        errorMessage: errorMessage,
-        data: Left(RemoteSourceFailure(remoteError: errorMessage))));
-  }
-
-  @protected
-  void onSuccess() {}
-
-  @protected
-  void onFail() {}
-
-  @protected
-  Future<Either<Failure, T?>> requestData(Future<Either<Failure, T?>> Function() request) async {
-    emitLoading();
-      return request().withProgress().then((result) {
-      emit(result.match(
-        (failure) {
-          onFail();
-          return state.copyWith(requestState: RequestState.error, errorMessage: failure.error.toString());
-        },
-        (data) {
-          onSuccess();
-          return state.copyWith(requestState: RequestState.success, data: state.data);
-        },
-      ));
-      return result;
-    });
+        errorMessage: failure.error.toString(),
+      )),
+      (_) => emit(state.copyWith(requestState: RequestState.success)),
+    );
+    return result;
   }
 }
