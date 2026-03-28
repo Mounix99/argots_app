@@ -19,7 +19,8 @@ enum Routes {
   marketPlace('/market_place'),
 
   /// Plant
-  plantDetails('/plant_details');
+  plantDetails('/plant_details'),
+  createPlant('/create_plant');
 
   const Routes(this._path);
 

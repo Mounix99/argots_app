@@ -223,6 +223,138 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'{days,plural, =1{{days} day}other{{days} days}}'**
   String days(num days);
+
+  /// No description provided for @create_plant.
+  ///
+  /// In en, this message translates to:
+  /// **'Create plant'**
+  String get create_plant;
+
+  /// No description provided for @basic_information.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic information'**
+  String get basic_information;
+
+  /// No description provided for @add_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Add a pic of your plant'**
+  String get add_photo;
+
+  /// No description provided for @take_photo.
+  ///
+  /// In en, this message translates to:
+  /// **'Take a cute picture'**
+  String get take_photo;
+
+  /// No description provided for @upload_from_gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Upload from gallery'**
+  String get upload_from_gallery;
+
+  /// No description provided for @plant_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant name'**
+  String get plant_name;
+
+  /// No description provided for @plant_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant description'**
+  String get plant_description;
+
+  /// No description provided for @public_plant.
+  ///
+  /// In en, this message translates to:
+  /// **'Public plant'**
+  String get public_plant;
+
+  /// No description provided for @public_plant_description.
+  ///
+  /// In en, this message translates to:
+  /// **'When other people can see your plant they can learn from it and help you grow it'**
+  String get public_plant_description;
+
+  /// No description provided for @growth_stages_description.
+  ///
+  /// In en, this message translates to:
+  /// **'You can add growth stages to show this plant. If you add a growth stage, you can have a better overview of what actions should be taken.'**
+  String get growth_stages_description;
+
+  /// No description provided for @stage_name.
+  ///
+  /// In en, this message translates to:
+  /// **'Stage name'**
+  String get stage_name;
+
+  /// No description provided for @stage_description.
+  ///
+  /// In en, this message translates to:
+  /// **'Stage description'**
+  String get stage_description;
+
+  /// No description provided for @duration.
+  ///
+  /// In en, this message translates to:
+  /// **'Duration'**
+  String get duration;
+
+  /// No description provided for @time_format.
+  ///
+  /// In en, this message translates to:
+  /// **'Time format'**
+  String get time_format;
+
+  /// No description provided for @create_stage.
+  ///
+  /// In en, this message translates to:
+  /// **'Create stage'**
+  String get create_stage;
+
+  /// No description provided for @plant_created_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant was successfully added!'**
+  String get plant_created_success;
+
+  /// No description provided for @light_requirements.
+  ///
+  /// In en, this message translates to:
+  /// **'Light requirements'**
+  String get light_requirements;
+
+  /// No description provided for @watering_frequency.
+  ///
+  /// In en, this message translates to:
+  /// **'Watering frequency'**
+  String get watering_frequency;
+
+  /// No description provided for @growth_seasons.
+  ///
+  /// In en, this message translates to:
+  /// **'Growth seasons'**
+  String get growth_seasons;
+
+  /// No description provided for @select_option.
+  ///
+  /// In en, this message translates to:
+  /// **'Select an option'**
+  String get select_option;
+
+  /// No description provided for @add_tags.
+  ///
+  /// In en, this message translates to:
+  /// **'Add tags, press Enter to confirm'**
+  String get add_tags;
+
+  /// No description provided for @no_options_available.
+  ///
+  /// In en, this message translates to:
+  /// **'No options available'**
+  String get no_options_available;
 }
 
 class _AppLocalizationsDelegate

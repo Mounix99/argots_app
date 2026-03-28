@@ -28,10 +28,15 @@ class PlantRepositoryImplementation implements PlantsRepository {
   }
 
   @override
-  Future<Either<Failure, Success>> addPlant({required PlantModel plant}) async {
+  Future<Either<Failure, PlantModel>> addPlant({required PlantModel plant}) async {
     try {
-      await _remoteDataSource.addPlant(plantData: plant.toDto().toJson());
-      return Right(RemoteSourceSuccess());
+      final json = plant.toDto().toJson()
+        ..remove('id')
+        ..remove('created_at')
+        ..remove('last_update_at')
+        ..remove('used_by');
+      final dto = await _remoteDataSource.addPlant(plantData: json);
+      return Right(dto.toDomain());
     } catch (e) {
       return Left(RemoteSourceFailure(remoteError: e));
     }

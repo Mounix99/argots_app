@@ -16,6 +16,9 @@ extension PlantDtoMapper on PlantDto {
         lastUpdateAt: lastUpdateAt,
         version: version,
         photoUrl: photoUrl,
+        lightRequirements: lightRequirements,
+        wateringFrequency: wateringFrequency,
+        growthSeasons: growthSeasons,
       );
 }
 
@@ -33,5 +36,8 @@ extension PlantModelMapper on PlantModel {
         lastUpdateAt: lastUpdateAt,
         version: version,
         photoUrl: photoUrl,
+        lightRequirements: lightRequirements,
+        wateringFrequency: wateringFrequency,
+        growthSeasons: growthSeasons,
       );
 }

@@ -1,6 +1,8 @@
 import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:agrost_app/common/state_management/base/request_state.dart';
+import 'package:agrost_app/common/theming/agrost_spacing.dart';
+import 'package:agrost_app/common/widgets/agrost_primary_button.dart';
 import 'package:agrost_app/features/authentication/signin/signin_cubit.dart';
 import 'package:domain/user/usecases/user_auth_usecases/signin_usecase.dart';
 import 'package:flutter/material.dart';
@@ -32,7 +34,10 @@ class SignInScreen extends HookWidget {
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+              padding: AgrostSpacing.screenHorizontal.copyWith(
+                top: AgrostSpacing.xxxl,
+                bottom: AgrostSpacing.xxxl,
+              ),
               child: Builder(
                 builder: (context) {
                   final cubit = context.read<SignInCubit>();
@@ -46,13 +51,13 @@ class SignInScreen extends HookWidget {
                           size: 72,
                           color: context.colorScheme.primary,
                         ),
-                        const SizedBox(height: 16),
+                        AgrostSpacing.verticalLg,
                         Text(
                           context.strings.sign_in,
                           style: context.textTheme.displayMedium,
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 40),
+                        AgrostSpacing.verticalHuge,
                         ReactiveTextField<String>(
                           formControlName: SignInFormFields.email.name,
                           decoration: InputDecoration(
@@ -66,7 +71,7 @@ class SignInScreen extends HookWidget {
                             'email': (control) => context.strings.field_incorrect,
                           },
                         ),
-                        const SizedBox(height: 16),
+                        AgrostSpacing.verticalLg,
                         ReactiveTextField<String>(
                           formControlName: SignInFormFields.password.name,
                           obscureText: obscurePassword.value,
@@ -87,20 +92,15 @@ class SignInScreen extends HookWidget {
                             'minLength': (control) => context.strings.field_incorrect,
                           },
                         ),
-                        const SizedBox(height: 28),
+                        AgrostSpacing.verticalXxl,
                         BlocBuilder<SignInCubit, FormRequestState>(
-                          builder: (context, state) => FilledButton(
-                            onPressed: state.requestState.isLoading ? null : cubit.signIn,
-                            child: state.requestState.isLoading
-                                ? const SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(strokeWidth: 2),
-                                  )
-                                : Text(context.strings.sign_in),
+                          builder: (context, state) => AgrostPrimaryButton(
+                            onPressed: cubit.signIn,
+                            label: context.strings.sign_in,
+                            isLoading: state.requestState.isLoading,
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        AgrostSpacing.verticalLg,
                         TextButton(
                           onPressed: () => context.navigator.goToSignUp(),
                           child: Text(context.strings.sign_up),

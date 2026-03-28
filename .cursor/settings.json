@@ -2,6 +2,12 @@
   "plugins": {
     "supabase": {
       "enabled": false
+    },
+    "notion-workspace": {
+      "enabled": true
+    },
+    "figma": {
+      "enabled": true
     }
   }
 }

@@ -87,4 +87,72 @@ class AppLocalizationsUk extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String get create_plant => 'Створити рослину';
+
+  @override
+  String get basic_information => 'Основна інформація';
+
+  @override
+  String get add_photo => 'Додайте фото вашої рослини';
+
+  @override
+  String get take_photo => 'Зробити фото';
+
+  @override
+  String get upload_from_gallery => 'Завантажити з галереї';
+
+  @override
+  String get plant_name => 'Назва рослини';
+
+  @override
+  String get plant_description => 'Опис рослини';
+
+  @override
+  String get public_plant => 'Публічна рослина';
+
+  @override
+  String get public_plant_description =>
+      'Коли інші люди можуть бачити вашу рослину, вони можуть вчитися від неї та допомагати вам її вирощувати';
+
+  @override
+  String get growth_stages_description =>
+      'Ви можете додати етапи росту, щоб показати цю рослину. Якщо ви додасте етап росту, ви зможете мати кращий огляд того, які дії слід вживати.';
+
+  @override
+  String get stage_name => 'Назва етапу';
+
+  @override
+  String get stage_description => 'Опис етапу';
+
+  @override
+  String get duration => 'Тривалість';
+
+  @override
+  String get time_format => 'Формат часу';
+
+  @override
+  String get create_stage => 'Створити етап';
+
+  @override
+  String get plant_created_success => 'Рослину успішно додано!';
+
+  @override
+  String get light_requirements => 'Потреба в освітленні';
+
+  @override
+  String get watering_frequency => 'Частота поливу';
+
+  @override
+  String get growth_seasons => 'Сезони росту';
+
+  @override
+  String get select_option => 'Оберіть варіант';
+
+  @override
+  String get add_tags => 'Додайте теги, натисніть Enter для підтвердження';
+
+  @override
+  String get no_options_available => 'Немає доступних варіантів';
 }

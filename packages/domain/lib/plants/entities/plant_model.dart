@@ -13,6 +13,9 @@ class PlantModel extends Equatable {
   final DateTime? lastUpdateAt;
   final String version;
   final String? photoUrl;
+  final String? lightRequirements;
+  final String? wateringFrequency;
+  final List<String>? growthSeasons;
 
   const PlantModel({
     required this.id,
@@ -27,6 +30,9 @@ class PlantModel extends Equatable {
     this.lastUpdateAt,
     required this.version,
     this.photoUrl,
+    this.lightRequirements,
+    this.wateringFrequency,
+    this.growthSeasons,
   });
 
   PlantModel copyWith({
@@ -42,6 +48,9 @@ class PlantModel extends Equatable {
     DateTime? lastUpdateAt,
     String? version,
     String? photoUrl,
+    String? lightRequirements,
+    String? wateringFrequency,
+    List<String>? growthSeasons,
   }) {
     return PlantModel(
       id: id ?? this.id,
@@ -56,6 +65,9 @@ class PlantModel extends Equatable {
       lastUpdateAt: lastUpdateAt ?? this.lastUpdateAt,
       version: version ?? this.version,
       photoUrl: photoUrl ?? this.photoUrl,
+      lightRequirements: lightRequirements ?? this.lightRequirements,
+      wateringFrequency: wateringFrequency ?? this.wateringFrequency,
+      growthSeasons: growthSeasons ?? this.growthSeasons,
     );
   }
 
@@ -73,5 +85,8 @@ class PlantModel extends Equatable {
         lastUpdateAt,
         version,
         photoUrl,
+        lightRequirements,
+        wateringFrequency,
+        growthSeasons,
       ];
 }

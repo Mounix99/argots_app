@@ -13,6 +13,7 @@ import '../../features/home/home_screen.dart';
 import '../../features/home/plants/plant_market/plant_market_page.dart';
 import '../../features/home/plants/user_plants_list/user_plants_list_page.dart';
 import '../../features/home/profile/profile_page.dart';
+import '../../features/plant/create_plant/create_plant_screen.dart';
 import '../../features/plant/plant_details/added_plant_details_screen.dart';
 import '../../features/splash/splash_screen.dart';
 import 'agrost_navigation_constants.dart';
@@ -122,7 +123,13 @@ class AgrostRouter {
               transitionType: TransitionType.slide,
               pageBuilder: (context, state) =>
                   AddedPlantDetailsScreen.create(plantId: int.parse(state.pathParameters['id']!)),
-            )
+            ),
+            TransitionGoRoute(
+              name: Routes.createPlant.name,
+              path: Routes.createPlant.path,
+              transitionType: TransitionType.slide,
+              pageBuilder: (context, state) => CreatePlantScreen.create(),
+            ),
           ]),
           StatefulShellBranch(routes: [
             GoRoute(

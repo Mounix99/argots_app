@@ -21,14 +21,26 @@ class HomeNavigation extends StatelessWidget {
         currentIndex: navigationShell.currentIndex,
         children: children,
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(icon: const Icon(Ionicons.map), label: context.strings.fields),
-          BottomNavigationBarItem(icon: const Icon(Ionicons.leaf), label: context.strings.plants),
-          BottomNavigationBarItem(icon: const Icon(Ionicons.person), label: context.strings.profile),
+      bottomNavigationBar: NavigationBar(
+        selectedIndex: navigationShell.currentIndex,
+        onDestinationSelected: (int index) => _onTap(context, index),
+        destinations: [
+          NavigationDestination(
+            icon: const Icon(Ionicons.map_outline),
+            selectedIcon: const Icon(Ionicons.map),
+            label: context.strings.fields,
+          ),
+          NavigationDestination(
+            icon: const Icon(Ionicons.leaf_outline),
+            selectedIcon: const Icon(Ionicons.leaf),
+            label: context.strings.plants,
+          ),
+          NavigationDestination(
+            icon: const Icon(Ionicons.person_outline),
+            selectedIcon: const Icon(Ionicons.person),
+            label: context.strings.profile,
+          ),
         ],
-        currentIndex: navigationShell.currentIndex,
-        onTap: (int index) => _onTap(context, index),
       ),
     );
   }

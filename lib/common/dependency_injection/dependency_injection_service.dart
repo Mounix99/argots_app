@@ -1,12 +1,16 @@
 import 'package:agrost_app/build_keys.dart';
 import 'package:agrost_app/common/navigation/agrost_router.dart';
+import 'package:agrost_app/common/system_values/system_values_cache.dart';
 import 'package:data/remote_data_source/plant_remote_data_source.dart';
 import 'package:data/remote_data_source/plant_remote_data_source_impl.dart';
+import 'package:data/remote_data_source/system_values_remote_data_source.dart';
+import 'package:data/remote_data_source/system_values_remote_data_source_impl.dart';
 import 'package:data/remote_data_source/user_auth_remote_data_source.dart';
 import 'package:data/remote_data_source/user_auth_remote_data_source_impl.dart';
 import 'package:data/remote_data_source/user_remote_data_source.dart';
 import 'package:data/remote_data_source/user_remote_data_source_impl.dart';
 import 'package:data/repository_implementation/plant_repository_implementation.dart';
+import 'package:data/repository_implementation/system_values_repository_implementation.dart';
 import 'package:data/repository_implementation/user_auth_repository_implementation.dart';
 import 'package:data/repository_implementation/user_repository_implementation.dart';
 import 'package:domain/plants/repositories/plant_repository.dart';
@@ -24,6 +28,12 @@ import 'package:domain/plants/usecases/stage_usecases/delete_stage_usecase.dart'
 import 'package:domain/plants/usecases/stage_usecases/get_list_of_stages_usecase.dart';
 import 'package:domain/plants/usecases/stage_usecases/get_stage_info_usecase.dart';
 import 'package:domain/plants/usecases/stage_usecases/update_stage_usecase.dart';
+import 'package:domain/system_values/repositories/system_values_repository.dart';
+import 'package:domain/system_values/usecases/get_growth_seasons_usecase.dart';
+import 'package:domain/system_values/usecases/get_light_requirements_usecase.dart';
+import 'package:domain/system_values/usecases/get_plant_types_usecase.dart';
+import 'package:domain/system_values/usecases/get_soil_types_usecase.dart';
+import 'package:domain/system_values/usecases/get_watering_frequencies_usecase.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
 import 'package:domain/user/repositories/user_repository.dart';
 import 'package:domain/user/usecases/user_auth_usecases/signin_usecase.dart';
@@ -62,6 +72,9 @@ class DIService {
     getIt.registerLazySingleton<PlantRemoteDataSource>(
       () => PlantRemoteDataSourceImpl(supabase: getIt.get<Supabase>()),
     );
+    getIt.registerLazySingleton<SystemValuesRemoteDataSource>(
+      () => SystemValuesRemoteDataSourceImpl(supabase: getIt.get<Supabase>()),
+    );
   }
 
   static Future<void> _registerRepositories() async {
@@ -73,6 +86,9 @@ class DIService {
     );
     getIt.registerLazySingleton<PlantsRepository>(
       () => PlantRepositoryImplementation(remoteDataSource: getIt.get<PlantRemoteDataSource>()),
+    );
+    getIt.registerLazySingleton<SystemValuesRepository>(
+      () => SystemValuesRepositoryImplementation(remoteDataSource: getIt.get<SystemValuesRemoteDataSource>()),
     );
     getIt.registerLazySingleton<GoRouter>(
       () => AgrostRouter(getIt.get<UserAuthRepository>()).router,
@@ -123,6 +139,32 @@ class DIService {
     );
     getIt.registerLazySingleton<RemovePlantFromUserUseCase>(
       () => RemovePlantFromUserUseCase(getIt.get<PlantsRepository>()),
+    );
+
+    // System value use cases
+    getIt.registerLazySingleton<GetSoilTypesUseCase>(
+      () => GetSoilTypesUseCase(getIt.get<SystemValuesRepository>()),
+    );
+    getIt.registerLazySingleton<GetPlantTypesUseCase>(
+      () => GetPlantTypesUseCase(getIt.get<SystemValuesRepository>()),
+    );
+    getIt.registerLazySingleton<GetLightRequirementsUseCase>(
+      () => GetLightRequirementsUseCase(getIt.get<SystemValuesRepository>()),
+    );
+    getIt.registerLazySingleton<GetWateringFrequenciesUseCase>(
+      () => GetWateringFrequenciesUseCase(getIt.get<SystemValuesRepository>()),
+    );
+    getIt.registerLazySingleton<GetGrowthSeasonsUseCase>(
+      () => GetGrowthSeasonsUseCase(getIt.get<SystemValuesRepository>()),
+    );
+    getIt.registerLazySingleton<SystemValuesCache>(
+      () => SystemValuesCache(
+        getSoilTypes: getIt.get<GetSoilTypesUseCase>(),
+        getPlantTypes: getIt.get<GetPlantTypesUseCase>(),
+        getLightRequirements: getIt.get<GetLightRequirementsUseCase>(),
+        getWateringFrequencies: getIt.get<GetWateringFrequenciesUseCase>(),
+        getGrowthSeasons: getIt.get<GetGrowthSeasonsUseCase>(),
+      ),
     );
 
     // Stage use cases

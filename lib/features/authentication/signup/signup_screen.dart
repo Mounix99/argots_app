@@ -1,6 +1,8 @@
 import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:agrost_app/common/state_management/base/request_state.dart';
+import 'package:agrost_app/common/theming/agrost_spacing.dart';
+import 'package:agrost_app/common/widgets/agrost_primary_button.dart';
 import 'package:agrost_app/features/authentication/signup/signup_cubit.dart';
 import 'package:domain/user/usecases/user_auth_usecases/signup_usecase.dart';
 import 'package:flutter/material.dart';
@@ -39,7 +41,10 @@ class SignUpScreen extends HookWidget {
         child: SafeArea(
           child: Center(
             child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+              padding: AgrostSpacing.screenHorizontal.copyWith(
+                top: AgrostSpacing.xxxl,
+                bottom: AgrostSpacing.xxxl,
+              ),
               child: Builder(
                 builder: (context) {
                   final cubit = context.read<SignUpCubit>();
@@ -53,13 +58,13 @@ class SignUpScreen extends HookWidget {
                           size: 72,
                           color: context.colorScheme.primary,
                         ),
-                        const SizedBox(height: 16),
+                        AgrostSpacing.verticalLg,
                         Text(
                           context.strings.sign_up,
                           style: context.textTheme.displayMedium,
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 40),
+                        AgrostSpacing.verticalHuge,
                         ReactiveTextField<String>(
                           formControlName: SignUpFormFields.email.name,
                           decoration: InputDecoration(
@@ -73,7 +78,7 @@ class SignUpScreen extends HookWidget {
                             'email': (control) => context.strings.field_incorrect,
                           },
                         ),
-                        const SizedBox(height: 16),
+                        AgrostSpacing.verticalLg,
                         ReactiveTextField<String>(
                           formControlName: SignUpFormFields.password.name,
                           obscureText: obscurePassword.value,
@@ -93,7 +98,7 @@ class SignUpScreen extends HookWidget {
                             'minLength': (control) => context.strings.field_incorrect,
                           },
                         ),
-                        const SizedBox(height: 16),
+                        AgrostSpacing.verticalLg,
                         ReactiveTextField<String>(
                           formControlName: SignUpFormFields.confirmPassword.name,
                           obscureText: obscureConfirm.value,
@@ -115,20 +120,15 @@ class SignUpScreen extends HookWidget {
                             'mustMatch': (control) => context.strings.field_incorrect,
                           },
                         ),
-                        const SizedBox(height: 28),
+                        AgrostSpacing.verticalXxl,
                         BlocBuilder<SignUpCubit, FormRequestState>(
-                          builder: (context, state) => FilledButton(
-                            onPressed: state.requestState.isLoading ? null : cubit.signUpWithEmail,
-                            child: state.requestState.isLoading
-                                ? const SizedBox(
-                                    height: 20,
-                                    width: 20,
-                                    child: CircularProgressIndicator(strokeWidth: 2),
-                                  )
-                                : Text(context.strings.sign_up),
+                          builder: (context, state) => AgrostPrimaryButton(
+                            onPressed: cubit.signUpWithEmail,
+                            label: context.strings.sign_up,
+                            isLoading: state.requestState.isLoading,
                           ),
                         ),
-                        const SizedBox(height: 16),
+                        AgrostSpacing.verticalLg,
                         TextButton(
                           onPressed: () => context.navigator.goToSignIn(),
                           child: Text(context.strings.sign_in),

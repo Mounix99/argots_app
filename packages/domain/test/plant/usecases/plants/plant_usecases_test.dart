@@ -48,13 +48,13 @@ void main() {
   });
 
   group("Domain/Plant/Add_plant", () {
-    test("/Success/ = should add plant to the repository", () async {
+    test("/Success/ = should add plant to the repository and return the created plant", () async {
       when(mockPlantsRepository.addPlant(plant: anyNamed("plant")))
-          .thenAnswer((_) async => Right(RemoteSourceSuccess()));
+          .thenAnswer((_) async => Right(_tPlantModel));
 
       final result = await addPlantUseCase(_tPlantModel);
 
-      expect(result, Right(RemoteSourceSuccess()));
+      expect(result, Right(_tPlantModel));
 
       verify(mockPlantsRepository.addPlant(plant: anyNamed("plant")));
     });

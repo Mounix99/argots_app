@@ -25,6 +25,11 @@ PlantDto _$PlantDtoFromJson(Map<String, dynamic> json) => PlantDto(
       : DateTime.parse(json['last_update_at'] as String),
   version: json['version'] as String,
   photoUrl: json['photo_url'] as String?,
+  lightRequirements: json['light_requirements'] as String?,
+  wateringFrequency: json['watering_frequency'] as String?,
+  growthSeasons: (json['growth_seasons'] as List<dynamic>?)
+      ?.map((e) => e as String)
+      .toList(),
 );
 
 Map<String, dynamic> _$PlantDtoToJson(PlantDto instance) => <String, dynamic>{
@@ -40,4 +45,7 @@ Map<String, dynamic> _$PlantDtoToJson(PlantDto instance) => <String, dynamic>{
   'last_update_at': instance.lastUpdateAt?.toIso8601String(),
   'version': instance.version,
   'photo_url': instance.photoUrl,
+  'light_requirements': instance.lightRequirements,
+  'watering_frequency': instance.wateringFrequency,
+  'growth_seasons': instance.growthSeasons,
 };
