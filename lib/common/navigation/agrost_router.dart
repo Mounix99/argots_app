@@ -1,11 +1,14 @@
 import 'dart:async';
 
+import 'package:agrost_app/auth_cubit.dart';
 import 'package:agrost_app/features/authentication/signin/signin_screen.dart';
 import 'package:agrost_app/features/authentication/signup/signup_screen.dart';
 import 'package:agrost_app/features/home/plants/plants_page.dart';
+import 'package:domain/plants/entities/plant_model.dart';
 import 'package:domain/user/entities/app_user.dart';
 import 'package:domain/user/repositories/user_auth_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/home/fields/fields_page.dart';
@@ -121,14 +124,18 @@ class AgrostRouter {
               name: Routes.plantDetails.name,
               path: Routes.plantDetails.pathWithParams(":id"),
               transitionType: TransitionType.slide,
-              pageBuilder: (context, state) =>
-                  AddedPlantDetailsScreen.create(plantId: int.parse(state.pathParameters['id']!)),
+              pageBuilder: (context, state) => AddedPlantDetailsScreen.create(
+                plantId: int.parse(state.pathParameters['id']!),
+                currentUserId: context.read<AuthCubit>().state.user!.id,
+              ),
             ),
             TransitionGoRoute(
               name: Routes.createPlant.name,
               path: Routes.createPlant.path,
               transitionType: TransitionType.slide,
-              pageBuilder: (context, state) => CreatePlantScreen.create(),
+              pageBuilder: (context, state) => CreatePlantScreen.create(
+                existingPlant: state.extra as PlantModel?,
+              ),
             ),
           ]),
           StatefulShellBranch(routes: [

@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:agrost_app/common/app_event_bus/app_event_bus.dart';
 import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
+import 'package:agrost_app/common/extensions/int_extensions.dart';
+import 'package:agrost_app/common/state_management/base/request_state.dart' show RequestState;
 import 'package:agrost_app/common/system_values/system_values_cache.dart';
 import 'package:agrost_app/common/theming/agrost_colors.dart';
 import 'package:agrost_app/common/theming/agrost_spacing.dart';
@@ -12,8 +14,13 @@ import 'package:agrost_app/common/widgets/agrost_loading_indicator.dart';
 import 'package:agrost_app/common/widgets/agrost_primary_button.dart';
 import 'package:agrost_app/common/widgets/agrost_section_header.dart';
 import 'package:agrost_app/features/plant/create_plant/create_plant_cubit.dart';
+import 'package:domain/plants/entities/plant_model.dart';
+import 'package:domain/plants/entities/stage_model.dart';
 import 'package:domain/plants/usecases/plant_usecases/add_plant_usecase.dart';
+import 'package:domain/plants/usecases/plant_usecases/update_plant_usecase.dart';
 import 'package:domain/plants/usecases/stage_usecases/add_stage_usecase.dart';
+import 'package:domain/plants/usecases/stage_usecases/delete_stage_usecase.dart';
+import 'package:domain/plants/usecases/stage_usecases/get_list_of_stages_usecase.dart';
 import 'package:domain/system_values/entities/growth_season.dart';
 import 'package:domain/system_values/entities/light_requirement.dart';
 import 'package:domain/system_values/entities/plant_type.dart';
@@ -30,7 +37,7 @@ import 'package:reactive_forms/reactive_forms.dart';
 class CreatePlantScreen extends HookWidget {
   const CreatePlantScreen({super.key});
 
-  static Widget create() {
+  static Widget create({PlantModel? existingPlant}) {
     return BlocProvider(
       create: (context) => CreatePlantCubit(
         addPlantUseCase: DIService.get<AddPlantUseCase>(),
@@ -38,6 +45,10 @@ class CreatePlantScreen extends HookWidget {
         systemValuesCache: DIService.get<SystemValuesCache>(),
         appEventBus: DIService.get<AppEventBus>(),
         authorId: context.user!.id,
+        existingPlant: existingPlant,
+        updatePlantUseCase: existingPlant != null ? DIService.get<UpdatePlantUseCase>() : null,
+        getListOfStagesUseCase: existingPlant != null ? DIService.get<GetListOfStagesUseCase>() : null,
+        deleteStageUseCase: existingPlant != null ? DIService.get<DeleteStageUseCase>() : null,
       ),
       child: const CreatePlantScreen(),
     );
@@ -47,10 +58,11 @@ class CreatePlantScreen extends HookWidget {
   Widget build(BuildContext context) {
     final stageTimeFormat = useState(StageTimeFormat.days);
     final cubit = context.read<CreatePlantCubit>();
+    final isEdit = cubit.isEditMode;
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(context.strings.create_plant),
+        title: Text(isEdit ? context.strings.edit_plant : context.strings.create_plant),
         leading: IconButton(
           icon: const Icon(Ionicons.arrow_back_outline),
           onPressed: () => context.navigator.goBack(),
@@ -61,7 +73,9 @@ class CreatePlantScreen extends HookWidget {
           if (state.requestState.isError && state.errorMessage != null) {
             context.showSnackBar(message: state.errorMessage!);
           } else if (state.requestState.isSuccess) {
-            context.showSnackBar(message: context.strings.plant_created_success);
+            context.showSnackBar(
+              message: isEdit ? context.strings.plant_updated_success : context.strings.plant_created_success,
+            );
             context.navigator.goBack();
           }
         },
@@ -79,11 +93,14 @@ class CreatePlantScreen extends HookWidget {
                   AgrostSpacing.verticalXxl,
                   _PublicPlantSection(cubit: cubit, state: state),
                   AgrostSpacing.verticalXxl,
-                  _GrowthStagesSection(stageTimeFormat: stageTimeFormat, cubit: cubit, state: state),
+                  if (isEdit)
+                    _EditModeStagesSection(stageTimeFormat: stageTimeFormat, cubit: cubit, state: state)
+                  else
+                    _GrowthStagesSection(stageTimeFormat: stageTimeFormat, cubit: cubit, state: state),
                   AgrostSpacing.verticalXxl,
                   AgrostPrimaryButton(
-                    onPressed: state.requestState.isLoading ? null : cubit.createPlant,
-                    label: context.strings.create_plant,
+                    onPressed: state.requestState.isLoading ? null : cubit.savePlant,
+                    label: isEdit ? context.strings.save : context.strings.create_plant,
                     isLoading: state.requestState.isLoading,
                     icon: const Icon(Ionicons.checkmark_outline, color: AgrostColors.textPrimary),
                   ),
@@ -608,6 +625,173 @@ class _LocalStageCard extends StatelessWidget {
             icon: Ionicons.calendar_outline,
             title: context.strings.duration,
             subtitle: _formatDuration(context, stage),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _EditModeStagesSection extends HookWidget {
+  const _EditModeStagesSection({
+    required this.stageTimeFormat,
+    required this.cubit,
+    required this.state,
+  });
+
+  final ValueNotifier<StageTimeFormat> stageTimeFormat;
+  final CreatePlantCubit cubit;
+  final CreatePlantState state;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        AgrostSectionHeader(
+          title: context.strings.growth_stages,
+          icon: Ionicons.moon_outline,
+        ),
+        Text(
+          context.strings.growth_stages_description,
+          style: context.textTheme.bodySmall?.copyWith(color: AgrostColors.textSecondary),
+        ),
+        AgrostSpacing.verticalLg,
+
+        if (state.existingStagesRequestState == RequestState.loading)
+          const Center(child: AgrostLoadingIndicator())
+        else if (state.existingStages.isEmpty && state.stages.isEmpty)
+          Text(
+            context.strings.no_stages_yet,
+            style: context.textTheme.bodyMedium?.copyWith(color: AgrostColors.textSecondary),
+          )
+        else ...[
+          ...state.existingStages.asMap().entries.map((entry) => Padding(
+                padding: const EdgeInsets.only(bottom: AgrostSpacing.md),
+                child: _ExistingStageCard(
+                  stage: entry.value,
+                  stageNumber: entry.key + 1,
+                  onDelete: () => cubit.deleteExistingStage(entry.value.id),
+                ),
+              )),
+          ...state.stages.asMap().entries.map((entry) => Padding(
+                padding: const EdgeInsets.only(bottom: AgrostSpacing.md),
+                child: _LocalStageCard(
+                  stage: entry.value,
+                  stageNumber: state.existingStages.length + entry.key + 1,
+                  onDelete: () => cubit.removeStage(entry.key),
+                ),
+              )),
+        ],
+
+        AgrostSpacing.verticalLg,
+        ReactiveForm(
+          formGroup: cubit.stageForm,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              ReactiveTextField<String>(
+                formControlName: CreatePlantFormFields.stageName.name,
+                decoration: InputDecoration(
+                  labelText: context.strings.stage_name,
+                  prefixIcon: const Icon(Ionicons.leaf_outline),
+                ),
+                textInputAction: TextInputAction.next,
+                validationMessages: {
+                  'required': (_) => context.strings.field_required,
+                },
+              ),
+              AgrostSpacing.verticalLg,
+              ReactiveTextField<String>(
+                formControlName: CreatePlantFormFields.stageDescription.name,
+                decoration: InputDecoration(
+                  labelText: context.strings.stage_description,
+                  prefixIcon: const Icon(Ionicons.create_outline),
+                  alignLabelWithHint: true,
+                ),
+                maxLines: 5,
+                minLines: 1,
+              ),
+              AgrostSpacing.verticalLg,
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Expanded(
+                    child: ReactiveTextField<int>(
+                      formControlName: CreatePlantFormFields.stageDuration.name,
+                      decoration: InputDecoration(
+                        labelText: context.strings.duration,
+                        prefixIcon: const Icon(Ionicons.calendar_outline),
+                      ),
+                      keyboardType: TextInputType.number,
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      textInputAction: TextInputAction.done,
+                      validationMessages: {
+                        'required': (_) => context.strings.field_required,
+                        'min': (_) => context.strings.field_incorrect,
+                      },
+                    ),
+                  ),
+                  AgrostSpacing.horizontalMd,
+                  SizedBox(
+                    width: 130,
+                    child: _TimeFormatSelector(stageTimeFormat: stageTimeFormat),
+                  ),
+                ],
+              ),
+              AgrostSpacing.verticalLg,
+              AgrostSecondaryButton(
+                onPressed: () => cubit.addStageToExistingPlant(stageTimeFormat.value),
+                label: context.strings.add_stage,
+                icon: const Icon(Ionicons.add_outline),
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _ExistingStageCard extends StatelessWidget {
+  const _ExistingStageCard({
+    required this.stage,
+    required this.stageNumber,
+    required this.onDelete,
+  });
+
+  final StageModel stage;
+  final int stageNumber;
+  final VoidCallback onDelete;
+
+  @override
+  Widget build(BuildContext context) {
+    return AgrostCard(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text('Stage $stageNumber', style: context.textTheme.displaySmall),
+              IconButton(
+                onPressed: onDelete,
+                icon: const Icon(Ionicons.trash_outline),
+              ),
+            ],
+          ),
+          AgrostSpacing.verticalMd,
+          AgrostIconInfoRow(
+            icon: Ionicons.leaf_outline,
+            title: stage.title,
+            subtitle: stage.description,
+          ),
+          AgrostSpacing.verticalMd,
+          AgrostIconInfoRow(
+            icon: Ionicons.calendar_outline,
+            title: context.strings.duration,
+            subtitle: stage.duration.formatAsDuration(context.strings),
           ),
         ],
       ),

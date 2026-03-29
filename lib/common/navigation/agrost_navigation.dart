@@ -1,3 +1,4 @@
+import 'package:domain/plants/entities/plant_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 
@@ -31,6 +32,8 @@ class AgrostNavigator {
   void goToPlantDetails(String id) => context.pushNamed(Routes.plantDetails.name, pathParameters: {'id': id});
 
   void goToCreatePlant() => context.pushNamed(Routes.createPlant.name);
+
+  void goToEditPlant(PlantModel plant) => context.pushNamed(Routes.createPlant.name, extra: plant);
 
   void goBack<T>() => context.pop<T>();
 }

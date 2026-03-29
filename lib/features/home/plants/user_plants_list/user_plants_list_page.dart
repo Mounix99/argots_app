@@ -3,8 +3,10 @@ import 'package:agrost_app/common/dependency_injection/dependency_injection_serv
 import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:agrost_app/common/pagination/pagination_controller.dart';
 import 'package:agrost_app/features/home/plants/user_plants_list/user_plants_list_cubit.dart';
+import 'package:agrost_app/features/home/plants/widgets/plant_card.dart';
 import 'package:domain/plants/entities/plant_model.dart';
 import 'package:domain/plants/usecases/plant_usecases/get_plants_created_by_me_usecase.dart';
+import 'package:domain/plants/usecases/plant_usecases/get_user_plants_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -18,6 +20,7 @@ class MyPlantsPage extends HookWidget {
     return BlocProvider(
         create: (context) => MyPlantsCubit(
               DIService.get<GetPlantsCreatedByMeUseCase>(),
+              DIService.get<GetUserPlantsUseCase>(),
               DIService.get<AppEventBus>(),
               userId: context.user!.id,
             ),
@@ -34,10 +37,13 @@ class MyPlantsPage extends HookWidget {
         if (state.myPlantsRequestState.isError && state.errorMessage != null) {
           context.showSnackBar(message: state.errorMessage!);
         }
+        if (state.myPlantsRequestState.isInitial) {
+          pagingController.refresh();
+        }
       },
       builder: (context, state) {
         return RefreshIndicator(
-          onRefresh: context.read<MyPlantsCubit>().refresh,
+          onRefresh: () async => pagingController.refresh(),
           child: PagingListener(
             controller: pagingController,
             builder: (context, state, fetchNextPage) => PagedListView<int, PlantModel>(
@@ -61,11 +67,14 @@ class MyPlantListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
+    return PlantCard(
+      plant: plant,
       onTap: () => context.navigator.goToPlantDetails(plant.id.toString()),
-      leading: plant.photoUrl != null ? Image.network(plant.photoUrl!) : const Icon(Ionicons.leaf),
-      title: Text(plant.title),
-      subtitle: plant.description != null ? Text(plant.description!) : null,
+      trailing: const Icon(
+        Ionicons.chevron_forward_outline,
+        size: 20,
+        color: Color(0xFF191B1D),
+      ),
     );
   }
 }

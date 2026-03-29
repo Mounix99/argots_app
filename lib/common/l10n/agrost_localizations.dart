@@ -391,6 +391,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No options available'**
   String get no_options_available;
+
+  /// No description provided for @plant_details.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant details'**
+  String get plant_details;
+
+  /// No description provided for @delete_plant.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete plant'**
+  String get delete_plant;
+
+  /// No description provided for @remove_from_my_list.
+  ///
+  /// In en, this message translates to:
+  /// **'Remove from my list'**
+  String get remove_from_my_list;
+
+  /// No description provided for @delete_plant_completely.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete plant completely'**
+  String get delete_plant_completely;
+
+  /// No description provided for @plant_deleted_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant was successfully deleted'**
+  String get plant_deleted_success;
+
+  /// No description provided for @plant_removed_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant was removed from your list'**
+  String get plant_removed_success;
+
+  /// No description provided for @delete_plant_confirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'What would you like to do?'**
+  String get delete_plant_confirmation;
+
+  /// No description provided for @version.
+  ///
+  /// In en, this message translates to:
+  /// **'Version'**
+  String get version;
+
+  /// No description provided for @created_at.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get created_at;
+
+  /// No description provided for @last_updated.
+  ///
+  /// In en, this message translates to:
+  /// **'Last updated'**
+  String get last_updated;
+
+  /// No description provided for @public.
+  ///
+  /// In en, this message translates to:
+  /// **'Public'**
+  String get public;
+
+  /// No description provided for @edit_plant.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit plant'**
+  String get edit_plant;
+
+  /// No description provided for @plant_updated_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Plant was successfully updated!'**
+  String get plant_updated_success;
+
+  /// No description provided for @save.
+  ///
+  /// In en, this message translates to:
+  /// **'Save'**
+  String get save;
+
+  /// No description provided for @add_stage.
+  ///
+  /// In en, this message translates to:
+  /// **'Add stage'**
+  String get add_stage;
+
+  /// No description provided for @no_stages_yet.
+  ///
+  /// In en, this message translates to:
+  /// **'No stages added yet'**
+  String get no_stages_yet;
+
+  /// No description provided for @stage_deleted_success.
+  ///
+  /// In en, this message translates to:
+  /// **'Stage was deleted'**
+  String get stage_deleted_success;
 }
 
 class _AppLocalizationsDelegate

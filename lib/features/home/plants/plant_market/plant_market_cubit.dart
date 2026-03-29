@@ -20,7 +20,6 @@ class PlantMarketCubit extends Cubit<PlantMarketState> {
     _eventSubscription = _appEventBus.stream.listen((event) {
       if (event == AppEvent.plantsUpdated) refresh();
     });
-    getMarketPlants();
   }
 
   Future<List<PlantModel>> getMarketPlants([int page = 1, int size = 20]) async {
@@ -44,7 +43,6 @@ class PlantMarketCubit extends Cubit<PlantMarketState> {
 
   Future<void> refresh() async {
     emit(PlantMarketState.initial());
-    getMarketPlants();
   }
 
   @override

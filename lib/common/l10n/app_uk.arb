@@ -53,5 +53,23 @@
   "growth_seasons" : "Сезони росту",
   "select_option" : "Оберіть варіант",
   "add_tags" : "Додайте теги, натисніть Enter для підтвердження",
-  "no_options_available" : "Немає доступних варіантів"
+  "no_options_available" : "Немає доступних варіантів",
+
+  "plant_details" : "Деталі рослини",
+  "delete_plant" : "Видалити рослину",
+  "remove_from_my_list" : "Прибрати зі свого списку",
+  "delete_plant_completely" : "Видалити рослину повністю",
+  "plant_deleted_success" : "Рослину успішно видалено",
+  "plant_removed_success" : "Рослину прибрано з вашого списку",
+  "delete_plant_confirmation" : "Що ви хочете зробити?",
+  "version" : "Версія",
+  "created_at" : "Створено",
+  "last_updated" : "Оновлено",
+  "public" : "Публічна",
+  "edit_plant" : "Редагувати рослину",
+  "plant_updated_success" : "Рослину успішно оновлено!",
+  "save" : "Зберегти",
+  "add_stage" : "Додати етап",
+  "no_stages_yet" : "Етапів ще не додано",
+  "stage_deleted_success" : "Етап видалено"
 }
