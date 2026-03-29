@@ -25,6 +25,12 @@
 
   "weeks": "{weeks,plural, =1{{weeks} week}other{{weeks} weeks}}",
   "days": "{days,plural, =1{{days} day}other{{days} days}}",
+  "months": "{months,plural, =1{{months} month}other{{months} months}}",
+  "years": "{years,plural, =1{{years} year}other{{years} years}}",
+  "day_unit": "Day",
+  "week_unit": "Week",
+  "month_unit": "Month",
+  "year_unit": "Year",
 
   "create_plant" : "Create plant",
   "basic_information" : "Basic information",

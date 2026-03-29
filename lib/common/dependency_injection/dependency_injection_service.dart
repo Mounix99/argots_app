@@ -1,4 +1,5 @@
 import 'package:agrost_app/build_keys.dart';
+import 'package:agrost_app/common/app_event_bus/app_event_bus.dart';
 import 'package:agrost_app/common/navigation/agrost_router.dart';
 import 'package:agrost_app/common/system_values/system_values_cache.dart';
 import 'package:data/remote_data_source/plant_remote_data_source.dart';
@@ -60,6 +61,7 @@ class DIService {
     getIt.registerSingleton<Supabase>(
       await Supabase.initialize(url: BuildKeys.supabaseUrl, anonKey: BuildKeys.supabaseApiKey),
     );
+    getIt.registerSingleton<AppEventBus>(AppEventBus());
   }
 
   static Future<void> _registerDataSources() async {

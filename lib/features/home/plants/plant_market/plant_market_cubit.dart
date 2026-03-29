@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:agrost_app/common/app_event_bus/app_event_bus.dart';
 import 'package:domain/plants/entities/plant_model.dart';
 import 'package:domain/plants/usecases/plant_usecases/add_plant_to_user_usecase.dart';
 import 'package:domain/plants/usecases/plant_usecases/get_market_plants_usecase.dart';
@@ -9,8 +12,14 @@ import '../../../../common/state_management/base/request_state.dart';
 class PlantMarketCubit extends Cubit<PlantMarketState> {
   final GetMarketPlantsUseCase _getMarketPlantsUseCase;
   final AddPlantToUserUseCase _addPlantToUserUseCase;
+  final AppEventBus _appEventBus;
+  late final StreamSubscription<AppEvent> _eventSubscription;
 
-  PlantMarketCubit(this._getMarketPlantsUseCase, this._addPlantToUserUseCase) : super(PlantMarketState.initial()) {
+  PlantMarketCubit(this._getMarketPlantsUseCase, this._addPlantToUserUseCase, this._appEventBus)
+      : super(PlantMarketState.initial()) {
+    _eventSubscription = _appEventBus.stream.listen((event) {
+      if (event == AppEvent.plantsUpdated) refresh();
+    });
     getMarketPlants();
   }
 
@@ -36,6 +45,12 @@ class PlantMarketCubit extends Cubit<PlantMarketState> {
   Future<void> refresh() async {
     emit(PlantMarketState.initial());
     getMarketPlants();
+  }
+
+  @override
+  Future<void> close() {
+    _eventSubscription.cancel();
+    return super.close();
   }
 }
 

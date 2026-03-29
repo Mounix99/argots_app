@@ -89,6 +89,40 @@ class AppLocalizationsUk extends AppLocalizations {
   }
 
   @override
+  String months(num months) {
+    String _temp0 = intl.Intl.pluralLogic(
+      months,
+      locale: localeName,
+      other: '$months місяців',
+      one: '$months місяць',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String years(num years) {
+    String _temp0 = intl.Intl.pluralLogic(
+      years,
+      locale: localeName,
+      other: '$years років',
+      one: '$years рік',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get day_unit => 'День';
+
+  @override
+  String get week_unit => 'Тиждень';
+
+  @override
+  String get month_unit => 'Місяць';
+
+  @override
+  String get year_unit => 'Рік';
+
+  @override
   String get create_plant => 'Створити рослину';
 
   @override

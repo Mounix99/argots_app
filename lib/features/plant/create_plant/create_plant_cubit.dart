@@ -1,3 +1,4 @@
+import 'package:agrost_app/common/app_event_bus/app_event_bus.dart';
 import 'package:agrost_app/common/state_management/base/request_state.dart';
 import 'package:agrost_app/common/system_values/system_values_cache.dart';
 import 'package:domain/plants/entities/plant_model.dart';
@@ -16,7 +17,7 @@ import 'package:reactive_forms/reactive_forms.dart';
 
 enum CreatePlantFormFields { plantName, plantFamily, description, stageName, stageDescription, stageDuration }
 
-enum StageTimeFormat { days, weeks }
+enum StageTimeFormat { days, weeks, months, years }
 
 class LocalStageData extends Equatable {
   final String name;
@@ -37,6 +38,10 @@ class LocalStageData extends Equatable {
         return duration * Duration.secondsPerDay;
       case StageTimeFormat.weeks:
         return duration * Duration.secondsPerDay * 7;
+      case StageTimeFormat.months:
+        return duration * Duration.secondsPerDay * 30;
+      case StageTimeFormat.years:
+        return duration * Duration.secondsPerDay * 365;
     }
   }
 
@@ -150,10 +155,12 @@ class CreatePlantCubit extends Cubit<CreatePlantState> {
     required AddPlantUseCase addPlantUseCase,
     required AddStageUseCase addStageUseCase,
     required SystemValuesCache systemValuesCache,
+    required AppEventBus appEventBus,
     required String authorId,
   })  : _addPlantUseCase = addPlantUseCase,
         _addStageUseCase = addStageUseCase,
         _systemValuesCache = systemValuesCache,
+        _appEventBus = appEventBus,
         _authorId = authorId,
         super(const CreatePlantState()) {
     _initForm();
@@ -163,6 +170,7 @@ class CreatePlantCubit extends Cubit<CreatePlantState> {
   final AddPlantUseCase _addPlantUseCase;
   final AddStageUseCase _addStageUseCase;
   final SystemValuesCache _systemValuesCache;
+  final AppEventBus _appEventBus;
   final String _authorId;
   final _imagePicker = ImagePicker();
 
@@ -203,9 +211,13 @@ class CreatePlantCubit extends Cubit<CreatePlantState> {
   }
 
   Future<void> pickPhoto(ImageSource source) async {
-    final file = await _imagePicker.pickImage(source: source, imageQuality: 85);
-    if (file != null) {
-      emit(state.copyWith(selectedPhoto: file));
+    try {
+      final file = await _imagePicker.pickImage(source: source, imageQuality: 85);
+      if (file != null) {
+        emit(state.copyWith(selectedPhoto: file));
+      }
+    } catch (_) {
+      // Permission denied or camera unavailable — silently ignore
     }
   }
 
@@ -324,6 +336,7 @@ class CreatePlantCubit extends Cubit<CreatePlantState> {
           );
           await _addStageUseCase(stageModel);
         }
+        _appEventBus.fire(AppEvent.plantsUpdated);
         emit(state.copyWith(requestState: RequestState.success));
       },
     );

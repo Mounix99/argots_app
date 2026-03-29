@@ -224,6 +224,42 @@ abstract class AppLocalizations {
   /// **'{days,plural, =1{{days} day}other{{days} days}}'**
   String days(num days);
 
+  /// No description provided for @months.
+  ///
+  /// In en, this message translates to:
+  /// **'{months,plural, =1{{months} month}other{{months} months}}'**
+  String months(num months);
+
+  /// No description provided for @years.
+  ///
+  /// In en, this message translates to:
+  /// **'{years,plural, =1{{years} year}other{{years} years}}'**
+  String years(num years);
+
+  /// No description provided for @day_unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Day'**
+  String get day_unit;
+
+  /// No description provided for @week_unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Week'**
+  String get week_unit;
+
+  /// No description provided for @month_unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Month'**
+  String get month_unit;
+
+  /// No description provided for @year_unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Year'**
+  String get year_unit;
+
   /// No description provided for @create_plant.
   ///
   /// In en, this message translates to:

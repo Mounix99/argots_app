@@ -88,6 +88,40 @@ class AppLocalizationsEn extends AppLocalizations {
   }
 
   @override
+  String months(num months) {
+    String _temp0 = intl.Intl.pluralLogic(
+      months,
+      locale: localeName,
+      other: '$months months',
+      one: '$months month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String years(num years) {
+    String _temp0 = intl.Intl.pluralLogic(
+      years,
+      locale: localeName,
+      other: '$years years',
+      one: '$years year',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get day_unit => 'Day';
+
+  @override
+  String get week_unit => 'Week';
+
+  @override
+  String get month_unit => 'Month';
+
+  @override
+  String get year_unit => 'Year';
+
+  @override
   String get create_plant => 'Create plant';
 
   @override

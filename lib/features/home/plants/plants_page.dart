@@ -35,23 +35,14 @@ class PlantsScreen extends HookWidget {
     final plantsTabController = useTabController(initialLength: children.length);
     plantsTabController.addListener(() => shell.goBranch(plantsTabController.index));
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => context.navigator.goToCreatePlant(),
+          backgroundColor: AgrostColors.primary,
+          foregroundColor: AgrostColors.textPrimary,
+          child: const Icon(Ionicons.add_outline),
+        ),
         appBar: AppBar(
             title: Text(context.strings.plants),
-            actions: [
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: FilledButton.icon(
-                  onPressed: () => context.navigator.goToCreatePlant(),
-                  icon: const Icon(Ionicons.add_outline, size: 18),
-                  label: Text(context.strings.create_plant),
-                  style: FilledButton.styleFrom(
-                    minimumSize: const Size(0, 36),
-                    backgroundColor: AgrostColors.primary,
-                    foregroundColor: AgrostColors.textPrimary,
-                  ),
-                ),
-              ),
-            ],
             bottom: TabBar(
               controller: plantsTabController,
               onTap: shell.goBranch,

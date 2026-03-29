@@ -1,9 +1,10 @@
+import 'package:agrost_app/common/app_event_bus/app_event_bus.dart';
 import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:agrost_app/common/pagination/pagination_controller.dart';
 import 'package:agrost_app/features/home/plants/user_plants_list/user_plants_list_cubit.dart';
 import 'package:domain/plants/entities/plant_model.dart';
-import 'package:domain/plants/usecases/plant_usecases/get_user_plants_usecase.dart';
+import 'package:domain/plants/usecases/plant_usecases/get_plants_created_by_me_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -16,7 +17,8 @@ class MyPlantsPage extends HookWidget {
   static Widget create() {
     return BlocProvider(
         create: (context) => MyPlantsCubit(
-              DIService.get<GetUserPlantsUseCase>(),
+              DIService.get<GetPlantsCreatedByMeUseCase>(),
+              DIService.get<AppEventBus>(),
               userId: context.user!.id,
             ),
         child: const MyPlantsPage());

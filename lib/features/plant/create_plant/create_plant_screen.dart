@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:agrost_app/common/app_event_bus/app_event_bus.dart';
 import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:agrost_app/common/system_values/system_values_cache.dart';
@@ -35,6 +36,7 @@ class CreatePlantScreen extends HookWidget {
         addPlantUseCase: DIService.get<AddPlantUseCase>(),
         addStageUseCase: DIService.get<AddStageUseCase>(),
         systemValuesCache: DIService.get<SystemValuesCache>(),
+        appEventBus: DIService.get<AppEventBus>(),
         authorId: context.user!.id,
       ),
       child: const CreatePlantScreen(),
@@ -185,8 +187,8 @@ class _BasicInfoSection extends StatelessWidget {
               prefixIcon: const Icon(Ionicons.create_outline),
               alignLabelWithHint: true,
             ),
-            maxLines: 4,
-            minLines: 3,
+            maxLines: 5,
+            minLines: 1,
             textInputAction: TextInputAction.newline,
           ),
         ],
@@ -305,11 +307,18 @@ class _MultiSelectChips<T> extends StatelessWidget {
               final value = getValue(option);
               final isSelected = selectedValues.contains(value);
               return FilterChip(
-                label: Text(getLabel(option)),
+                label: Text(
+                  getLabel(option),
+                  style: TextStyle(
+                    color: isSelected ? AgrostColors.textPrimary : AgrostColors.textSecondary,
+                  ),
+                ),
                 selected: isSelected,
                 onSelected: (_) => onToggle(value),
+                backgroundColor: AgrostColors.surfaceContainer,
                 selectedColor: AgrostColors.primary,
                 checkmarkColor: AgrostColors.textPrimary,
+                showCheckmark: false,
               );
             }).toList(),
           ),
@@ -439,6 +448,19 @@ class _GrowthStagesSection extends HookWidget {
         ),
         AgrostSpacing.verticalLg,
 
+        // Existing stages list (shown above the form)
+        if (state.stages.isNotEmpty) ...[
+          ...state.stages.asMap().entries.map((entry) => Padding(
+                padding: const EdgeInsets.only(bottom: AgrostSpacing.md),
+                child: _LocalStageCard(
+                  stage: entry.value,
+                  stageNumber: entry.key + 1,
+                  onDelete: () => cubit.removeStage(entry.key),
+                ),
+              )),
+          AgrostSpacing.verticalLg,
+        ],
+
         // Stage sub-form
         ReactiveForm(
           formGroup: cubit.stageForm,
@@ -464,8 +486,8 @@ class _GrowthStagesSection extends HookWidget {
                   prefixIcon: const Icon(Ionicons.create_outline),
                   alignLabelWithHint: true,
                 ),
-                maxLines: 3,
-                minLines: 2,
+                maxLines: 5,
+                minLines: 1,
               ),
               AgrostSpacing.verticalLg,
               Row(
@@ -503,19 +525,6 @@ class _GrowthStagesSection extends HookWidget {
             ],
           ),
         ),
-
-        // Existing stages list
-        if (state.stages.isNotEmpty) ...[
-          AgrostSpacing.verticalLg,
-          ...state.stages.asMap().entries.map((entry) => Padding(
-                padding: const EdgeInsets.only(bottom: AgrostSpacing.md),
-                child: _LocalStageCard(
-                  stage: entry.value,
-                  stageNumber: entry.key + 1,
-                  onDelete: () => cubit.removeStage(entry.key),
-                ),
-              )),
-        ],
       ],
     );
   }
@@ -535,8 +544,10 @@ class _TimeFormatSelector extends HookWidget {
         contentPadding: AgrostSpacing.inputContentPadding,
       ),
       items: [
-        DropdownMenuItem(value: StageTimeFormat.days, child: Text(context.strings.days(1))),
-        DropdownMenuItem(value: StageTimeFormat.weeks, child: Text(context.strings.weeks(1))),
+        DropdownMenuItem(value: StageTimeFormat.days, child: Text(context.strings.day_unit)),
+        DropdownMenuItem(value: StageTimeFormat.weeks, child: Text(context.strings.week_unit)),
+        DropdownMenuItem(value: StageTimeFormat.months, child: Text(context.strings.month_unit)),
+        DropdownMenuItem(value: StageTimeFormat.years, child: Text(context.strings.year_unit)),
       ],
       onChanged: (value) {
         if (value != null) stageTimeFormat.value = value;
@@ -555,6 +566,19 @@ class _LocalStageCard extends StatelessWidget {
   final LocalStageData stage;
   final int stageNumber;
   final VoidCallback onDelete;
+
+  String _formatDuration(BuildContext context, LocalStageData stage) {
+    switch (stage.timeFormat) {
+      case StageTimeFormat.days:
+        return context.strings.days(stage.duration);
+      case StageTimeFormat.weeks:
+        return context.strings.weeks(stage.duration);
+      case StageTimeFormat.months:
+        return context.strings.months(stage.duration);
+      case StageTimeFormat.years:
+        return context.strings.years(stage.duration);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -583,7 +607,7 @@ class _LocalStageCard extends StatelessWidget {
           AgrostIconInfoRow(
             icon: Ionicons.calendar_outline,
             title: context.strings.duration,
-            subtitle: '${stage.duration} ${stage.timeFormat == StageTimeFormat.days ? context.strings.days(stage.duration) : context.strings.weeks(stage.duration)}',
+            subtitle: _formatDuration(context, stage),
           ),
         ],
       ),

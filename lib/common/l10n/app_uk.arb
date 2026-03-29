@@ -25,6 +25,12 @@
 
   "weeks": "{weeks,plural, =1{{weeks} тиждень}other{{weeks} тижнів}}",
   "days": "{days,plural, =1{{days} день}other{{days} дні}}",
+  "months": "{months,plural, =1{{months} місяць}other{{months} місяців}}",
+  "years": "{years,plural, =1{{years} рік}other{{years} років}}",
+  "day_unit": "День",
+  "week_unit": "Тиждень",
+  "month_unit": "Місяць",
+  "year_unit": "Рік",
 
   "create_plant" : "Створити рослину",
   "basic_information" : "Основна інформація",

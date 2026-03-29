@@ -1,3 +1,4 @@
+import 'package:agrost_app/common/app_event_bus/app_event_bus.dart';
 import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:agrost_app/features/home/plants/plant_market/plant_market_cubit.dart';
@@ -21,6 +22,7 @@ class PlantMarketPage extends HookWidget {
       create: (_) => PlantMarketCubit(
         DIService.get<GetMarketPlantsUseCase>(),
         DIService.get<AddPlantToUserUseCase>(),
+        DIService.get<AppEventBus>(),
       ),
       child: const PlantMarketPage(),
     );
