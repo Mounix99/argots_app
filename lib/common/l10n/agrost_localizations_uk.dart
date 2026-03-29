@@ -189,4 +189,55 @@ class AppLocalizationsUk extends AppLocalizations {
 
   @override
   String get no_options_available => 'Немає доступних варіантів';
+
+  @override
+  String get plant_details => 'Деталі рослини';
+
+  @override
+  String get delete_plant => 'Видалити рослину';
+
+  @override
+  String get remove_from_my_list => 'Прибрати зі свого списку';
+
+  @override
+  String get delete_plant_completely => 'Видалити рослину повністю';
+
+  @override
+  String get plant_deleted_success => 'Рослину успішно видалено';
+
+  @override
+  String get plant_removed_success => 'Рослину прибрано з вашого списку';
+
+  @override
+  String get delete_plant_confirmation => 'Що ви хочете зробити?';
+
+  @override
+  String get version => 'Версія';
+
+  @override
+  String get created_at => 'Створено';
+
+  @override
+  String get last_updated => 'Оновлено';
+
+  @override
+  String get public => 'Публічна';
+
+  @override
+  String get edit_plant => 'Редагувати рослину';
+
+  @override
+  String get plant_updated_success => 'Рослину успішно оновлено!';
+
+  @override
+  String get save => 'Зберегти';
+
+  @override
+  String get add_stage => 'Додати етап';
+
+  @override
+  String get no_stages_yet => 'Етапів ще не додано';
+
+  @override
+  String get stage_deleted_success => 'Етап видалено';
 }

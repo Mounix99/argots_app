@@ -53,5 +53,23 @@
   "growth_seasons" : "Growth seasons",
   "select_option" : "Select an option",
   "add_tags" : "Add tags, press Enter to confirm",
-  "no_options_available" : "No options available"
+  "no_options_available" : "No options available",
+
+  "plant_details" : "Plant details",
+  "delete_plant" : "Delete plant",
+  "remove_from_my_list" : "Remove from my list",
+  "delete_plant_completely" : "Delete plant completely",
+  "plant_deleted_success" : "Plant was successfully deleted",
+  "plant_removed_success" : "Plant was removed from your list",
+  "delete_plant_confirmation" : "What would you like to do?",
+  "version" : "Version",
+  "created_at" : "Created",
+  "last_updated" : "Last updated",
+  "public" : "Public",
+  "edit_plant" : "Edit plant",
+  "plant_updated_success" : "Plant was successfully updated!",
+  "save" : "Save",
+  "add_stage" : "Add stage",
+  "no_stages_yet" : "No stages added yet",
+  "stage_deleted_success" : "Stage was deleted"
 }

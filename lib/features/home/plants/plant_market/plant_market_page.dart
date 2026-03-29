@@ -1,7 +1,9 @@
 import 'package:agrost_app/common/app_event_bus/app_event_bus.dart';
 import 'package:agrost_app/common/dependency_injection/dependency_injection_service.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
+import 'package:agrost_app/common/theming/agrost_colors.dart';
 import 'package:agrost_app/features/home/plants/plant_market/plant_market_cubit.dart';
+import 'package:agrost_app/features/home/plants/widgets/plant_card.dart';
 import 'package:domain/plants/entities/plant_model.dart';
 import 'package:domain/plants/usecases/plant_usecases/add_plant_to_user_usecase.dart';
 import 'package:domain/plants/usecases/plant_usecases/get_market_plants_usecase.dart';
@@ -40,6 +42,9 @@ class PlantMarketPage extends HookWidget {
             if (state.plantMarketRequestState.isError && state.errorMessage != null) {
               context.showSnackBar(message: state.errorMessage!);
             }
+            if (state.plantMarketRequestState.isInitial) {
+              paginationController.refresh();
+            }
           },
         ),
         BlocListener<ManagePlantsCubit, ManagePlantsState>(
@@ -54,7 +59,7 @@ class PlantMarketPage extends HookWidget {
       child: BlocBuilder<PlantMarketCubit, PlantMarketState>(
         builder: (context, state) {
           return RefreshIndicator(
-            onRefresh: context.read<PlantMarketCubit>().refresh,
+            onRefresh: () async => paginationController.refresh(),
             child: PagingListener(
               controller: paginationController,
               builder: (context, state, fetchNextPage) => PagedListView<int, PlantModel>(
@@ -79,21 +84,26 @@ class PlantMarketListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-        onLongPress: plant.usedBy?.contains(context.user!.id) == true
-            ? () => context.read<ManagePlantsCubit>().removePlantFromUser(plant.id)
-            : null,
-        onTap: () => context.navigator.goToPlantDetails(plant.id.toString()),
-        leading: plant.photoUrl != null ? Image.network(plant.photoUrl!) : const Icon(Ionicons.leaf),
-        title: Text(plant.title),
-        subtitle: plant.description != null ? Text(plant.description!) : null,
-        trailing: plant.usedBy?.contains(context.user!.id) == true
-            ? IconButton(
-                icon: const Icon(Ionicons.checkmark_done),
-                onPressed: () => context.read<ManagePlantsCubit>().removePlantFromUser(plant.id))
-            : IconButton(
-                icon: const Icon(Ionicons.add),
-                onPressed: () => context.read<ManagePlantsCubit>().addPlantToUser(plant.id),
-              ));
+    final isAdded = plant.usedBy?.contains(context.user!.id) == true;
+
+    return PlantCard(
+      plant: plant,
+      onTap: () => context.navigator.goToPlantDetails(plant.id.toString()),
+      backgroundColor: isAdded ? AgrostColors.primary : AgrostColors.surfaceContainer,
+      trailing: GestureDetector(
+        onTap: () {
+          if (isAdded) {
+            context.read<ManagePlantsCubit>().removePlantFromUser(plant.id);
+          } else {
+            context.read<ManagePlantsCubit>().addPlantToUser(plant.id);
+          }
+        },
+        child: Icon(
+          isAdded ? Ionicons.checkmark_done_outline : Ionicons.add_outline,
+          size: 22,
+          color: AgrostColors.textPrimary,
+        ),
+      ),
+    );
   }
 }

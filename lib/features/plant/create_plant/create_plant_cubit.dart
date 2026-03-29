@@ -4,7 +4,10 @@ import 'package:agrost_app/common/system_values/system_values_cache.dart';
 import 'package:domain/plants/entities/plant_model.dart';
 import 'package:domain/plants/entities/stage_model.dart';
 import 'package:domain/plants/usecases/plant_usecases/add_plant_usecase.dart';
+import 'package:domain/plants/usecases/plant_usecases/update_plant_usecase.dart';
 import 'package:domain/plants/usecases/stage_usecases/add_stage_usecase.dart';
+import 'package:domain/plants/usecases/stage_usecases/delete_stage_usecase.dart';
+import 'package:domain/plants/usecases/stage_usecases/get_list_of_stages_usecase.dart';
 import 'package:domain/system_values/entities/growth_season.dart';
 import 'package:domain/system_values/entities/light_requirement.dart';
 import 'package:domain/system_values/entities/plant_type.dart';
@@ -61,13 +64,18 @@ class CreatePlantState extends Equatable {
   final String? selectedWateringFrequency;
   final List<String> selectedGrowthSeasons;
 
-  // System value options
   final List<SoilType> soilTypeOptions;
   final List<PlantType> plantTypeOptions;
   final List<LightRequirement> lightRequirementOptions;
   final List<WateringFrequency> wateringFrequencyOptions;
   final List<GrowthSeason> growthSeasonOptions;
   final bool optionsLoaded;
+
+  final bool isEditMode;
+  final String? existingPhotoUrl;
+
+  final List<StageModel> existingStages;
+  final RequestState existingStagesRequestState;
 
   const CreatePlantState({
     this.requestState = RequestState.initial,
@@ -86,6 +94,10 @@ class CreatePlantState extends Equatable {
     this.wateringFrequencyOptions = const [],
     this.growthSeasonOptions = const [],
     this.optionsLoaded = false,
+    this.isEditMode = false,
+    this.existingPhotoUrl,
+    this.existingStages = const [],
+    this.existingStagesRequestState = RequestState.initial,
   });
 
   CreatePlantState copyWith({
@@ -108,6 +120,10 @@ class CreatePlantState extends Equatable {
     List<WateringFrequency>? wateringFrequencyOptions,
     List<GrowthSeason>? growthSeasonOptions,
     bool? optionsLoaded,
+    bool? isEditMode,
+    String? existingPhotoUrl,
+    List<StageModel>? existingStages,
+    RequestState? existingStagesRequestState,
   }) {
     return CreatePlantState(
       requestState: requestState ?? this.requestState,
@@ -126,6 +142,10 @@ class CreatePlantState extends Equatable {
       wateringFrequencyOptions: wateringFrequencyOptions ?? this.wateringFrequencyOptions,
       growthSeasonOptions: growthSeasonOptions ?? this.growthSeasonOptions,
       optionsLoaded: optionsLoaded ?? this.optionsLoaded,
+      isEditMode: isEditMode ?? this.isEditMode,
+      existingPhotoUrl: existingPhotoUrl ?? this.existingPhotoUrl,
+      existingStages: existingStages ?? this.existingStages,
+      existingStagesRequestState: existingStagesRequestState ?? this.existingStagesRequestState,
     );
   }
 
@@ -147,6 +167,10 @@ class CreatePlantState extends Equatable {
         wateringFrequencyOptions,
         growthSeasonOptions,
         optionsLoaded,
+        isEditMode,
+        existingPhotoUrl,
+        existingStages,
+        existingStagesRequestState,
       ];
 }
 
@@ -157,31 +181,53 @@ class CreatePlantCubit extends Cubit<CreatePlantState> {
     required SystemValuesCache systemValuesCache,
     required AppEventBus appEventBus,
     required String authorId,
+    this.existingPlant,
+    UpdatePlantUseCase? updatePlantUseCase,
+    GetListOfStagesUseCase? getListOfStagesUseCase,
+    DeleteStageUseCase? deleteStageUseCase,
   })  : _addPlantUseCase = addPlantUseCase,
         _addStageUseCase = addStageUseCase,
+        _updatePlantUseCase = updatePlantUseCase,
+        _getListOfStagesUseCase = getListOfStagesUseCase,
+        _deleteStageUseCase = deleteStageUseCase,
         _systemValuesCache = systemValuesCache,
         _appEventBus = appEventBus,
         _authorId = authorId,
         super(const CreatePlantState()) {
     _initForm();
     _loadOptions();
+    if (existingPlant != null) {
+      _prefillFromPlant(existingPlant!);
+      _loadExistingStages();
+    }
   }
 
   final AddPlantUseCase _addPlantUseCase;
   final AddStageUseCase _addStageUseCase;
+  final UpdatePlantUseCase? _updatePlantUseCase;
+  final GetListOfStagesUseCase? _getListOfStagesUseCase;
+  final DeleteStageUseCase? _deleteStageUseCase;
   final SystemValuesCache _systemValuesCache;
   final AppEventBus _appEventBus;
   final String _authorId;
+  final PlantModel? existingPlant;
   final _imagePicker = ImagePicker();
+
+  bool get isEditMode => existingPlant != null;
 
   late final FormGroup plantForm;
   late final FormGroup stageForm;
 
   void _initForm() {
     plantForm = FormGroup({
-      CreatePlantFormFields.plantName.name: FormControl<String>(validators: [Validators.required]),
+      CreatePlantFormFields.plantName.name: FormControl<String>(
+        validators: [Validators.required],
+        value: existingPlant?.title,
+      ),
       CreatePlantFormFields.plantFamily.name: FormControl<String>(),
-      CreatePlantFormFields.description.name: FormControl<String>(),
+      CreatePlantFormFields.description.name: FormControl<String>(
+        value: existingPlant?.description,
+      ),
     });
 
     stageForm = FormGroup({
@@ -189,6 +235,88 @@ class CreatePlantCubit extends Cubit<CreatePlantState> {
       CreatePlantFormFields.stageDescription.name: FormControl<String>(),
       CreatePlantFormFields.stageDuration.name: FormControl<int>(validators: [Validators.required, Validators.min(1)]),
     });
+  }
+
+  void _prefillFromPlant(PlantModel plant) {
+    emit(state.copyWith(
+      isEditMode: true,
+      isPublic: plant.public,
+      selectedSoilTypes: plant.soilType ?? [],
+      selectedPlantTypes: plant.plantType ?? [],
+      selectedLightRequirement: plant.lightRequirements,
+      selectedWateringFrequency: plant.wateringFrequency,
+      selectedGrowthSeasons: plant.growthSeasons ?? [],
+      existingPhotoUrl: plant.photoUrl,
+    ));
+  }
+
+  Future<void> _loadExistingStages() async {
+    if (_getListOfStagesUseCase == null || existingPlant == null) return;
+    emit(state.copyWith(existingStagesRequestState: RequestState.loading));
+    final result = await _getListOfStagesUseCase((plantId: existingPlant!.id, page: 1, size: 50));
+    emit(result.match(
+      (failure) => state.copyWith(existingStagesRequestState: RequestState.error, errorMessage: failure.error.toString()),
+      (data) => state.copyWith(existingStagesRequestState: RequestState.success, existingStages: data),
+    ));
+  }
+
+  Future<void> deleteExistingStage(int stageId) async {
+    if (_deleteStageUseCase == null) return;
+    final result = await _deleteStageUseCase(stageId);
+    result.match(
+      (failure) => emit(state.copyWith(errorMessage: failure.error.toString())),
+      (_) {
+        final updated = state.existingStages.where((s) => s.id != stageId).toList();
+        emit(state.copyWith(existingStages: updated));
+      },
+    );
+  }
+
+  Future<void> addStageToExistingPlant(StageTimeFormat timeFormat) async {
+    if (!stageForm.valid) {
+      stageForm.markAllAsTouched();
+      return;
+    }
+    if (existingPlant == null) return;
+
+    final name = stageForm.control(CreatePlantFormFields.stageName.name).value as String;
+    final description = stageForm.control(CreatePlantFormFields.stageDescription.name).value as String?;
+    final duration = stageForm.control(CreatePlantFormFields.stageDuration.name).value as int;
+
+    final durationInSeconds = _computeDurationInSeconds(duration, timeFormat);
+
+    final stageModel = StageModel(
+      id: 0,
+      title: name,
+      description: description?.isEmpty == true ? null : description,
+      createdAt: DateTime.now(),
+      lastUpdateAt: DateTime.now(),
+      plantId: existingPlant!.id,
+      authorId: _authorId,
+      duration: durationInSeconds,
+    );
+
+    final result = await _addStageUseCase(stageModel);
+    result.match(
+      (failure) => emit(state.copyWith(errorMessage: failure.error.toString())),
+      (_) => stageForm.reset(),
+    );
+    if (result.isRight()) {
+      await _loadExistingStages();
+    }
+  }
+
+  int _computeDurationInSeconds(int duration, StageTimeFormat timeFormat) {
+    switch (timeFormat) {
+      case StageTimeFormat.days:
+        return duration * Duration.secondsPerDay;
+      case StageTimeFormat.weeks:
+        return duration * Duration.secondsPerDay * 7;
+      case StageTimeFormat.months:
+        return duration * Duration.secondsPerDay * 30;
+      case StageTimeFormat.years:
+        return duration * Duration.secondsPerDay * 365;
+    }
   }
 
   Future<void> _loadOptions() async {
@@ -217,7 +345,7 @@ class CreatePlantCubit extends Cubit<CreatePlantState> {
         emit(state.copyWith(selectedPhoto: file));
       }
     } catch (_) {
-      // Permission denied or camera unavailable — silently ignore
+      // Permission denied or camera unavailable
     }
   }
 
@@ -288,7 +416,15 @@ class CreatePlantCubit extends Cubit<CreatePlantState> {
     emit(state.copyWith(stages: updated));
   }
 
-  Future<void> createPlant() async {
+  Future<void> savePlant() async {
+    if (isEditMode) {
+      await _updatePlant();
+    } else {
+      await _createPlant();
+    }
+  }
+
+  Future<void> _createPlant() async {
     if (!plantForm.valid) {
       plantForm.markAllAsTouched();
       return;
@@ -341,4 +477,41 @@ class CreatePlantCubit extends Cubit<CreatePlantState> {
       },
     );
   }
+
+  Future<void> _updatePlant() async {
+    if (!plantForm.valid) {
+      plantForm.markAllAsTouched();
+      return;
+    }
+    if (_updatePlantUseCase == null) return;
+
+    emit(state.copyWith(requestState: RequestState.loading));
+
+    final name = plantForm.control(CreatePlantFormFields.plantName.name).value as String;
+    final description = plantForm.control(CreatePlantFormFields.description.name).value as String?;
+
+    final updatedPlant = existingPlant!.copyWith(
+      title: name,
+      description: description?.isEmpty == true ? null : description,
+      soilType: state.selectedSoilTypes.isEmpty ? null : state.selectedSoilTypes,
+      plantType: state.selectedPlantTypes.isEmpty ? null : state.selectedPlantTypes,
+      public: state.isPublic,
+      lightRequirements: state.selectedLightRequirement,
+      wateringFrequency: state.selectedWateringFrequency,
+      growthSeasons: state.selectedGrowthSeasons.isEmpty ? null : state.selectedGrowthSeasons,
+      lastUpdateAt: DateTime.now(),
+    );
+
+    final result = await _updatePlantUseCase(updatedPlant);
+    result.match(
+      (failure) => emit(state.copyWith(requestState: RequestState.error, errorMessage: failure.error.toString())),
+      (_) {
+        _appEventBus.fire(AppEvent.plantsUpdated);
+        emit(state.copyWith(requestState: RequestState.success));
+      },
+    );
+  }
+
+  @Deprecated('Use savePlant() instead')
+  Future<void> createPlant() => savePlant();
 }

@@ -188,4 +188,55 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get no_options_available => 'No options available';
+
+  @override
+  String get plant_details => 'Plant details';
+
+  @override
+  String get delete_plant => 'Delete plant';
+
+  @override
+  String get remove_from_my_list => 'Remove from my list';
+
+  @override
+  String get delete_plant_completely => 'Delete plant completely';
+
+  @override
+  String get plant_deleted_success => 'Plant was successfully deleted';
+
+  @override
+  String get plant_removed_success => 'Plant was removed from your list';
+
+  @override
+  String get delete_plant_confirmation => 'What would you like to do?';
+
+  @override
+  String get version => 'Version';
+
+  @override
+  String get created_at => 'Created';
+
+  @override
+  String get last_updated => 'Last updated';
+
+  @override
+  String get public => 'Public';
+
+  @override
+  String get edit_plant => 'Edit plant';
+
+  @override
+  String get plant_updated_success => 'Plant was successfully updated!';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get add_stage => 'Add stage';
+
+  @override
+  String get no_stages_yet => 'No stages added yet';
+
+  @override
+  String get stage_deleted_success => 'Stage was deleted';
 }
