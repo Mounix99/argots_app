@@ -27,8 +27,9 @@ class PlantRemoteDataSourceImpl implements PlantRemoteDataSource {
   }
 
   @override
-  Future<void> addPlant({required Map<String, dynamic> plantData}) async {
-    await supabase.client.from(_plantTable).insert(plantData);
+  Future<PlantDto> addPlant({required Map<String, dynamic> plantData}) async {
+    final response = await supabase.client.from(_plantTable).insert(plantData).select().single();
+    return PlantDto.fromJson(response);
   }
 
   @override
@@ -55,7 +56,7 @@ class PlantRemoteDataSourceImpl implements PlantRemoteDataSource {
 
   @override
   Future<List<PlantDto>> getUserPlants({required String userId, required int offset, required int limit}) async {
-    final response = await supabase.client.from(_plantTable).select().eq('used_by', '{$userId}').range(offset, offset + limit - 1);
+    final response = await supabase.client.from(_plantTable).select().contains('used_by', [userId]).range(offset, offset + limit - 1);
     return response.map((e) => PlantDto.fromJson(e)).toList();
   }
 

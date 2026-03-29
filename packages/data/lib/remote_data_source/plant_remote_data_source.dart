@@ -6,7 +6,7 @@ abstract class PlantRemoteDataSource {
 
   Future<PlantDto> getPlantInfo({required int plantId});
 
-  Future<void> addPlant({required Map<String, dynamic> plantData});
+  Future<PlantDto> addPlant({required Map<String, dynamic> plantData});
 
   Future<void> updatePlant({required int plantId, required Map<String, dynamic> plantData});
 

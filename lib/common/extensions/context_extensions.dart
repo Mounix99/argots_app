@@ -5,6 +5,7 @@ import 'package:agrost_app/common/l10n/agrost_localizations.dart';
 
 import '../../auth_cubit.dart';
 import '../navigation/agrost_navigation.dart';
+import '../theming/agrost_theme_extensions.dart';
 
 extension OfContext on BuildContext {
   AppLocalizations get strings => AppLocalizations.of(this)!;
@@ -14,6 +15,9 @@ extension OfContext on BuildContext {
   TextTheme get textTheme => theme.textTheme;
 
   ColorScheme get colorScheme => theme.colorScheme;
+
+  AgrostSemanticColors get semanticColors =>
+      theme.extension<AgrostSemanticColors>()!;
 
   FocusScopeNode get focus => FocusScope.of(this);
 

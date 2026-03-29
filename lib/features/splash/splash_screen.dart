@@ -1,4 +1,5 @@
 import 'package:agrost_app/common/extensions/context_extensions.dart';
+import 'package:agrost_app/common/theming/agrost_spacing.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -16,14 +17,14 @@ class SplashScreen extends StatelessWidget {
               size: 80,
               color: context.colorScheme.primary,
             ),
-            const SizedBox(height: 20),
+            AgrostSpacing.verticalXl,
             Text(
               'Agrost',
               style: context.textTheme.displayLarge?.copyWith(
                 color: context.colorScheme.primary,
               ),
             ),
-            const SizedBox(height: 56),
+            AgrostSpacing.verticalMassive,
             CircularProgressIndicator(
               color: context.colorScheme.primary,
             ),

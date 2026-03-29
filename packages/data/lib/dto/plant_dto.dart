@@ -16,6 +16,9 @@ class PlantDto {
   final DateTime? lastUpdateAt;
   final String version;
   final String? photoUrl;
+  final String? lightRequirements;
+  final String? wateringFrequency;
+  final List<String>? growthSeasons;
 
   const PlantDto({
     required this.id,
@@ -30,6 +33,9 @@ class PlantDto {
     this.lastUpdateAt,
     required this.version,
     this.photoUrl,
+    this.lightRequirements,
+    this.wateringFrequency,
+    this.growthSeasons,
   });
 
   factory PlantDto.fromJson(Map<String, dynamic> json) => _$PlantDtoFromJson(json);

@@ -1,21 +1,30 @@
+import 'dart:async';
+
+import 'package:agrost_app/common/app_event_bus/app_event_bus.dart';
 import 'package:domain/plants/entities/plant_model.dart';
-import 'package:domain/plants/usecases/plant_usecases/get_user_plants_usecase.dart';
+import 'package:domain/plants/usecases/plant_usecases/get_plants_created_by_me_usecase.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../common/state_management/base/request_state.dart';
 
 class MyPlantsCubit extends Cubit<MyPlantsState> {
-  final GetUserPlantsUseCase _getUserPlantsUseCase;
+  final GetPlantsCreatedByMeUseCase _getPlantsCreatedByMeUseCase;
+  final AppEventBus _appEventBus;
   final String userId;
+  late final StreamSubscription<AppEvent> _eventSubscription;
 
-  MyPlantsCubit(this._getUserPlantsUseCase, {required this.userId}) : super(MyPlantsState.initial()) {
+  MyPlantsCubit(this._getPlantsCreatedByMeUseCase, this._appEventBus, {required this.userId})
+      : super(MyPlantsState.initial()) {
+    _eventSubscription = _appEventBus.stream.listen((event) {
+      if (event == AppEvent.plantsUpdated) refresh();
+    });
     getMyPlants();
   }
 
   Future<List<PlantModel>> getMyPlants([int page = 1, int size = 20]) async {
     emit(state.copyWith(myPlantsRequestState: RequestState.loading, page: page));
-    final result = await _getUserPlantsUseCase((id: userId, page: state.page, size: size));
+    final result = await _getPlantsCreatedByMeUseCase((id: userId, page: state.page, size: size));
     emit(result.match(
       (failure) => state.copyWith(myPlantsRequestState: RequestState.error, errorMessage: failure.error.toString()),
       (data) => state.copyWith(myPlantsRequestState: RequestState.success, plants: data, page: page),
@@ -26,6 +35,12 @@ class MyPlantsCubit extends Cubit<MyPlantsState> {
   Future<void> refresh() async {
     emit(MyPlantsState.initial());
     getMyPlants();
+  }
+
+  @override
+  Future<void> close() {
+    _eventSubscription.cancel();
+    return super.close();
   }
 }
 

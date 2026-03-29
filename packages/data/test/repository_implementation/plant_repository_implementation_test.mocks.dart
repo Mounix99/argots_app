@@ -60,13 +60,25 @@ class MockPlantRemoteDataSource extends _i1.Mock
           as _i5.Future<_i2.PlantDto>);
 
   @override
-  _i5.Future<void> addPlant({required Map<String, dynamic>? plantData}) =>
+  _i5.Future<_i2.PlantDto> addPlant({
+    required Map<String, dynamic>? plantData,
+  }) =>
       (super.noSuchMethod(
             Invocation.method(#addPlant, [], {#plantData: plantData}),
-            returnValue: _i5.Future<void>.value(),
-            returnValueForMissingStub: _i5.Future<void>.value(),
+            returnValue: _i5.Future<_i2.PlantDto>.value(
+              _FakePlantDto_0(
+                this,
+                Invocation.method(#addPlant, [], {#plantData: plantData}),
+              ),
+            ),
+            returnValueForMissingStub: _i5.Future<_i2.PlantDto>.value(
+              _FakePlantDto_0(
+                this,
+                Invocation.method(#addPlant, [], {#plantData: plantData}),
+              ),
+            ),
           )
-          as _i5.Future<void>);
+          as _i5.Future<_i2.PlantDto>);
 
   @override
   _i5.Future<void> updatePlant({

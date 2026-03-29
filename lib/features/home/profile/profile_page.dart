@@ -1,5 +1,6 @@
 import 'package:agrost_app/auth_cubit.dart';
 import 'package:agrost_app/common/extensions/context_extensions.dart';
+import 'package:agrost_app/common/theming/agrost_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -19,14 +20,14 @@ class ProfilePage extends StatelessWidget {
           return Center(
             child: ListView(
               shrinkWrap: true,
-              padding: const EdgeInsets.all(16.0),
+              padding: AgrostSpacing.screenAll,
               children: [
                 Text(
                   authState.user?.email ?? '',
                   textAlign: TextAlign.center,
                   style: context.textTheme.titleMedium,
                 ),
-                const SizedBox(height: 24),
+                AgrostSpacing.verticalXxl,
                 TextButton(
                   onPressed: () => context.read<AuthCubit>().signOut(),
                   child: Text(context.strings.sign_out),

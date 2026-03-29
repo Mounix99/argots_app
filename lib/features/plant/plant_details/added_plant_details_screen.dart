@@ -1,5 +1,10 @@
 import 'package:agrost_app/common/extensions/context_extensions.dart';
 import 'package:agrost_app/common/extensions/int_extensions.dart';
+import 'package:agrost_app/common/theming/agrost_spacing.dart';
+import 'package:agrost_app/common/widgets/agrost_card.dart';
+import 'package:agrost_app/common/widgets/agrost_info_row.dart';
+import 'package:agrost_app/common/widgets/agrost_loading_indicator.dart';
+import 'package:agrost_app/common/widgets/agrost_section_header.dart';
 import 'package:agrost_app/features/plant/plant_details/plant_details_cubit.dart';
 import 'package:domain/plants/entities/plant_model.dart';
 import 'package:domain/plants/entities/stage_model.dart';
@@ -29,9 +34,9 @@ class AddedPlantDetailsScreen extends StatelessWidget {
     return BlocBuilder<PlantDetailsCubit, PlantDetailsState>(
       builder: (context, state) {
         if (state.plantDetailsRequestState.isLoading) {
-          return const Center(child: CircularProgressIndicator());
+          return const AgrostLoadingScreen();
         } else if (state.plantDetailsRequestState.isSuccess && state.plant != null) {
-          return const PlantDetailsWidget();
+          return const _PlantDetailsWidget();
         } else {
           return const SizedBox();
         }
@@ -40,8 +45,8 @@ class AddedPlantDetailsScreen extends StatelessWidget {
   }
 }
 
-class PlantDetailsWidget extends StatelessWidget {
-  const PlantDetailsWidget({super.key});
+class _PlantDetailsWidget extends StatelessWidget {
+  const _PlantDetailsWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -49,31 +54,17 @@ class PlantDetailsWidget extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(title: Text(state.plant!.title)),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
+          padding: const EdgeInsets.symmetric(horizontal: AgrostSpacing.sm),
           child: ListView(
             shrinkWrap: true,
             children: [
-              const SizedBox(height: 16),
+              AgrostSpacing.verticalLg,
               if (state.plant?.photoUrl != null) ...[
-                Card(
-                    margin: EdgeInsets.zero,
-                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(28))),
-                    elevation: 0,
-                    color: context.colorScheme.onSurface,
-                    child: Image.network(state.plant!.photoUrl!, loadingBuilder: (_, child, chunkEvent) {
-                      if (chunkEvent == null) return child;
-                      return Center(
-                        child: CircularProgressIndicator(
-                          value: chunkEvent.expectedTotalBytes != null
-                              ? chunkEvent.cumulativeBytesLoaded / chunkEvent.expectedTotalBytes!
-                              : null,
-                        ),
-                      );
-                    })),
-                const SizedBox(height: 16),
+                AgrostImageCard(imageUrl: state.plant!.photoUrl!),
+                AgrostSpacing.verticalLg,
               ],
               _plantInfoBloc(context, state.plant!),
-              const SizedBox(height: 40),
+              AgrostSpacing.verticalHuge,
               _stagesBlock(context, state)
             ],
           ),
@@ -83,41 +74,43 @@ class PlantDetailsWidget extends StatelessWidget {
   }
 
   Widget _plantInfoBloc(BuildContext context, PlantModel plant) {
-    const space = SizedBox(height: 8);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(AgrostSpacing.sm),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(plant.title, style: context.textTheme.displayLarge),
-          space,
+          AgrostSpacing.verticalSm,
           if (plant.plantType != null) ...[
-            _infoField(context, "${context.strings.plant_family}: ", plant.plantType!.join(", ")),
-            space,
+            AgrostInfoRow(
+              label: "${context.strings.plant_family}:",
+              value: plant.plantType!.join(", "),
+            ),
+            AgrostSpacing.verticalSm,
           ],
           if (plant.soilType != null) ...[
-            _infoField(context, "${context.strings.soil_type}: ", plant.soilType!.join(", ")),
-            space,
+            AgrostInfoRow(
+              label: "${context.strings.soil_type}:",
+              value: plant.soilType!.join(", "),
+            ),
+            AgrostSpacing.verticalSm,
           ],
-          _infoField(context, "${context.strings.description}: ", plant.description ?? ""),
-          space,
+          AgrostInfoRow(
+            label: "${context.strings.description}:",
+            value: plant.description ?? "",
+          ),
+          AgrostSpacing.verticalSm,
           if (plant.public)
             Row(
               children: [
                 Text(context.strings.plant_published_publicly, style: context.textTheme.bodyMedium),
-                const SizedBox(width: 6),
-                const Icon(Ionicons.bag_add_outline)
+                AgrostSpacing.horizontalSm,
+                const Icon(Ionicons.bag_add_outline),
               ],
             )
         ],
       ),
-    );
-  }
-
-  Widget _infoField(BuildContext context, String field, String value) {
-    return Row(
-      children: [Text(field, style: context.textTheme.bodyMedium), Text(value, style: context.textTheme.bodyMedium)],
     );
   }
 
@@ -126,14 +119,10 @@ class PlantDetailsWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(left: 8, bottom: 16),
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(context.strings.growth_stages, style: context.textTheme.displayMedium),
-              const SizedBox(width: 5),
-              const Icon(Ionicons.moon_outline)
-            ],
+          padding: const EdgeInsets.only(left: AgrostSpacing.sm),
+          child: AgrostSectionHeader(
+            title: context.strings.growth_stages,
+            icon: Ionicons.moon_outline,
           ),
         ),
         if (state.stages?.isNotEmpty ?? false) _stageList(state.stages!)
@@ -146,7 +135,7 @@ class PlantDetailsWidget extends StatelessWidget {
         shrinkWrap: true,
         physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (_, index) => StageCard(stage: stages.elementAt(index), stageNumber: index + 1),
-        separatorBuilder: (_, index) => const SizedBox(height: 8),
+        separatorBuilder: (_, index) => AgrostSpacing.verticalSm,
         itemCount: stages.length);
   }
 }
@@ -159,78 +148,34 @@ class StageCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(28))),
-      elevation: 0,
-      margin: const EdgeInsets.only(bottom: 16),
-      color: context.colorScheme.onSurface,
-      child: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text("${"stage"} $stageNumber", style: context.textTheme.displaySmall),
-                if (onDeletePressed != null)
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [IconButton(onPressed: onDeletePressed, icon: const Icon(Ionicons.trash_outline))],
-                  )
-              ],
+    return AgrostCard(
+      margin: const EdgeInsets.only(bottom: AgrostSpacing.lg),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text("${"stage"} $stageNumber", style: context.textTheme.displaySmall),
+              if (onDeletePressed != null)
+                IconButton(onPressed: onDeletePressed, icon: const Icon(Ionicons.trash_outline)),
+            ],
+          ),
+          AgrostSpacing.verticalXxl,
+          if (stage.description?.isNotEmpty ?? false)
+            AgrostIconInfoRow(
+              icon: Ionicons.create_outline,
+              title: stage.title,
+              subtitle: stage.description,
             ),
-            const SizedBox(height: 25),
-            if (stage.description?.isNotEmpty ?? false)
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  CircleAvatar(
-                    radius: 27,
-                    backgroundColor: context.colorScheme.surface,
-                    child: const Icon(Ionicons.create_outline),
-                  ),
-                  const SizedBox(width: 16),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text("stage", style: context.textTheme.titleLarge),
-                      const SizedBox(height: 8),
-                      Text(stage.title,
-                          style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.onPrimary)),
-                      const SizedBox(height: 8),
-                      if (stage.description != null)
-                        Text(stage.description!,
-                            style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.onPrimary)),
-                    ],
-                  ),
-                ],
-              ),
-            const SizedBox(height: 25),
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CircleAvatar(
-                    radius: 27,
-                    backgroundColor: context.colorScheme.surface,
-                    child: const Icon(Ionicons.calendar_outline)),
-                const SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('createStageDuration', style: context.textTheme.titleLarge),
-                    const SizedBox(height: 8),
-                    Text(stage.duration.formatAsDuration(context.strings),
-                        style: context.textTheme.bodyMedium?.copyWith(color: context.colorScheme.onPrimary)),
-                  ],
-                ),
-              ],
-            ),
-          ],
-        ),
+          AgrostSpacing.verticalXxl,
+          AgrostIconInfoRow(
+            icon: Ionicons.calendar_outline,
+            title: 'Duration',
+            subtitle: stage.duration.formatAsDuration(context.strings),
+          ),
+        ],
       ),
     );
   }

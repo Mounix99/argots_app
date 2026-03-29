@@ -86,4 +86,106 @@ class AppLocalizationsEn extends AppLocalizations {
     );
     return '$_temp0';
   }
+
+  @override
+  String months(num months) {
+    String _temp0 = intl.Intl.pluralLogic(
+      months,
+      locale: localeName,
+      other: '$months months',
+      one: '$months month',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String years(num years) {
+    String _temp0 = intl.Intl.pluralLogic(
+      years,
+      locale: localeName,
+      other: '$years years',
+      one: '$years year',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get day_unit => 'Day';
+
+  @override
+  String get week_unit => 'Week';
+
+  @override
+  String get month_unit => 'Month';
+
+  @override
+  String get year_unit => 'Year';
+
+  @override
+  String get create_plant => 'Create plant';
+
+  @override
+  String get basic_information => 'Basic information';
+
+  @override
+  String get add_photo => 'Add a pic of your plant';
+
+  @override
+  String get take_photo => 'Take a cute picture';
+
+  @override
+  String get upload_from_gallery => 'Upload from gallery';
+
+  @override
+  String get plant_name => 'Plant name';
+
+  @override
+  String get plant_description => 'Plant description';
+
+  @override
+  String get public_plant => 'Public plant';
+
+  @override
+  String get public_plant_description =>
+      'When other people can see your plant they can learn from it and help you grow it';
+
+  @override
+  String get growth_stages_description =>
+      'You can add growth stages to show this plant. If you add a growth stage, you can have a better overview of what actions should be taken.';
+
+  @override
+  String get stage_name => 'Stage name';
+
+  @override
+  String get stage_description => 'Stage description';
+
+  @override
+  String get duration => 'Duration';
+
+  @override
+  String get time_format => 'Time format';
+
+  @override
+  String get create_stage => 'Create stage';
+
+  @override
+  String get plant_created_success => 'Plant was successfully added!';
+
+  @override
+  String get light_requirements => 'Light requirements';
+
+  @override
+  String get watering_frequency => 'Watering frequency';
+
+  @override
+  String get growth_seasons => 'Growth seasons';
+
+  @override
+  String get select_option => 'Select an option';
+
+  @override
+  String get add_tags => 'Add tags, press Enter to confirm';
+
+  @override
+  String get no_options_available => 'No options available';
 }

@@ -30,5 +30,7 @@ class AgrostNavigator {
   /// Plant
   void goToPlantDetails(String id) => context.pushNamed(Routes.plantDetails.name, pathParameters: {'id': id});
 
+  void goToCreatePlant() => context.pushNamed(Routes.createPlant.name);
+
   void goBack<T>() => context.pop<T>();
 }

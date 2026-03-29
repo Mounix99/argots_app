@@ -163,12 +163,12 @@ void main() {
   });
 
   group('PlantRepositoryImplementation/addPlant', () {
-    test('/Success/ = calls data source with DTO JSON', () async {
-      when(mockDataSource.addPlant(plantData: anyNamed('plantData'))).thenAnswer((_) async {});
+    test('/Success/ = calls data source with DTO JSON and returns created PlantModel', () async {
+      when(mockDataSource.addPlant(plantData: anyNamed('plantData'))).thenAnswer((_) async => _tPlantDto);
 
       final result = await repository.addPlant(plant: _tPlantModel);
 
-      expect(result, Right(RemoteSourceSuccess()));
+      expect(result, rightWith(_tPlantModel));
       verify(mockDataSource.addPlant(plantData: anyNamed('plantData')));
     });
 
